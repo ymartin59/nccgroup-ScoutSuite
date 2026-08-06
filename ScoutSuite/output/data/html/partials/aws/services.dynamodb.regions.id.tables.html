@@ -11,6 +11,7 @@
         <div class="list-group-item-text item-margin">Status: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.table_status"><samp>{{value_or_none table_status}}</samp></span></div>
         <div class="list-group-item-text item-margin">Creation Date: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.creation_date_time"><samp>{{format_date creation_date_time}}</samp></span></div>
         <div class="list-group-item-text item-margin">Automatic Backups: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.automatic_backups_enabled">{{convert_bool_to_enabled automatic_backups_enabled}}</span></div>
+        <div class="list-group-item-text item-margin">On-Demand Backups: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.backup_summaries"><samp>{{value_or_none backup_summaries.length}}</samp></span></div>
         <div class="list-group-item-text item-margin">KMS Encryption: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.sse_enabled">{{convert_bool_to_enabled sse_enabled}}</span></div>
         <div class="list-group-item-text item-margin">Item Count: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.item_count"><samp>{{value_or_none item_count}}</samp></span></div>
     </div>

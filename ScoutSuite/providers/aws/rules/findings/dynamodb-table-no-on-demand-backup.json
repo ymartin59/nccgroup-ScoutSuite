@@ -1,0 +1,22 @@
+{
+    "description": "Table with No On-Demand Backup",
+    "rationale": "Point-in-time recovery only covers the last 35 days and stops protecting the data as soon as it is turned off, whereas on-demand backups are retained until explicitly deleted and survive the deletion of the table itself. A table with no on-demand backup therefore has no recovery option beyond the point-in-time recovery window, which is insufficient for data subject to longer retention requirements or for recovering from a corruption discovered late.",
+    "remediation": "Create on-demand backups of the table, or place it under an AWS Backup plan with a retention period matching the data retention requirements",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BackupRestore.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_HowItWorks.html",
+        "https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-dynamodb.html"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.backup_summaries",
+            "empty",
+            ""
+        ]
+    ],
+    "id_suffix": "backup_summaries"
+}

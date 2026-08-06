@@ -112,6 +112,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-no-on-demand-backup.json": [
+            {
+                "enabled": false,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-point-in-time-recovery-disabled.json": [
             {
                 "enabled": true,
