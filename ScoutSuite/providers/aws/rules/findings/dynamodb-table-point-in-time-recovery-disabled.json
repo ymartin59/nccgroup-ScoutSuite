@@ -1,0 +1,21 @@
+{
+    "description": "Table with Point-in-Time Recovery Disabled",
+    "rationale": "Point-in-time recovery (PITR) keeps continuous backups of a DynamoDB table for the last 35 days and is the only mechanism able to restore the table to a specific second. Without it, the table can only be restored from whichever on-demand backups happen to exist, so an accidental deletion, a faulty write or a compromised application can lead to permanent data loss.",
+    "remediation": "Enable point-in-time recovery on the table",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BackupRestore.html"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.automatic_backups_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "automatic_backups_enabled"
+}

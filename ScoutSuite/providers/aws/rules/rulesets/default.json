@@ -106,6 +106,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-point-in-time-recovery-disabled.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "ec2-ami-public.json": [
             {
                 "enabled": true,
