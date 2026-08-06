@@ -124,6 +124,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-no-encryption-with-kms.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-point-in-time-recovery-disabled.json": [
             {
                 "enabled": true,

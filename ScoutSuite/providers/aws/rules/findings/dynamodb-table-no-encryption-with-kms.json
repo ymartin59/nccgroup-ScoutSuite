@@ -1,0 +1,21 @@
+{
+    "description": "Table Not Encrypted with a KMS Key",
+    "rationale": "DynamoDB tables are always encrypted at rest, but by default they use an AWS owned key that does not reside in the account. Such a key has no key policy the account owner can restrict, its usage does not appear in CloudTrail, and access to the data it protects cannot be independently revoked or audited. Encrypting the table with an AWS managed or customer managed KMS key restores that visibility and control, and is a prerequisite for enforcing separation of duties between the data and the key that protects it.",
+    "remediation": "Update the table encryption settings to use an AWS managed or, preferably, a customer managed KMS key",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.howitworks.html"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.sse_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "sse_enabled"
+}
