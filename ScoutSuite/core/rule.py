@@ -100,10 +100,10 @@ class Rule:
             definition = json.loads(string_definition)
             # Set special values (IP ranges, AWS account ID, ...)
             for condition in definition['conditions']:
+                # Only string values may contain a special value to substitute
                 if type(condition) != list \
-                        or len(condition) == 1 \
-                        or type(condition[2]) == list \
-                        or type(condition[2]) == dict:
+                        or len(condition) < 3 \
+                        or not isinstance(condition[2], str):
                     continue
                 for testcase in testcases:
                     result = testcase['regex'].match(condition[2])
