@@ -1,48 +1,45 @@
 from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.base import AWSResources
-from ScoutSuite.providers.base.resources.base import CompositeResources
 from ScoutSuite.providers.utils import get_non_provider_id
+
 
 class Nodegroups(AWSResources):
     def __init__(self, facade: AWSFacade, region: str):
         super().__init__(facade)
         self.region = region
-        self.cluster_name = None
 
     async def fetch_all(self):
-        if not self.cluster_name:
-            self.cluster_name = await self._get_cluster_name()
-        if self.cluster_name:
-            raw_nodes = await self.facade.eks.get_nodegroups(self.region, self.cluster_name)
-            for raw_node in raw_nodes:
-                name, resource = self._parse_nodegroups(raw_node)
+        for cluster_name in await self.facade.eks.get_cluster_names(self.region):
+            raw_nodegroups = await self.facade.eks.get_nodegroups(self.region, cluster_name)
+            for raw_nodegroup in raw_nodegroups:
+                name, resource = self._parse_nodegroup(raw_nodegroup, cluster_name)
                 self[name] = resource
 
+    def _parse_nodegroup(self, raw_nodegroup, cluster_name):
+        scaling_config = raw_nodegroup.get('scalingConfig', {})
+        resources = raw_nodegroup.get('resources', {})
+        instance_types = raw_nodegroup.get('instanceTypes', [])
+        created_at = raw_nodegroup.get('createdAt')
+        modified_at = raw_nodegroup.get('modifiedAt')
 
-    async def _get_cluster_name(self):
-        raw_clusters = await self.facade.eks.get_clusters(self.region)
-        for cluster in raw_clusters:
-            if cluster['cluster']['name']:
-                return cluster['cluster']['name']
-
-    def _parse_nodegroups(self, raw_node):
         node = {}
-        node['name'] = raw_node['nodegroupName']
-        node['nodegroupArn'] = raw_node['nodegroupArn']
-        node['clusterName'] = raw_node['clusterName']
-        node['Nodegroup_version'] = raw_node['version']
-        node['MinSize'] = raw_node['scalingConfig']['minSize']
-        node['MaxSize'] = raw_node['scalingConfig']['maxSize']
-        node['desiredSize'] = raw_node['scalingConfig']['desiredSize']
-        node['Node_sg'] = raw_node['resources']['remoteAccessSecurityGroup']
-        node['created_at'] = raw_node['createdAt'].strftime('%Y-%m-%d %H:%M:%S')
-        node['modified_at'] = raw_node['modifiedAt'].strftime('%Y-%m-%d %H:%M:%S')
-        node['status'] = raw_node['status']
-        node['capacityType'] = raw_node['capacityType']
+        node['name'] = raw_nodegroup['nodegroupName']
+        node['nodegroupArn'] = raw_nodegroup.get('nodegroupArn')
+        node['clusterName'] = raw_nodegroup.get('clusterName', cluster_name)
+        node['Nodegroup_version'] = raw_nodegroup.get('version')
+        node['MinSize'] = scaling_config.get('minSize')
+        node['MaxSize'] = scaling_config.get('maxSize')
+        node['desiredSize'] = scaling_config.get('desiredSize')
+        node['Node_sg'] = resources.get('remoteAccessSecurityGroup')
+        node['created_at'] = created_at.strftime('%Y-%m-%d %H:%M:%S') if created_at else None
+        node['modified_at'] = modified_at.strftime('%Y-%m-%d %H:%M:%S') if modified_at else None
+        node['status'] = raw_nodegroup.get('status')
+        node['capacityType'] = raw_nodegroup.get('capacityType')
         node['region'] = self.region
-        node['instanceTypes'] = raw_node['instanceTypes'][0]
-        node['amiType'] = raw_node['amiType']
-        node['diskSize'] = raw_node['diskSize']
-        node['nodeRole'] = raw_node['nodeRole']
+        node['instanceTypes'] = instance_types[0] if instance_types else None
+        node['amiType'] = raw_nodegroup.get('amiType')
+        node['diskSize'] = raw_nodegroup.get('diskSize')
+        node['nodeRole'] = raw_nodegroup.get('nodeRole')
 
-        return get_non_provider_id(node['name']), node
+        # Nodegroup names are only unique within a cluster:
+        return get_non_provider_id(f"{node['clusterName']}/{node['name']}"), node

@@ -374,7 +374,7 @@
                 },
                 "nodegroups": {
                     "cols": 2,
-                    "path": "services.ecs.regions.id.nodegroups"
+                    "path": "services.eks.regions.id.nodegroups"
                 }
             }
         }
