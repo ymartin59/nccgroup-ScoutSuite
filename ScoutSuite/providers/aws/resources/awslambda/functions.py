@@ -79,18 +79,42 @@ class Functions(AWSResources):
             function_dict["env_variable_values"] = []
 
     def _get_deprecation_date(self, runtime):
-        # As of December 2024, the Lambda API does not have a way to determine whether a Lambda 
-        # runtime is deprecated; that information is only available in AWS documentation.  
+        # As of August 2026, the Lambda API does not have a way to determine whether a Lambda
+        # runtime is deprecated; that information is only available in AWS documentation.
         # Consequently, the table here will need to be updated from time to time.
         # Upcoming deprecation dates: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
         # Past deprecation dates: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-deprecated
 
         # Table of runtime identifier : deprecation date
-        # If a particular runtime identifier does not appear in the table, then no deprecation 
-        # date for the runtime has been announced.
-        last_updated = datetime.date(2024, 12, 30)
+        # If a particular runtime identifier does not appear in the table, then no deprecation
+        # date for the runtime has been announced. This is currently the case for the
+        # Amazon Linux 2023 Java runtimes: java8.al2023, java11.al2023 and java17.al2023.
+        last_updated = datetime.date(2026, 8, 13)
         deprecations = {
-            'nodejs18.x': datetime.date(2025, 7, 31), # Jul 31 2025
+            'python3.14': datetime.date(2029, 6, 30), # Jun 30, 2029
+            'python3.13': datetime.date(2029, 6, 30), # Jun 30, 2029
+            'java25': datetime.date(2029, 6, 30), # Jun 30, 2029
+            'java21': datetime.date(2029, 6, 30), # Jun 30, 2029
+            'provided.al2023': datetime.date(2029, 6, 30), # Jun 30, 2029
+            'ruby4.0': datetime.date(2029, 3, 31), # Mar 31, 2029
+            'dotnet10': datetime.date(2028, 11, 14), # Nov 14, 2028
+            'python3.12': datetime.date(2028, 10, 31), # Oct 31, 2028
+            'nodejs24.x': datetime.date(2028, 4, 30), # Apr 30, 2028
+            'ruby3.4': datetime.date(2028, 3, 31), # Mar 31, 2028
+            'python3.11': datetime.date(2027, 6, 30), # Jun 30, 2027
+            'java17': datetime.date(2027, 6, 30), # Jun 30, 2027
+            'java11': datetime.date(2027, 6, 30), # Jun 30, 2027
+            'java8.al2': datetime.date(2027, 6, 30), # Jun 30, 2027
+            'nodejs22.x': datetime.date(2027, 4, 30), # Apr 30, 2027
+            'ruby3.3': datetime.date(2027, 3, 31), # Mar 31, 2027
+            'dotnet9': datetime.date(2026, 11, 10), # Nov 10, 2026
+            'dotnet8': datetime.date(2026, 11, 10), # Nov 10, 2026
+            'python3.10': datetime.date(2026, 10, 31), # Oct 31, 2026
+            'provided.al2': datetime.date(2026, 7, 31), # Jul 31, 2026
+            'nodejs20.x': datetime.date(2026, 4, 30), # Apr 30, 2026
+            'ruby3.2': datetime.date(2026, 3, 31), # Mar 31, 2026
+            'python3.9': datetime.date(2025, 12, 15), # Dec 15, 2025
+            'nodejs18.x': datetime.date(2025, 9, 1), # Sep 1, 2025
             'dotnet6': datetime.date(2024, 12, 20), # Dec 20, 2024
             'python3.8': datetime.date(2024, 10, 14), # Oct 14, 2024
             'nodejs16.x': datetime.date(2024, 6, 12), # Jun 12, 2024
@@ -113,9 +137,9 @@ class Functions(AWSResources):
             'nodejs4.3': datetime.date(2020, 3, 5), # Mar 5, 2020
             'nodejs4.3-edge': datetime.date(2020, 3, 5), # Mar 5, 2020
             'nodejs6.10': datetime.date(2019, 8, 12), # Aug 12, 2019
-            'dotnetcore1.0': datetime.date(2019, 7, 27), # Jun 27, 2019
+            'dotnetcore1.0': datetime.date(2019, 6, 27), # Jun 27, 2019
             'dotnetcore2.0': datetime.date(2019, 5, 30), # May 30, 2019
-            'nodejs': datetime.date(2016, 10, 31), # Oct 31, 2016
+            'nodejs': datetime.date(2016, 8, 30), # Aug 30, 2016
         }
 
         # Warn if the table hasn't been updated
