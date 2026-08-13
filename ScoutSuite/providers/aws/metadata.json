@@ -355,6 +355,14 @@
                 "clusters": {
                     "cols": 2,
                     "path": "services.ecs.regions.id.clusters"
+                },
+                "services": {
+                    "cols": 2,
+                    "path": "services.ecs.regions.id.services"
+                },
+                "tasks": {
+                    "cols": 2,
+                    "path": "services.ecs.regions.id.tasks"
                 }
             }
         },
@@ -363,6 +371,10 @@
                 "clusters": {
                     "cols": 2,
                     "path": "services.eks.regions.id.clusters"
+                },
+                "nodegroups": {
+                    "cols": 2,
+                    "path": "services.ecs.regions.id.nodegroups"
                 }
             }
         }
