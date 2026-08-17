@@ -1,0 +1,566 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "ecr": {
+            "images_count": 4,
+            "regions": {
+                "ap-south-1": {
+                    "id": "ap-south-1",
+                    "images": {},
+                    "images_count": 0,
+                    "name": "ap-south-1",
+                    "region": "ap-south-1",
+                    "registry_settings": {
+                        "0": {
+                            "cross_account_replication_destinations": [],
+                            "id": "123456789012",
+                            "name": "ap-south-1",
+                            "pull_through_cache_rules": [],
+                            "pull_through_cache_rules_count": 0,
+                            "region": "ap-south-1",
+                            "replication_destinations": [],
+                            "replication_rules": [],
+                            "replication_rules_count": 0,
+                            "scan_type": "BASIC",
+                            "scanning_rules": []
+                        }
+                    },
+                    "registry_settings_count": 1,
+                    "repositories": {},
+                    "repositories_count": 0
+                },
+                "eu-west-1": {
+                    "id": "eu-west-1",
+                    "images": {
+                        "scoutid-218a8cb0716bfc4083aa2404a6f6e3fcbac73711": {
+                            "artifact_media_type": "application/vnd.docker.container.image.v1+json",
+                            "critical_severity_count": 0,
+                            "finding_severity_counts": {},
+                            "high_severity_count": 0,
+                            "id": "scoutid-218a8cb0716bfc4083aa2404a6f6e3fcbac73711",
+                            "image_digest": "sha256:cccc1111dddd2222eeee3333ffff4444aaaa5555bbbb6666cccc7777dddd8888",
+                            "image_size_in_bytes": 74053120,
+                            "image_tags": [],
+                            "informational_severity_count": 0,
+                            "low_severity_count": 0,
+                            "medium_severity_count": 0,
+                            "name": "legacy-app@sha256:cccc1111dddd2222eeee3333ffff4444aaaa5555bbbb6666cccc7777dddd8888",
+                            "pushed_at": "2024-11-05 17:42:11",
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "repository_name": "legacy-app",
+                            "scan_completed_at": null,
+                            "scan_status": null,
+                            "scan_status_description": null,
+                            "scanned": false,
+                            "undefined_severity_count": 0
+                        },
+                        "scoutid-7e0e693ca8a36563d6b03275d72e8aba8842bba8": {
+                            "artifact_media_type": "application/vnd.docker.container.image.v1+json",
+                            "critical_severity_count": 2,
+                            "finding_severity_counts": {
+                                "CRITICAL": 2,
+                                "HIGH": 5,
+                                "LOW": 4,
+                                "MEDIUM": 11
+                            },
+                            "high_severity_count": 5,
+                            "id": "scoutid-7e0e693ca8a36563d6b03275d72e8aba8842bba8",
+                            "image_digest": "sha256:bbbb1111cccc2222dddd3333eeee4444ffff5555aaaa6666bbbb7777cccc8888",
+                            "image_size_in_bytes": 74053120,
+                            "image_tags": [
+                                "latest"
+                            ],
+                            "informational_severity_count": 0,
+                            "low_severity_count": 4,
+                            "medium_severity_count": 11,
+                            "name": "legacy-app:latest",
+                            "pushed_at": "2024-11-05 17:42:11",
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "repository_name": "legacy-app",
+                            "scan_completed_at": "2024-11-05 17:44:02",
+                            "scan_status": "COMPLETE",
+                            "scan_status_description": "The scan was completed successfully.",
+                            "scanned": true,
+                            "undefined_severity_count": 0
+                        },
+                        "scoutid-b4a878672613fca722f0ccce9fb33270a9f99124": {
+                            "artifact_media_type": "application/vnd.docker.container.image.v1+json",
+                            "critical_severity_count": 0,
+                            "finding_severity_counts": {
+                                "INFORMATIONAL": 7,
+                                "LOW": 3,
+                                "MEDIUM": 1
+                            },
+                            "high_severity_count": 0,
+                            "id": "scoutid-b4a878672613fca722f0ccce9fb33270a9f99124",
+                            "image_digest": "sha256:aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666aaaa7777bbbb8888",
+                            "image_size_in_bytes": 74053120,
+                            "image_tags": [
+                                "1.4.2",
+                                "latest"
+                            ],
+                            "informational_severity_count": 7,
+                            "low_severity_count": 3,
+                            "medium_severity_count": 1,
+                            "name": "well-protected:1.4.2, latest",
+                            "pushed_at": "2024-11-05 17:42:11",
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "repository_name": "well-protected",
+                            "scan_completed_at": "2024-11-05 17:44:02",
+                            "scan_status": "COMPLETE",
+                            "scan_status_description": "The scan was completed successfully.",
+                            "scanned": true,
+                            "undefined_severity_count": 0
+                        }
+                    },
+                    "images_count": 3,
+                    "name": "eu-west-1",
+                    "region": "eu-west-1",
+                    "registry_settings": {
+                        "0": {
+                            "cross_account_replication_destinations": [],
+                            "id": "123456789012",
+                            "name": "eu-west-1",
+                            "pull_through_cache_rules": [],
+                            "pull_through_cache_rules_count": 0,
+                            "region": "eu-west-1",
+                            "replication_destinations": [],
+                            "replication_rules": [],
+                            "replication_rules_count": 0,
+                            "scan_type": "ENHANCED",
+                            "scanning_rules": [
+                                {
+                                    "repositoryFilters": [
+                                        {
+                                            "filter": "*",
+                                            "filterType": "WILDCARD"
+                                        }
+                                    ],
+                                    "scanFrequency": "CONTINUOUS_SCAN"
+                                }
+                            ]
+                        }
+                    },
+                    "registry_settings_count": 1,
+                    "repositories": {
+                        "scoutid-1810863c4300b60850d3c66ec73b40a9cfe4355d": {
+                            "applied_scan_filters": [
+                                {
+                                    "filter": "*",
+                                    "filterType": "WILDCARD"
+                                }
+                            ],
+                            "arn": "arn:aws:ecr:eu-west-1:123456789012:repository/partner-shared",
+                            "created_at": "2023-06-14 09:21:37",
+                            "encrypted_with_kms_key": true,
+                            "encryption_type": "KMS_DSSE",
+                            "id": "scoutid-1810863c4300b60850d3c66ec73b40a9cfe4355d",
+                            "image_tag_mutability": "IMMUTABLE",
+                            "image_tag_mutability_exclusion_filters": null,
+                            "image_tags_immutable": true,
+                            "kms_key": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "lifecycle_policy": {
+                                "rules": [
+                                    {
+                                        "action": {
+                                            "type": "expire"
+                                        },
+                                        "description": "Expire untagged images older than 30 days",
+                                        "rulePriority": 1,
+                                        "selection": {
+                                            "countNumber": 30,
+                                            "countType": "sinceImagePushed",
+                                            "countUnit": "days",
+                                            "tagStatus": "untagged"
+                                        }
+                                    }
+                                ]
+                            },
+                            "lifecycle_policy_configured": true,
+                            "name": "partner-shared",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": [
+                                            "ecr:BatchGetImage",
+                                            "ecr:GetDownloadUrlForLayer"
+                                        ],
+                                        "Effect": "Allow",
+                                        "Principal": {
+                                            "AWS": "arn:aws:iam::210987654321:root"
+                                        },
+                                        "Sid": "AllowPartnerPull"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "policy_restricts_to_vpc_endpoint": false,
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "scan_frequency": "CONTINUOUS_SCAN",
+                            "scan_on_push": false,
+                            "scanning_configured": true,
+                            "tags": [
+                                {
+                                    "Key": "Owner",
+                                    "Value": "platform"
+                                }
+                            ],
+                            "uri": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/partner-shared"
+                        },
+                        "scoutid-1b36daa343116af58aa93e0d485a8638b675ac16": {
+                            "applied_scan_filters": null,
+                            "arn": "arn:aws:ecr:eu-west-1:123456789012:repository/legacy-app",
+                            "created_at": "2023-06-14 09:21:37",
+                            "encrypted_with_kms_key": false,
+                            "encryption_type": "AES256",
+                            "id": "scoutid-1b36daa343116af58aa93e0d485a8638b675ac16",
+                            "image_tag_mutability": "MUTABLE",
+                            "image_tag_mutability_exclusion_filters": null,
+                            "image_tags_immutable": false,
+                            "kms_key": null,
+                            "lifecycle_policy_configured": false,
+                            "name": "legacy-app",
+                            "policy_restricts_to_vpc_endpoint": false,
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "scan_frequency": "MANUAL",
+                            "scan_on_push": false,
+                            "scanning_configured": false,
+                            "tags": [
+                                {
+                                    "Key": "Owner",
+                                    "Value": "platform"
+                                }
+                            ],
+                            "uri": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/legacy-app"
+                        },
+                        "scoutid-bfbe455f81f70c5fbd882a9392922b546c7183be": {
+                            "applied_scan_filters": null,
+                            "arn": "arn:aws:ecr:eu-west-1:123456789012:repository/public-mirror",
+                            "created_at": "2023-06-14 09:21:37",
+                            "encrypted_with_kms_key": true,
+                            "encryption_type": "KMS",
+                            "id": "scoutid-bfbe455f81f70c5fbd882a9392922b546c7183be",
+                            "image_tag_mutability": "IMMUTABLE_WITH_EXCLUSION",
+                            "image_tag_mutability_exclusion_filters": [
+                                {
+                                    "filter": "nightly*",
+                                    "filterType": "WILDCARD"
+                                }
+                            ],
+                            "image_tags_immutable": false,
+                            "kms_key": "arn:aws:kms:eu-west-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+                            "lifecycle_policy": {
+                                "rules": [
+                                    {
+                                        "action": {
+                                            "type": "expire"
+                                        },
+                                        "description": "Expire untagged images older than 30 days",
+                                        "rulePriority": 1,
+                                        "selection": {
+                                            "countNumber": 30,
+                                            "countType": "sinceImagePushed",
+                                            "countUnit": "days",
+                                            "tagStatus": "untagged"
+                                        }
+                                    }
+                                ]
+                            },
+                            "lifecycle_policy_configured": true,
+                            "name": "public-mirror",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": [
+                                            "ecr:BatchGetImage",
+                                            "ecr:GetDownloadUrlForLayer"
+                                        ],
+                                        "Effect": "Allow",
+                                        "Principal": {
+                                            "AWS": "*"
+                                        },
+                                        "Sid": "AllowEveryonePull"
+                                    },
+                                    {
+                                        "Action": [
+                                            "ecr:BatchDeleteImage",
+                                            "ecr:DeleteRepository"
+                                        ],
+                                        "Effect": "Deny",
+                                        "Principal": {
+                                            "AWS": "*"
+                                        },
+                                        "Sid": "DenyEveryoneDelete"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "policy_restricts_to_vpc_endpoint": false,
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "scan_frequency": "SCAN_ON_PUSH",
+                            "scan_on_push": true,
+                            "scanning_configured": true,
+                            "tags": [
+                                {
+                                    "Key": "Owner",
+                                    "Value": "platform"
+                                }
+                            ],
+                            "uri": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/public-mirror"
+                        },
+                        "scoutid-c7ce0a09e3ec1a161894d47612c435865c4512e9": {
+                            "applied_scan_filters": [
+                                {
+                                    "filter": "*",
+                                    "filterType": "WILDCARD"
+                                }
+                            ],
+                            "arn": "arn:aws:ecr:eu-west-1:123456789012:repository/well-protected",
+                            "created_at": "2023-06-14 09:21:37",
+                            "encrypted_with_kms_key": true,
+                            "encryption_type": "KMS",
+                            "id": "scoutid-c7ce0a09e3ec1a161894d47612c435865c4512e9",
+                            "image_tag_mutability": "IMMUTABLE",
+                            "image_tag_mutability_exclusion_filters": null,
+                            "image_tags_immutable": true,
+                            "kms_key": "arn:aws:kms:eu-west-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+                            "lifecycle_policy": {
+                                "rules": [
+                                    {
+                                        "action": {
+                                            "type": "expire"
+                                        },
+                                        "description": "Expire untagged images older than 30 days",
+                                        "rulePriority": 1,
+                                        "selection": {
+                                            "countNumber": 30,
+                                            "countType": "sinceImagePushed",
+                                            "countUnit": "days",
+                                            "tagStatus": "untagged"
+                                        }
+                                    }
+                                ]
+                            },
+                            "lifecycle_policy_configured": true,
+                            "name": "well-protected",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": [
+                                            "ecr:BatchGetImage",
+                                            "ecr:GetDownloadUrlForLayer"
+                                        ],
+                                        "Effect": "Allow",
+                                        "Principal": {
+                                            "AWS": "arn:aws:iam::123456789012:root"
+                                        },
+                                        "Sid": "AllowSameAccountPull"
+                                    },
+                                    {
+                                        "Action": "ecr:*",
+                                        "Condition": {
+                                            "StringNotEquals": {
+                                                "aws:sourceVpce": "vpce-0123456789abcdef0"
+                                            }
+                                        },
+                                        "Effect": "Deny",
+                                        "Principal": {
+                                            "AWS": "*"
+                                        },
+                                        "Sid": "DenyOutsideVpcEndpoint"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "policy_restricts_to_vpc_endpoint": true,
+                            "region": "eu-west-1",
+                            "registry_id": "123456789012",
+                            "scan_frequency": "CONTINUOUS_SCAN",
+                            "scan_on_push": true,
+                            "scanning_configured": true,
+                            "tags": [
+                                {
+                                    "Key": "Owner",
+                                    "Value": "platform"
+                                }
+                            ],
+                            "uri": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/well-protected"
+                        }
+                    },
+                    "repositories_count": 4
+                },
+                "us-east-1": {
+                    "id": "us-east-1",
+                    "images": {
+                        "scoutid-1a4c0289fb6b35e2ec8cfc92627906b130c02b33": {
+                            "artifact_media_type": "application/vnd.docker.container.image.v1+json",
+                            "critical_severity_count": 0,
+                            "finding_severity_counts": {
+                                "HIGH": 1,
+                                "MEDIUM": 2
+                            },
+                            "high_severity_count": 1,
+                            "id": "scoutid-1a4c0289fb6b35e2ec8cfc92627906b130c02b33",
+                            "image_digest": "sha256:dddd1111eeee2222ffff3333aaaa4444bbbb5555cccc6666dddd7777eeee8888",
+                            "image_size_in_bytes": 74053120,
+                            "image_tags": [
+                                "release-2024.11"
+                            ],
+                            "informational_severity_count": 0,
+                            "low_severity_count": 0,
+                            "medium_severity_count": 2,
+                            "name": "mirror-legacy:release-2024.11",
+                            "pushed_at": "2024-11-05 17:42:11",
+                            "region": "us-east-1",
+                            "registry_id": "123456789012",
+                            "repository_name": "mirror-legacy",
+                            "scan_completed_at": "2024-11-05 17:44:02",
+                            "scan_status": "COMPLETE",
+                            "scan_status_description": "The scan was completed successfully.",
+                            "scanned": true,
+                            "undefined_severity_count": 0
+                        }
+                    },
+                    "images_count": 1,
+                    "name": "us-east-1",
+                    "region": "us-east-1",
+                    "registry_settings": {
+                        "0": {
+                            "cross_account_replication_destinations": [
+                                {
+                                    "region": "eu-central-1",
+                                    "registryId": "210987654321"
+                                }
+                            ],
+                            "id": "123456789012",
+                            "name": "us-east-1",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": [
+                                            "ecr:CreateRepository",
+                                            "ecr:ReplicateImage"
+                                        ],
+                                        "Effect": "Allow",
+                                        "Principal": "*",
+                                        "Resource": "arn:aws:ecr:us-east-1:123456789012:repository/*",
+                                        "Sid": "AllowEveryoneToReplicate"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "pull_through_cache_rules": [
+                                {
+                                    "credentialArn": "arn:aws:secretsmanager:us-east-1:123456789012:secret:ecr-pullthroughcache/docker-hub-AbCdEf",
+                                    "ecrRepositoryPrefix": "docker-hub",
+                                    "registryId": "123456789012",
+                                    "upstreamRegistry": "docker-hub",
+                                    "upstreamRegistryUrl": "registry-1.docker.io"
+                                }
+                            ],
+                            "pull_through_cache_rules_count": 1,
+                            "region": "us-east-1",
+                            "replication_destinations": [
+                                {
+                                    "region": "eu-central-1",
+                                    "registryId": "210987654321"
+                                }
+                            ],
+                            "replication_rules": [
+                                {
+                                    "destinations": [
+                                        {
+                                            "region": "eu-central-1",
+                                            "registryId": "210987654321"
+                                        }
+                                    ],
+                                    "repositoryFilters": [
+                                        {
+                                            "filter": "mirror-",
+                                            "filterType": "PREFIX_MATCH"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "replication_rules_count": 1,
+                            "scan_type": "BASIC",
+                            "scanning_rules": [
+                                {
+                                    "repositoryFilters": [
+                                        {
+                                            "filter": "prod-",
+                                            "filterType": "WILDCARD"
+                                        }
+                                    ],
+                                    "scanFrequency": "SCAN_ON_PUSH"
+                                }
+                            ]
+                        }
+                    },
+                    "registry_settings_count": 1,
+                    "repositories": {
+                        "scoutid-7ff6c993f59516a769bc1a51b7354c9c6451277d": {
+                            "applied_scan_filters": null,
+                            "arn": "arn:aws:ecr:us-east-1:123456789012:repository/mirror-legacy",
+                            "created_at": "2023-06-14 09:21:37",
+                            "encrypted_with_kms_key": false,
+                            "encryption_type": "AES256",
+                            "id": "scoutid-7ff6c993f59516a769bc1a51b7354c9c6451277d",
+                            "image_tag_mutability": "MUTABLE_WITH_EXCLUSION",
+                            "image_tag_mutability_exclusion_filters": [
+                                {
+                                    "filter": "release-*",
+                                    "filterType": "WILDCARD"
+                                }
+                            ],
+                            "image_tags_immutable": false,
+                            "kms_key": null,
+                            "lifecycle_policy": {
+                                "rules": [
+                                    {
+                                        "action": {
+                                            "type": "expire"
+                                        },
+                                        "description": "Expire untagged images older than 30 days",
+                                        "rulePriority": 1,
+                                        "selection": {
+                                            "countNumber": 30,
+                                            "countType": "sinceImagePushed",
+                                            "countUnit": "days",
+                                            "tagStatus": "untagged"
+                                        }
+                                    }
+                                ]
+                            },
+                            "lifecycle_policy_configured": true,
+                            "name": "mirror-legacy",
+                            "policy_restricts_to_vpc_endpoint": false,
+                            "region": "us-east-1",
+                            "registry_id": "123456789012",
+                            "scan_frequency": null,
+                            "scan_on_push": true,
+                            "scanning_configured": true,
+                            "tags": [
+                                {
+                                    "Key": "Owner",
+                                    "Value": "platform"
+                                }
+                            ],
+                            "uri": "123456789012.dkr.ecr.us-east-1.amazonaws.com/mirror-legacy"
+                        }
+                    },
+                    "repositories_count": 1
+                }
+            },
+            "regions_count": 3,
+            "registry_settings_count": 3,
+            "repositories_count": 5
+        }
+    }
+}

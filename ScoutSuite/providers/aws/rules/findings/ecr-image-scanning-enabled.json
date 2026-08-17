@@ -1,26 +1,10 @@
 {
-    "description": "ECR Image scanning enabled",
-    "rationale": "ECR image scanning helps identify vulnerabilities and threats in container images stored in ECR repositories.",
-    "remediation": "Enable image scanning on all ECR repositories by setting the image-scanning-configuration property to true.",
-    "compliance": [
-        {
-            "name": "CIS Amazon Web Services Foundations",
-            "version": "1.0.0",
-            "reference": "5.15"
-        },
-        {
-            "name": "CIS Amazon Web Services Foundations",
-            "version": "1.1.0",
-            "reference": "5.15"
-        },
-        {
-            "name": "CIS Amazon Web Services Foundations",
-            "version": "1.2.0",
-            "reference": "5.15"
-        }
-    ],
+    "description": "Repository Without Automatic Image Scanning",
+    "rationale": "A repository nobody scans accumulates images whose vulnerabilities are only discovered by whoever exploits them. Scanning is what turns the registry into an inventory of known exposure, and it has to happen without anyone asking for it: an image is pushed once and pulled for months afterwards, so a manual scan only describes the day it was run.",
+    "remediation": "Set the registry scanning configuration to scan the repository continuously, which hands it to Amazon Inspector, or failing that turn on scan on push for the repository",
     "references": [
-        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html"
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/ecr-controls.html#ecr-1"
     ],
     "dashboard_name": "Repositories",
     "display_path": "ecr.regions.id.repositories.id",
@@ -28,15 +12,10 @@
     "conditions": [
         "and",
         [
-            "ecr.regions.id.repositories.id.",
-            "withKey",
-            "scan_on_push"
-        ],
-        [
-            "ecr.regions.id.repositories.id.scan_on_push",
-            "equal",
-            false
+            "ecr.regions.id.repositories.id.scanning_configured",
+            "false",
+            ""
         ]
     ],
-    "id_suffix": "scanOnPush"
+    "id_suffix": "scan_frequency"
 }

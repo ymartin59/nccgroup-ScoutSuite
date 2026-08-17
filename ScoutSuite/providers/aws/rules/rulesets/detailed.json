@@ -475,6 +475,12 @@
                 "level": "warning"
             }
         ],
+        "ecr-image-scanning-enabled.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "elb-listener-allowing-cleartext.json": [
             {
                 "enabled": true,
