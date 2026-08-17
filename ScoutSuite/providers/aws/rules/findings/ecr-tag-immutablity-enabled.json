@@ -1,45 +1,21 @@
 {
-    
-    "description": "Repository tag immutability should be enabled for all ECR repositories",
-    "rationale": "Repository tag immutability should be enabled on all ECR repositories to help prevent accidental overwrites or deletions of container images.",
-    "remediation": "Enable repository tag immutability on all ECR repositories by setting the image-tag-mutability property to IMMUTABLE.",
-    "compliance": [
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.0.0",
-        "reference": "5.17"
-      },
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.1.0",
-        "reference": "5.17"
-      },
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.2.0",
-        "reference": "5.17"
-      }
-    ],
+    "description": "Repository With Mutable Image Tags",
+    "rationale": "A mutable tag is a moving target: the digest behind version 1.4.2 today need not be the one deployed under that name yesterday, so a compromised or merely careless push replaces the image every task definition and every manifest referring to that tag will pull next, with nothing in the reference showing it changed. Immutable tags make the tag as good an identifier as the digest, which is what makes an audit of what runs in production meaningful.",
+    "remediation": "Set the repository image tag mutability to IMMUTABLE, without exclusion filters, unless it is the destination of a pull through cache rule",
     "references": [
-      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-tag-mutability.html"
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-tag-mutability.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/ecr-controls.html#ecr-2"
     ],
-      "dashboard_name": "Repositories",
-      "display_path": "ecr.regions.id.repositories.id",
-      "path": "ecr.regions.id.repositories.id",
-      "conditions": [
-          "and",
-          [
-              "ecr.regions.id.repositories.id.",
-              "withKey",
-              "image_tag_mutability"
-          ],
-          [
-              "ecr.regions.id.repositories.id.image_tag_mutability",
-              "equal",
-              "MUTABLE"
-              
-          ]
-      ],
-      "id_suffix": "image_tag_mutability"
-  }
-  
+    "dashboard_name": "Repositories",
+    "display_path": "ecr.regions.id.repositories.id",
+    "path": "ecr.regions.id.repositories.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories.id.image_tags_immutable",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "image_tag_mutability"
+}

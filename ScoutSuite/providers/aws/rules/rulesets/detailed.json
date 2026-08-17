@@ -481,6 +481,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-tag-immutablity-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "elb-listener-allowing-cleartext.json": [
             {
                 "enabled": true,
