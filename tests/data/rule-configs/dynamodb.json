@@ -2,8 +2,44 @@
     "account_id": "123456789012",
     "services": {
         "dynamodb": {
+            "dax_clusters_count": 3,
             "regions": {
                 "eu-west-1": {
+                    "dax_clusters": {
+                        "analytics-cache": {
+                            "arn": "arn:aws:dax:eu-west-1:123456789012:cache/analytics-cache",
+                            "cluster_discovery_endpoint": {
+                                "Address": "analytics-cache.abcdef.dax-clusters.eu-west-1.amazonaws.com",
+                                "Port": 8111
+                            },
+                            "encryption_in_transit_enabled": false,
+                            "endpoint_encryption_type": "NONE",
+                            "id": "analytics-cache",
+                            "name": "analytics-cache",
+                            "node_type": "dax.r4.large",
+                            "sse_enabled": false,
+                            "sse_status": null,
+                            "status": "available",
+                            "total_nodes": 3
+                        },
+                        "orders-cache": {
+                            "arn": "arn:aws:dax:eu-west-1:123456789012:cache/orders-cache",
+                            "cluster_discovery_endpoint": {
+                                "Address": "orders-cache.abcdef.dax-clusters.eu-west-1.amazonaws.com",
+                                "Port": 8111
+                            },
+                            "encryption_in_transit_enabled": true,
+                            "endpoint_encryption_type": "TLS",
+                            "id": "orders-cache",
+                            "name": "orders-cache",
+                            "node_type": "dax.r4.large",
+                            "sse_enabled": true,
+                            "sse_status": "ENABLED",
+                            "status": "available",
+                            "total_nodes": 3
+                        }
+                    },
+                    "dax_clusters_count": 2,
                     "region": "eu-west-1",
                     "tables": {
                         "11111111-1111-1111-1111-111111111111": {
@@ -177,6 +213,25 @@
                     "tables_count": 6
                 },
                 "us-east-1": {
+                    "dax_clusters": {
+                        "legacy-cache": {
+                            "arn": "arn:aws:dax:us-east-1:123456789012:cache/legacy-cache",
+                            "cluster_discovery_endpoint": {
+                                "Address": "legacy-cache.abcdef.dax-clusters.us-east-1.amazonaws.com",
+                                "Port": 8111
+                            },
+                            "encryption_in_transit_enabled": false,
+                            "endpoint_encryption_type": null,
+                            "id": "legacy-cache",
+                            "name": "legacy-cache",
+                            "node_type": "dax.r4.large",
+                            "sse_enabled": false,
+                            "sse_status": null,
+                            "status": "available",
+                            "total_nodes": 3
+                        }
+                    },
+                    "dax_clusters_count": 1,
                     "region": "us-east-1",
                     "tables": {
                         "44444444-4444-4444-4444-444444444444": {
@@ -221,6 +276,8 @@
                     "tables_count": 2
                 },
                 "us-west-2": {
+                    "dax_clusters": {},
+                    "dax_clusters_count": 0,
                     "region": "us-west-2",
                     "tables": {},
                     "tables_count": 0

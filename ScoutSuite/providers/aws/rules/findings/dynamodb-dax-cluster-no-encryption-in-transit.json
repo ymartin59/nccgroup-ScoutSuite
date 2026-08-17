@@ -1,0 +1,21 @@
+{
+    "description": "DAX Cluster Not Encrypting Traffic in Transit",
+    "rationale": "A DAX cluster terminates client connections itself instead of forwarding them to the DynamoDB endpoint, so its endpoint encryption setting, not DynamoDB's, decides whether table items travel in cleartext. A cluster created with an unencrypted endpoint carries cached items and query results in the clear across the VPC, where anyone able to observe the traffic or reach the cluster's port can read them, which undoes the protection the table's KMS key provides at rest. The setting is fixed when the cluster is created and cannot be changed afterwards.",
+    "remediation": "Recreate the cluster with an endpoint encryption type of TLS, then repoint the clients to the new cluster and delete the unencrypted one",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAXEncryptionInTransit.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAXEncryptionAtRest.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "dynamodb.regions.id.dax_clusters.id",
+    "path": "dynamodb.regions.id.dax_clusters.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.dax_clusters.id.encryption_in_transit_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_in_transit_enabled"
+}

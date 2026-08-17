@@ -1,0 +1,4 @@
+[
+    "dynamodb.regions.eu-west-1.dax_clusters.analytics-cache.encryption_in_transit_enabled",
+    "dynamodb.regions.us-east-1.dax_clusters.legacy-cache.encryption_in_transit_enabled"
+]

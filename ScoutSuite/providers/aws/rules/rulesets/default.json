@@ -106,6 +106,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-dax-cluster-no-encryption-in-transit.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "dynamodb-table-deletion-protection-disabled.json": [
             {
                 "enabled": false,
