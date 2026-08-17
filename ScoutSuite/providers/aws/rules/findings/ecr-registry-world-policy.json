@@ -1,0 +1,43 @@
+{
+    "description": "Registry Authorized to All Principals",
+    "rationale": "A registry policy grants actions over the registry as a whole rather than over one repository, and the actions it exists to grant are the far-reaching ones: replicating images into it, creating repositories in it, and pulling through its cache. Allowing any of them to all principals lets any AWS account write into the registry, which is how an image nobody in the account ever built ends up being deployed from it. AWS documents naming only the actions the feature in use requires, precisely because the wildcard is so much wider than the need.",
+    "remediation": "Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\":\"*\"} in the affected registry policy, and replace it with the accounts that need to replicate into the registry",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-permissions.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "ecr.regions.id.registry_settings.id",
+    "path": "ecr.regions.id.registry_settings.id.policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.registry_settings.id.",
+            "withKey",
+            "policy"
+        ],
+        [
+            "ecr.regions.id.registry_settings.id.policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "ecr.regions.id.registry_settings.id.policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "ecr.regions.id.registry_settings.id.policy.Statement.id"
+            ]
+        ]
+    ]
+}
