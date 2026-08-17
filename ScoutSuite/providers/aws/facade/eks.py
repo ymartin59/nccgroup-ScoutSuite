@@ -1,3 +1,4 @@
+from asyncio import Lock
 from typing import Dict, List
 
 from ScoutSuite.core.console import print_exception
@@ -7,6 +8,8 @@ from ScoutSuite.providers.utils import run_concurrently, map_concurrently
 
 
 class EKSFacade(AWSBaseFacade):
+    iam_oidc_providers_cache_locks = {}
+    iam_oidc_providers_cache = {}
 
     async def get_cluster_names(self, region: str) -> List[str]:
         try:
@@ -45,6 +48,37 @@ class EKSFacade(AWSBaseFacade):
             self._get_nodegroup, nodegroup_names, region=region, cluster_name=cluster_name)
 
         return [nodegroup for nodegroup in nodegroups if nodegroup]
+
+    async def get_pod_identity_associations(self, region: str, cluster_name: str) -> List[Dict]:
+        try:
+            return await AWSFacadeUtils.get_all_pages(
+                'eks', region, self.session, 'list_pod_identity_associations', 'associations',
+                clusterName=cluster_name)
+        except Exception as e:
+            print_exception(f'Failed to list EKS pod identity associations of cluster {cluster_name}: {e}')
+            return []
+
+    async def get_iam_oidc_provider_urls(self) -> List[str]:
+        """List the URLs registered as OpenID Connect providers in IAM, which is what makes the OIDC
+        issuer of a cluster usable by IAM roles for service accounts. IAM being global, the answer is
+        the same for every region."""
+
+        # The lock is only created here, as an asyncio lock binds to the running loop
+        async with self.iam_oidc_providers_cache_locks.setdefault('urls', Lock()):
+            if 'urls' not in self.iam_oidc_providers_cache:
+                iam_client = AWSFacadeUtils.get_client('iam', self.session)
+                try:
+                    providers = await run_concurrently(
+                        lambda: iam_client.list_open_id_connect_providers()['OpenIDConnectProviderList'])
+                except Exception as e:
+                    print_exception(f'Failed to list IAM OpenID Connect providers: {e}')
+                    providers = []
+
+                # The URL of a provider is the part of its ARN that follows oidc-provider/
+                self.iam_oidc_providers_cache['urls'] = [
+                    provider['Arn'].split('oidc-provider/', 1)[-1] for provider in providers]
+
+        return self.iam_oidc_providers_cache['urls']
 
     async def _get_cluster(self, cluster_name: str, region: str) -> Dict:
         eks_client = AWSFacadeUtils.get_client('eks', self.session, region)

@@ -520,6 +520,12 @@
                 "level" : "warning"
             }
         ],
+        "eks-cluster-no-service-account-iam-roles.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-public-endpoint-unrestricted.json": [
             {
                 "enabled": true,

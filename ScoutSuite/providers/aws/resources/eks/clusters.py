@@ -13,8 +13,13 @@ class Clusters(AWSResources):
 
     async def fetch_all(self):
         raw_clusters = await self.facade.eks.get_clusters(self.region)
+        if not raw_clusters:
+            return
+
+        oidc_provider_urls = await self.facade.eks.get_iam_oidc_provider_urls()
         for raw_cluster in raw_clusters:
             name, resource = self._parse_cluster(raw_cluster)
+            await self._parse_service_account_iam_roles(raw_cluster['cluster'], resource, oidc_provider_urls)
             self[name] = resource
 
     def _parse_cluster(self, raw_cluster):
@@ -39,6 +44,18 @@ class Clusters(AWSResources):
         self._parse_encryption(raw_cluster['cluster'], cluster)
 
         return get_non_provider_id(cluster['name']), cluster
+
+    async def _parse_service_account_iam_roles(self, raw_cluster, cluster, oidc_provider_urls):
+        # Every cluster is handed an OIDC issuer URL, but IAM roles for service accounts only work
+        # once that URL is registered as an IAM identity provider of the account. EKS pod identity
+        # is the other way to give a pod its own role, and needs no identity provider at all.
+        issuer = raw_cluster.get('identity', {}).get('oidc', {}).get('issuer')
+        cluster['oidc_issuer'] = issuer
+        cluster['oidc_provider_registered'] = \
+            bool(issuer) and issuer.split('://', 1)[-1] in oidc_provider_urls
+
+        associations = await self.facade.eks.get_pod_identity_associations(self.region, cluster['name'])
+        cluster['pod_identity_associations_count'] = len(associations)
 
     @staticmethod
     def _parse_encryption(raw_cluster, cluster):

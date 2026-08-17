@@ -26,6 +26,9 @@
                                 "scheduler"
                             ],
                             "name": "production",
+                            "oidc_issuer": "https://oidc.eks.eu-west-1.amazonaws.com/id/90A8834DE76326869F3E703CD6151308",
+                            "oidc_provider_registered": true,
+                            "pod_identity_associations_count": 0,
                             "public_access_cidrs": [
                                 "0.0.0.0/0"
                             ],
@@ -60,6 +63,9 @@
                             ],
                             "logging_enabled_types": [],
                             "name": "legacy",
+                            "oidc_issuer": "https://oidc.eks.eu-west-1.amazonaws.com/id/9B33046ED39D182E3ADAFA9045AD6787",
+                            "oidc_provider_registered": false,
+                            "pod_identity_associations_count": 0,
                             "public_access_cidrs": [
                                 "0.0.0.0/0"
                             ],
@@ -95,6 +101,9 @@
                                 "authenticator"
                             ],
                             "name": "staging",
+                            "oidc_issuer": "https://oidc.eks.eu-west-1.amazonaws.com/id/D9390B2C40115621A794999E812ABC00",
+                            "oidc_provider_registered": false,
+                            "pod_identity_associations_count": 4,
                             "public_access_cidrs": [
                                 "203.0.113.0/24"
                             ],
