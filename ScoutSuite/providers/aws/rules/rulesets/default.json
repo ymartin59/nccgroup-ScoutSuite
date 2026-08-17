@@ -490,6 +490,12 @@
                 "level": "warning"
             }
         ],
+        "eks-cluster-endpoint-publicly-accessible.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-logging-enabled.json": [
             {
                 "enabled" : true,

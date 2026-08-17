@@ -1,0 +1,28 @@
+{
+    "description": "Cluster Endpoint Publicly Accessible",
+    "rationale": "A cluster with public endpoint access publishes its Kubernetes API server on an internet-resolvable name, so anything that reaches the internet can attempt to authenticate against the control plane. What stands between that endpoint and the cluster is only the strength of its authentication and authorization: a leaked kubeconfig, an IAM principal mapped more widely than intended, or an authentication bypass in the API server is exploitable from anywhere rather than from inside the VPC. Nodes and administrators reach the control plane over private addressing once private access is enabled, which leaves no reason to keep the public endpoint on.",
+    "remediation": "Disable public endpoint access on the cluster, and reach the API server through the VPC, a bastion or a VPN once private access is enabled",
+    "compliance": [
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "5.4.2"
+        }
+    ],
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.endpointPublicAccess",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "endpointPublicAccess"
+}
