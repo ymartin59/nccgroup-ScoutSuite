@@ -442,6 +442,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-repository-no-lifecycle-policy.json": [
+            {
+                "enabled": false,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-logging-enabled.json": [
             {
                 "enabled" : true,

@@ -481,6 +481,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-repository-no-lifecycle-policy.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ecr-tag-immutablity-enabled.json": [
             {
                 "enabled": true,

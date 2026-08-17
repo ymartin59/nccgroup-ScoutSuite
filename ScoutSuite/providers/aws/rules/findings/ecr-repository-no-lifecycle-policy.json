@@ -1,0 +1,21 @@
+{
+    "description": "Repository Without Lifecycle Policy",
+    "rationale": "Nothing removes an image from a repository on its own, so every build ever pushed stays pullable, including the ones whose vulnerabilities were the reason for the next build. An untagged or long superseded image is still a valid target for a deployment referring to it by digest or by a tag that was never cleaned up, and the older it is the less likely anyone is watching its scan findings. A lifecycle policy bounds what the repository keeps, and thereby what can still be deployed from it.",
+    "remediation": "Add a lifecycle policy to the repository expiring untagged images and bounding how many versions of each tag are kept",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/ecr-controls.html#ecr-3"
+    ],
+    "dashboard_name": "Repositories",
+    "display_path": "ecr.regions.id.repositories.id",
+    "path": "ecr.regions.id.repositories.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories.id.lifecycle_policy_configured",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "lifecycle_policy_configured"
+}
