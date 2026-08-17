@@ -1,45 +1,27 @@
 {
-    
-    "description": "Cluster logging should be enabled for all EKS clusters",
-    "rationale": "Enabling cluster logging provides operational visibility and assists in debugging issues that occur in the Kubernetes clusters running on EKS.",
-    "remediation": "Enable cluster logging on all EKS clusters by creating and configuring a logging backend such as Amazon CloudWatch Logs or Amazon Elasticsearch Service.",
+    "description": "Cluster Logging Disabled",
+    "rationale": "The EKS control plane is managed by AWS, so its components leave no trace on any instance the account can reach: the only record of who called the Kubernetes API, and of what the authenticator, scheduler and controller manager did, is what the cluster is configured to send to CloudWatch Logs. None of it is emitted by default. A cluster with logging off cannot be investigated after the fact, and the gap cannot be filled retroactively because the events were never recorded anywhere.",
+    "remediation": "Enable the control plane log types on the cluster, and set a retention period on the resulting /aws/eks/<cluster>/cluster log group",
     "compliance": [
-    {
-    "name": "CIS Amazon Web Services Foundations",
-    "version": "1.0.0",
-    "reference": "5.4"
-    },
-    {
-    "name": "CIS Amazon Web Services Foundations",
-    "version": "1.1.0",
-    "reference": "5.4"
-    },
-    {
-    "name": "CIS Amazon Web Services Foundations",
-    "version": "1.2.0",
-    "reference": "5.4"
-    }
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "2.1.1"
+        }
     ],
     "references": [
-    "https://docs.aws.amazon.com/eks/latest/userguide/logging.html"
+        "https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html"
     ],
-      "dashboard_name": "Clusters",
-      "display_path": "eks.regions.id.clusters.id",
-      "path": "eks.regions.id.clusters.id",
-      "conditions": [
-          "and",
-          [
-              "eks.regions.id.clusters.id.",
-              "withKey",
-              "logging"
-          ],
-          [
-              "eks.regions.id.clusters.id.logging",  
-              "equal",
-              "False"
-              
-          ]
-      ],
-      "id_suffix": "logging"
-  }
-  
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.logging",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "logging"
+}

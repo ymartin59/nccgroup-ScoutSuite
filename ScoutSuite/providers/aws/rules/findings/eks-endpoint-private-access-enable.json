@@ -1,44 +1,27 @@
 {
-    "description": "EKS endpoint private access should be enabled",
-    "rationale": "Endpoint private access should be enabled to restrict access to the Kubernetes API server and prevent unauthorized access from external resources.",
-    "remediation": "Enable endpoint private access for the EKS cluster by setting the `endpointPrivateAccess` configuration property to `true`.",
+    "description": "Cluster Endpoint Private Access Disabled",
+    "rationale": "With private access disabled, every call to the Kubernetes API server leaves the VPC and comes back in through the public endpoint, including the calls made by the nodes themselves. Reaching the control plane then depends on the cluster having internet egress, and the API server can only be protected by the CIDR allow list of its public endpoint rather than by VPC routing. Enabling private access publishes the endpoint inside the VPC so that nodes and administrators can reach it over private addressing, which is the prerequisite for turning public access off.",
+    "remediation": "Enable endpoint private access on the cluster, then restrict or disable public access once administrators reach the API server through the VPC",
     "compliance": [
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.0.0",
-        "reference": "5.2"
-      },
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.1.0",
-        "reference": "5.2"
-      },
-      {
-        "name": "CIS Amazon Web Services Foundations",
-        "version": "1.2.0",
-        "reference": "5.2"
-      }
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "5.4.2"
+        }
     ],
     "references": [
-      "https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html#private-access"
+        "https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html#private-access"
     ],
-      "dashboard_name": "Clusters",
-      "display_path": "eks.regions.id.clusters.id",
-      "path": "eks.regions.id.clusters.id",
-      "conditions": [
-          "and",
-          [
-              "eks.regions.id.clusters.id.",
-              "withKey",
-              "endpointPrivateAccess"
-          ],
-          [
-              "eks.regions.id.clusters.id.endpointPrivateAccess",
-              "equal",
-              "False"
-              
-          ]
-      ],
-      "id_suffix": "endpointPrivateAccess"
-  }
-  
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.endpointPrivateAccess",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "endpointPrivateAccess"
+}

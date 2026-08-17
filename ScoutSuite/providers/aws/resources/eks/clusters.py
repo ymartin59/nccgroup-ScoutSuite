@@ -2,6 +2,10 @@ from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.base import AWSResources
 from ScoutSuite.providers.utils import get_non_provider_id
 
+# The control plane log types a cluster may emit, none of which is on by default
+LOGGING_TYPES = ['api', 'audit', 'authenticator', 'controllerManager', 'scheduler']
+
+
 class Clusters(AWSResources):
     def __init__(self, facade: AWSFacade, region: str):
         super().__init__(facade)
@@ -26,14 +30,25 @@ class Clusters(AWSResources):
         cluster['endpointPrivateAccess'] = raw_cluster['cluster']['resourcesVpcConfig']['endpointPrivateAccess']
         cluster['cluster_sg_group'] = raw_cluster['cluster']['resourcesVpcConfig']['clusterSecurityGroupId']
         cluster['cluster_vpc'] = raw_cluster['cluster']['resourcesVpcConfig']['vpcId']
-        cluster['logging'] = raw_cluster['cluster']['logging']['clusterLogging'][0]['enabled']
         cluster['region'] = self.region
 
-        #extracting each logging type
-        logging_types = raw_cluster['cluster']['logging']['clusterLogging']
-        for log_type in logging_types:
-            type_name = log_type['types'][0]
-            type_enabled = log_type['enabled']
-            cluster[f'type_logging_{type_name}'] = type_enabled
-        
+        self._parse_logging(raw_cluster['cluster'], cluster)
+
         return get_non_provider_id(cluster['name']), cluster
+
+    @staticmethod
+    def _parse_logging(raw_cluster, cluster):
+        # describe_cluster groups the log types by whether they are enabled, so an entry of
+        # clusterLogging carries a list of types and the single flag that applies to all of them.
+        # Reading one entry, or one type per entry, therefore misses most of the configuration.
+        enabled_types = []
+        for log_setup in raw_cluster.get('logging', {}).get('clusterLogging', []):
+            if log_setup.get('enabled'):
+                enabled_types += log_setup.get('types', [])
+
+        cluster['logging_enabled_types'] = enabled_types
+        cluster['logging_disabled_types'] = [t for t in LOGGING_TYPES if t not in enabled_types]
+        # Whether the cluster sends anything at all to CloudWatch Logs
+        cluster['logging'] = bool(enabled_types)
+        for log_type in LOGGING_TYPES:
+            cluster[f'type_logging_{log_type}'] = log_type in enabled_types

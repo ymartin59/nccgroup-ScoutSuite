@@ -529,6 +529,18 @@
                 "level": "warning"
             }
         ],
+        "eks-cluster-logging-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "eks-endpoint-private-access-enable.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "elb-listener-allowing-cleartext.json": [
             {
                 "enabled": true,

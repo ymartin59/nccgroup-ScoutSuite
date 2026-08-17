@@ -1,0 +1,179 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "eks": {
+            "clusters_count": 3,
+            "nodegroups_count": 3,
+            "regions": {
+                "eu-west-1": {
+                    "clusters": {
+                        "scoutid-90a8834de76326869f3e703cd61513081ad73d3c": {
+                            "arn": "arn:aws:eks:eu-west-1:123456789012:cluster/production",
+                            "cluster_sg_group": "sg-0a1b2c3d4e5f60718",
+                            "cluster_vpc": "vpc-0123456789abcdef0",
+                            "created_at": "2023-09-04 11:02:47",
+                            "endpoint": "https://90A8834DE76326869F3E703CD6151308.gr7.eu-west-1.eks.amazonaws.com",
+                            "endpointPrivateAccess": true,
+                            "endpointPublicAccess": false,
+                            "id": "scoutid-90a8834de76326869f3e703cd61513081ad73d3c",
+                            "logging": true,
+                            "logging_disabled_types": [],
+                            "logging_enabled_types": [
+                                "api",
+                                "audit",
+                                "authenticator",
+                                "controllerManager",
+                                "scheduler"
+                            ],
+                            "name": "production",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/eks-cluster-production",
+                            "status": "ACTIVE",
+                            "type_logging_api": true,
+                            "type_logging_audit": true,
+                            "type_logging_authenticator": true,
+                            "type_logging_controllerManager": true,
+                            "type_logging_scheduler": true,
+                            "version": "1.28"
+                        },
+                        "scoutid-9b33046ed39d182e3adafa9045ad6787d4bbc321": {
+                            "arn": "arn:aws:eks:eu-west-1:123456789012:cluster/legacy",
+                            "cluster_sg_group": "sg-0a1b2c3d4e5f60718",
+                            "cluster_vpc": "vpc-0123456789abcdef0",
+                            "created_at": "2021-08-19 15:33:12",
+                            "endpoint": "https://9B33046ED39D182E3ADAFA9045AD6787.gr7.eu-west-1.eks.amazonaws.com",
+                            "endpointPrivateAccess": false,
+                            "endpointPublicAccess": true,
+                            "id": "scoutid-9b33046ed39d182e3adafa9045ad6787d4bbc321",
+                            "logging": false,
+                            "logging_disabled_types": [
+                                "api",
+                                "audit",
+                                "authenticator",
+                                "controllerManager",
+                                "scheduler"
+                            ],
+                            "logging_enabled_types": [],
+                            "name": "legacy",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/eks-cluster-legacy",
+                            "status": "ACTIVE",
+                            "type_logging_api": false,
+                            "type_logging_audit": false,
+                            "type_logging_authenticator": false,
+                            "type_logging_controllerManager": false,
+                            "type_logging_scheduler": false,
+                            "version": "1.21"
+                        },
+                        "scoutid-d9390b2c40115621a794999e812abc00bf9e5c7b": {
+                            "arn": "arn:aws:eks:eu-west-1:123456789012:cluster/staging",
+                            "cluster_sg_group": "sg-0a1b2c3d4e5f60718",
+                            "cluster_vpc": "vpc-0123456789abcdef0",
+                            "created_at": "2023-06-27 08:14:05",
+                            "endpoint": "https://D9390B2C40115621A794999E812ABC00.gr7.eu-west-1.eks.amazonaws.com",
+                            "endpointPrivateAccess": true,
+                            "endpointPublicAccess": true,
+                            "id": "scoutid-d9390b2c40115621a794999e812abc00bf9e5c7b",
+                            "logging": true,
+                            "logging_disabled_types": [
+                                "audit",
+                                "controllerManager",
+                                "scheduler"
+                            ],
+                            "logging_enabled_types": [
+                                "api",
+                                "authenticator"
+                            ],
+                            "name": "staging",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/eks-cluster-staging",
+                            "status": "ACTIVE",
+                            "type_logging_api": true,
+                            "type_logging_audit": false,
+                            "type_logging_authenticator": true,
+                            "type_logging_controllerManager": false,
+                            "type_logging_scheduler": false,
+                            "version": "1.27"
+                        }
+                    },
+                    "clusters_count": 3,
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "nodegroups": {
+                        "scoutid-4316e5c364da69e3df675dfd8256468c534d8476": {
+                            "MaxSize": 6,
+                            "MinSize": 2,
+                            "Node_sg": null,
+                            "Nodegroup_version": "1.28",
+                            "amiType": "AL2023_x86_64_STANDARD",
+                            "capacityType": "ON_DEMAND",
+                            "clusterName": "production",
+                            "created_at": "2023-09-04 11:19:33",
+                            "desiredSize": 3,
+                            "diskSize": 50,
+                            "id": "scoutid-4316e5c364da69e3df675dfd8256468c534d8476",
+                            "instanceTypes": "m6i.large",
+                            "modified_at": "2023-09-04 11:19:33",
+                            "name": "managed-nodes",
+                            "nodeRole": "arn:aws:iam::123456789012:role/eks-node-production",
+                            "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/production/managed-nodes/e40cf894",
+                            "region": "eu-west-1",
+                            "status": "ACTIVE"
+                        },
+                        "scoutid-a05052c4e459bffcaeb514af6a080b8ad9c68d98": {
+                            "MaxSize": 6,
+                            "MinSize": 2,
+                            "Node_sg": null,
+                            "Nodegroup_version": "1.20",
+                            "amiType": "CUSTOM",
+                            "capacityType": "ON_DEMAND",
+                            "clusterName": "legacy",
+                            "created_at": "2021-08-19 15:51:08",
+                            "desiredSize": 3,
+                            "diskSize": 50,
+                            "id": "scoutid-a05052c4e459bffcaeb514af6a080b8ad9c68d98",
+                            "instanceTypes": "m5.large",
+                            "modified_at": "2021-08-19 15:51:08",
+                            "name": "legacy-nodes",
+                            "nodeRole": "arn:aws:iam::123456789012:role/eks-node-legacy",
+                            "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/legacy/legacy-nodes/0328ca10",
+                            "region": "eu-west-1",
+                            "status": "ACTIVE"
+                        },
+                        "scoutid-d38906ce8b6e748b60a7b56ff6b8d63898b7ed9a": {
+                            "MaxSize": 6,
+                            "MinSize": 2,
+                            "Node_sg": null,
+                            "Nodegroup_version": "1.27",
+                            "amiType": "AL2_x86_64",
+                            "capacityType": "SPOT",
+                            "clusterName": "staging",
+                            "created_at": "2023-06-27 08:41:52",
+                            "desiredSize": 3,
+                            "diskSize": 50,
+                            "id": "scoutid-d38906ce8b6e748b60a7b56ff6b8d63898b7ed9a",
+                            "instanceTypes": "m6i.xlarge",
+                            "modified_at": "2023-06-27 08:41:52",
+                            "name": "spot-nodes",
+                            "nodeRole": "arn:aws:iam::123456789012:role/eks-node-staging",
+                            "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/staging/spot-nodes/f5b0d655",
+                            "region": "eu-west-1",
+                            "status": "ACTIVE"
+                        }
+                    },
+                    "nodegroups_count": 3,
+                    "region": "eu-west-1"
+                },
+                "us-east-1": {
+                    "clusters": {},
+                    "clusters_count": 0,
+                    "id": "us-east-1",
+                    "name": "us-east-1",
+                    "nodegroups": {},
+                    "nodegroups_count": 0,
+                    "region": "us-east-1"
+                }
+            }
+        }
+    }
+}
