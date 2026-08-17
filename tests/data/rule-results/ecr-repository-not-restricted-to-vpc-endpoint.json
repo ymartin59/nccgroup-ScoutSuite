@@ -1,0 +1,6 @@
+[
+    "ecr.regions.eu-west-1.repositories.scoutid-1b36daa343116af58aa93e0d485a8638b675ac16.policy_restricts_to_vpc_endpoint",
+    "ecr.regions.eu-west-1.repositories.scoutid-1810863c4300b60850d3c66ec73b40a9cfe4355d.policy_restricts_to_vpc_endpoint",
+    "ecr.regions.eu-west-1.repositories.scoutid-bfbe455f81f70c5fbd882a9392922b546c7183be.policy_restricts_to_vpc_endpoint",
+    "ecr.regions.us-east-1.repositories.scoutid-7ff6c993f59516a769bc1a51b7354c9c6451277d.policy_restricts_to_vpc_endpoint"
+]

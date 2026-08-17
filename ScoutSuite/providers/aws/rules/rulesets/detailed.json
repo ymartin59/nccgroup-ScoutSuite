@@ -499,6 +499,12 @@
                 "level": "warning"
             }
         ],
+        "ecr-repository-not-restricted-to-vpc-endpoint.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ecr-repository-world-policy.json": [
             {
                 "enabled": true,

@@ -1,0 +1,21 @@
+{
+    "description": "Repository Reachable from Outside a VPC Endpoint",
+    "rationale": "ECR has no network-level access control of its own: its endpoint is public and any principal holding valid credentials can pull from it, or push to it, from anywhere on the Internet, so a leaked deployment key is immediately usable from outside the account's network. Interface VPC endpoints only add a private route, they take nothing away from the public one. Combining them with a repository policy conditioned on aws:SourceVpce is the only way to require that requests arrive through the VPC, which is what makes stolen credentials alone insufficient to read the images or to replace them.",
+    "remediation": "Create interface VPC endpoints for ECR in the VPCs that use the repository, then add a statement to the repository policy denying every request whose aws:SourceVpce is not one of them",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html"
+    ],
+    "dashboard_name": "Repositories",
+    "display_path": "ecr.regions.id.repositories.id",
+    "path": "ecr.regions.id.repositories.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories.id.policy_restricts_to_vpc_endpoint",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "policy_restricts_to_vpc_endpoint"
+}
