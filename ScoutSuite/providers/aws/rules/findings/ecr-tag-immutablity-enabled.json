@@ -31,15 +31,15 @@
           [
               "ecr.regions.id.repositories.id.",
               "withKey",
-              "imageTagMutability"
+              "image_tag_mutability"
           ],
           [
-              "ecr.regions.id.repositories.id.imageTagMutability",
+              "ecr.regions.id.repositories.id.image_tag_mutability",
               "equal",
               "MUTABLE"
               
           ]
       ],
-      "id_suffix": "imageTagMutability"
+      "id_suffix": "image_tag_mutability"
   }
   

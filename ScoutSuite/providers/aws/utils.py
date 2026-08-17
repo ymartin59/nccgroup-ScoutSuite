@@ -4,6 +4,10 @@ from ScoutSuite.core.console import print_exception
 
 ec2_classic = "EC2-Classic"
 
+# Global condition keys that tie a request to a VPC endpoint, and therefore keep a resource off the
+# public path even though the service endpoint itself is reachable from the Internet
+VPC_ENDPOINT_CONDITION_KEYS = ['aws:sourcevpce', 'aws:sourcevpc', 'aws:vpcsourceip']
+
 
 def get_caller_identity(session):
     sts_client = session.client("sts")
@@ -130,6 +134,32 @@ def snake_keys(d):
             else:
                 new_table[new_key] = d[k]
     return new_table
+
+
+def policy_restricts_to_vpc_endpoint(policy):
+    """
+    Whether a resource-based policy confines access to a VPC endpoint, either by denying anything
+    coming from elsewhere or by only allowing what comes through the endpoint.
+
+    :param policy:                      Resource-based policy document, as a dictionary
+    :return:                            True when the policy closes the public path
+    """
+
+    for statement in policy.get('Statement', []):
+        condition = statement.get('Condition', {})
+        if not isinstance(condition, dict):
+            continue
+        for operator, condition_keys in condition.items():
+            if not isinstance(condition_keys, dict):
+                continue
+            for condition_key in condition_keys:
+                if condition_key.lower() in VPC_ENDPOINT_CONDITION_KEYS:
+                    # A Deny on requests not coming from the endpoint and an Allow limited to the
+                    # endpoint both close the public path, the negated operators distinguish them
+                    negated = 'Not' in operator
+                    if (statement.get('Effect') == 'Deny') == negated:
+                        return True
+    return False
 
 
 def format_arn(partition, service, region, account_id, resource_id, resource_type=None):

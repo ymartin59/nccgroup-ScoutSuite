@@ -4,17 +4,42 @@
       <h4 class="list-group-item-heading">{{name}}</h4>
     </div>
     <div class="list-group-item">
-      <h4>Information</h4>
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="ecr.regions.{{region}}.repositories.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">URI: <span id="ecr.regions.{{region}}.repositories.{{@key}}.uri"><samp>{{value_or_none uri}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Registry ID: <span id="ecr.regions.{{region}}.repositories.{{@key}}.registry_id"><samp>{{value_or_none registry_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="ecr.regions.{{region}}.repositories.{{@key}}.created_at"><samp>{{value_or_none created_at}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Image tag mutability: <span id="ecr.regions.{{region}}.repositories.{{@key}}.image_tag_mutability"><samp>{{value_or_none image_tag_mutability}}</samp></span></div>
+      {{#if image_tag_mutability_exclusion_filters}}
+      <div class="list-group-item-text item-margin">Image tag mutability exclusion filters:
+        <span id="ecr.regions.{{region}}.repositories.{{@key}}.image_tag_mutability_exclusion_filters">
+          {{#each image_tag_mutability_exclusion_filters}}<samp>{{filter}}</samp> {{/each}}
+        </span>
+      </div>
+      {{/if}}
+      <div class="list-group-item-text item-margin">Encryption type: <span id="ecr.regions.{{region}}.repositories.{{@key}}.encryption_type"><samp>{{value_or_none encryption_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">KMS key: <span id="ecr.regions.{{region}}.repositories.{{@key}}.kms_key"><samp>{{#if kms_key}}{{kms_key}}{{else}}S3 managed{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Scan on push: <span id="ecr.regions.{{region}}.repositories.{{@key}}.scan_on_push">{{convert_bool_to_enabled scan_on_push}}</span></div>
+      <div class="list-group-item-text item-margin">Scan frequency: <span id="ecr.regions.{{region}}.repositories.{{@key}}.scan_frequency"><samp>{{value_or_none scan_frequency}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Lifecycle policy: <span id="ecr.regions.{{region}}.repositories.{{@key}}.lifecycle_policy_configured">{{convert_bool_to_enabled lifecycle_policy_configured}}</span></div>
+      <div class="list-group-item-text item-margin">Restricted to a VPC endpoint: <span id="ecr.regions.{{region}}.repositories.{{@key}}.policy_restricts_to_vpc_endpoint">{{convert_bool_to_enabled policy_restricts_to_vpc_endpoint}}</span></div>
+    </div>
+    {{#if policy}}
+      {{> accordion_policy name = 'Repository Policy' document = policy policy_path = (concat 'ecr.regions' region 'repositories' @key 'policy')}}
+    {{/if}}
+    {{#if lifecycle_policy}}
+      {{> accordion_policy name = 'Lifecycle Policy' document = lifecycle_policy policy_path = (concat 'ecr.regions' region 'repositories' @key 'lifecycle_policy')}}
+    {{/if}}
+    {{#if tags}}
+    <div class="list-group-item">
+      <h4>Tags</h4>
       <ul>
-        <li class="list-group-item-text">Registry ID: {{id}}</li>
-        <li class="list-group-item-text">Created At: {{created_at}}</li>
-        <li class="list-group-item-text">Image Tag Immutablity status: {{imageTagMutability}}</li>
-        <li class="list-group-item-text">Scan on Push: {{Scan_on_Push}}</li>
-        <li class="list-group-item-text">Encryption Type: {{encryptionType}}</li>
-        <li class="list-group-item-text">Region: {{region}}</li>
-
+        {{#each tags}}
+        <li class="list-group-item-text"><samp>{{Key}}</samp>: <samp>{{Value}}</samp></li>
+        {{/each}}
       </ul>
     </div>
+    {{/if}}
   </script>
   <script>
     Handlebars.registerPartial("services.ecr.regions.id.repositories", $("#services\\.ecr\\.regions\\.id\\.repositories\\.partial").html());

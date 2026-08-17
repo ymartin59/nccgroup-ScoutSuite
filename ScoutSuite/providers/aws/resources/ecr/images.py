@@ -2,6 +2,8 @@ from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.base import AWSResources
 from ScoutSuite.providers.utils import get_non_provider_id
 
+SEVERITIES = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFORMATIONAL', 'UNDEFINED']
+
 
 class Images(AWSResources):
     def __init__(self, facade: AWSFacade, region: str):
@@ -9,33 +11,55 @@ class Images(AWSResources):
         self.region = region
 
     async def fetch_all(self):
-        raw_repos = await self.facade.ecr.get_repositories(self.region)
-        for raw_repo in raw_repos:
-            repository_name = raw_repo.get('repositoryName')
-            if repository_name:
-                images = await self.facade.ecr.get_images(self.region, repository_name)
-                for image in images:
-                    name, resource = self._parse_images(image)
-                    self[name] = resource
+        raw_repositories = await self.facade.ecr.get_repositories(self.region)
+        for raw_repository in raw_repositories:
+            repository_name = raw_repository.get('repositoryName')
+            if not repository_name:
+                continue
+            raw_images = await self.facade.ecr.get_images(self.region, repository_name)
+            for raw_image in raw_images:
+                name, resource = self._parse_image(raw_image)
+                self[name] = resource
 
-    def _parse_images(self, raw_repo):
+    def _parse_image(self, raw_image):
         image = {}
-        image['name'] = raw_repo['repositoryName']
-        image['registryId'] = raw_repo['registryId']
-        image['imageDigest'] = raw_repo['imageDigest']
-        
-        image_scan_status = raw_repo.get('imageScanStatus', {})
-        image['imageScanEnabled'] = "False" if image_scan_status.get('status') is None else "True"
+        repository_name = raw_image['repositoryName']
+        image_digest = raw_image['imageDigest']
+        image_tags = raw_image.get('imageTags', [])
 
-        image['ScanStatusMessage'] = image_scan_status.get('description', 'Not Scanned')
-        
-        image_scan_summary = raw_repo.get('imageScanFindingsSummary', {}).get('findingSeverityCounts', {})
-        image['HighSeverityCounts'] = image_scan_summary.get('HIGH', 0)
-        image['MediumSeverityCounts'] = image_scan_summary.get('MEDIUM', 0)
-        image['InformationalSeverityCounts'] = image_scan_summary.get('INFORMATIONAL', 0)
-        image['LowSeverityCounts'] = image_scan_summary.get('LOW', 0)
-        
-        image_scan_summary_completed = raw_repo.get('imageScanFindingsSummary', {}).get('imageScanCompletedAt')
-        image['imageScanFindingsSummaryCompleted'] = image_scan_summary_completed.strftime('%Y-%m-%d %H:%M:%S') if image_scan_summary_completed else ''
-        
-        return get_non_provider_id(image['imageDigest']), image
+        # The same image may well be pushed to several repositories of the region, so the digest alone
+        # does not identify it. Tags do not either, an image may carry none.
+        image['id'] = get_non_provider_id('{}@{}'.format(repository_name, image_digest))
+        image['name'] = '{}:{}'.format(repository_name, ', '.join(image_tags)) if image_tags \
+            else '{}@{}'.format(repository_name, image_digest)
+        image['repository_name'] = repository_name
+        image['registry_id'] = raw_image.get('registryId')
+        image['image_digest'] = image_digest
+        image['image_tags'] = image_tags
+        image['image_size_in_bytes'] = raw_image.get('imageSizeInBytes')
+        image['artifact_media_type'] = raw_image.get('artifactMediaType')
+        image['region'] = self.region
+        pushed_at = raw_image.get('imagePushedAt')
+        image['pushed_at'] = pushed_at.strftime('%Y-%m-%d %H:%M:%S') if pushed_at else None
+
+        self._parse_scan_findings(raw_image, image)
+
+        return image['id'], image
+
+    @staticmethod
+    def _parse_scan_findings(raw_image, image):
+        scan_status = raw_image.get('imageScanStatus') or {}
+        image['scan_status'] = scan_status.get('status')
+        image['scan_status_description'] = scan_status.get('description')
+        # An image is only reported as scanned once findings exist for it, which is not the same as the
+        # repository having scanning configured: images pushed before it was turned on stay unscanned
+        image['scanned'] = scan_status.get('status') == 'COMPLETE'
+
+        scan_findings = raw_image.get('imageScanFindings') or {}
+        completed_at = scan_findings.get('imageScanCompletedAt')
+        image['scan_completed_at'] = completed_at.strftime('%Y-%m-%d %H:%M:%S') if completed_at else None
+
+        severity_counts = scan_findings.get('findingSeverityCounts', {})
+        image['finding_severity_counts'] = severity_counts
+        for severity in SEVERITIES:
+            image['{}_severity_count'.format(severity.lower())] = severity_counts.get(severity, 0)

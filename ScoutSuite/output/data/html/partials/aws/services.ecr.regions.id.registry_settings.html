@@ -1,0 +1,58 @@
+<!-- ECR registry settings partial -->
+<script id="services.ecr.regions.id.registry_settings.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{region}}</h4>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Private registry settings</h4>
+        <div class="list-group-item-text item-margin">Registry ID: <span id="ecr.regions.{{region}}.registry_settings.{{@key}}.id"><samp>{{value_or_none id}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Scanning type: <span id="ecr.regions.{{region}}.registry_settings.{{@key}}.scan_type"><samp>{{value_or_none scan_type}}</samp></span></div>
+    </div>
+    {{#if scanning_rules}}
+    <div class="list-group-item">
+        <h4>Scanning Rules</h4>
+        <ul>
+            {{#each scanning_rules}}
+            <li class="list-group-item-text"><samp>{{scanFrequency}}</samp> for
+                {{#each repositoryFilters}}<samp>{{filter}}</samp> {{/each}}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if replication_rules}}
+    <div class="list-group-item">
+        <h4>Replication Destinations</h4>
+        <ul>
+            {{#each replication_destinations}}
+            <li class="list-group-item-text">region <samp>{{region}}</samp> of account <samp>{{registryId}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if pull_through_cache_rules}}
+    <div class="list-group-item">
+        <h4>Pull Through Cache Rules</h4>
+        <ul>
+            {{#each pull_through_cache_rules}}
+            <li class="list-group-item-text"><samp>{{ecrRepositoryPrefix}}</samp> caches <samp>{{upstreamRegistryUrl}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if policy}}
+        {{> accordion_policy name = 'Registry Policy' document = policy policy_path = (concat 'ecr.regions' region 'registry_settings' @key 'policy')}}
+    {{/if}}
+</script>
+
+<script>
+    Handlebars.registerPartial("services.ecr.regions.id.registry_settings", $("#services\\.ecr\\.regions\\.id\\.registry_settings\\.partial").html());
+</script>
+
+<!-- Single ECR registry template -->
+<script id="single_ecr_registry_setting-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.ecr.regions.id.registry_settings'}}
+</script>
+<script>
+    var single_ecr_registry_setting_template = Handlebars.compile($("#single_ecr_registry_setting-template").html());
+</script>

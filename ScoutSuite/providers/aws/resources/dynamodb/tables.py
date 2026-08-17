@@ -1,9 +1,6 @@
 from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.base import AWSResources
-
-# Global condition keys that tie a request to a VPC endpoint, and therefore keep the table
-# off the public path even though the DynamoDB endpoint itself is reachable from the Internet
-VPC_ENDPOINT_CONDITION_KEYS = ['aws:sourcevpce', 'aws:sourcevpc', 'aws:vpcsourceip']
+from ScoutSuite.providers.aws.utils import policy_restricts_to_vpc_endpoint
 
 
 class Tables(AWSResources):
@@ -92,8 +89,8 @@ class Tables(AWSResources):
         table_dict['replicas'] = replicas
         table_dict['replicas_count'] = len(replicas)
 
-    @classmethod
-    def _parse_policies(cls, raw_table, table_dict):
+    @staticmethod
+    def _parse_policies(raw_table, table_dict):
         # Only set the attributes when a policy exists, so that rules can tell a table with no
         # resource-based policy apart from one whose policy has no statement
         resource_policy = raw_table.get('ResourcePolicy')
@@ -104,25 +101,4 @@ class Tables(AWSResources):
             table_dict['stream_policy'] = stream_policy
 
         table_dict['policy_restricts_to_vpc_endpoint'] = \
-            cls._restricts_to_vpc_endpoint(resource_policy) if resource_policy else False
-
-    @staticmethod
-    def _restricts_to_vpc_endpoint(policy):
-        """Whether the policy confines access to a VPC endpoint, either by denying anything coming from
-        elsewhere or by only allowing what comes through the endpoint."""
-
-        for statement in policy.get('Statement', []):
-            condition = statement.get('Condition', {})
-            if not isinstance(condition, dict):
-                continue
-            for operator, condition_keys in condition.items():
-                if not isinstance(condition_keys, dict):
-                    continue
-                for condition_key in condition_keys:
-                    if condition_key.lower() in VPC_ENDPOINT_CONDITION_KEYS:
-                        # A Deny on requests not coming from the endpoint and an Allow limited to the
-                        # endpoint both close the public path, the negated operators distinguish them
-                        negated = 'Not' in operator
-                        if (statement.get('Effect') == 'Deny') == negated:
-                            return True
-        return False
+            policy_restricts_to_vpc_endpoint(resource_policy) if resource_policy else False

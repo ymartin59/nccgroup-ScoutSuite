@@ -346,6 +346,10 @@
                 "repositories": {
                     "cols": 2,
                     "path": "services.ecr.regions.id.repositories"
+                },
+                "registry_settings": {
+                    "cols": 2,
+                    "path": "services.ecr.regions.id.registry_settings"
                 }
             }
         },
