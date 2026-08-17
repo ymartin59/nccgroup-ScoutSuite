@@ -112,6 +112,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-kinesis-replication-enabled.json": [
+            {
+                "enabled": false,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-no-encryption-with-kms.json": [
             {
                 "enabled": true,

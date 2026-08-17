@@ -19,6 +19,13 @@
                             "global_table_version": "2019.11.21",
                             "id": "11111111-1111-1111-1111-111111111111",
                             "item_count": 42,
+                            "kinesis_data_stream_destinations": [
+                                {
+                                    "DestinationStatus": "ACTIVE",
+                                    "StreamArn": "arn:aws:kinesis:eu-west-1:123456789012:stream/well-protected-changes"
+                                }
+                            ],
+                            "latest_stream_arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/well-protected/stream/2024-01-01T00:00:00.000",
                             "name": "well-protected",
                             "replicas": {
                                 "ap-south-1": {
@@ -40,6 +47,8 @@
                             },
                             "replicas_count": 2,
                             "sse_enabled": true,
+                            "stream_enabled": true,
+                            "stream_view_type": "NEW_AND_OLD_IMAGES",
                             "table_status": "ACTIVE"
                         },
                         "22222222-2222-2222-2222-222222222222": {
@@ -49,10 +58,12 @@
                             "deletion_protection_enabled": false,
                             "id": "22222222-2222-2222-2222-222222222222",
                             "item_count": 7,
+                            "kinesis_data_stream_destinations": [],
                             "name": "no-backups",
                             "replicas": {},
                             "replicas_count": 0,
                             "sse_enabled": false,
+                            "stream_enabled": false,
                             "table_status": "ACTIVE"
                         },
                         "33333333-3333-3333-3333-333333333333": {
@@ -61,8 +72,12 @@
                             "backup_summaries": [],
                             "id": "33333333-3333-3333-3333-333333333333",
                             "item_count": 0,
+                            "kinesis_data_stream_destinations": [],
+                            "latest_stream_arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/pitr-only/stream/2024-01-01T00:00:00.000",
                             "name": "pitr-only",
                             "sse_enabled": false,
+                            "stream_enabled": true,
+                            "stream_view_type": "KEYS_ONLY",
                             "table_status": "ACTIVE"
                         },
                         "66666666-6666-6666-6666-666666666666": {

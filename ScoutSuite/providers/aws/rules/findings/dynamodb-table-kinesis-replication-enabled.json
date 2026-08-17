@@ -1,0 +1,26 @@
+{
+    "description": "Table Changes Replicated to a Kinesis Data Stream",
+    "rationale": "A Kinesis streaming destination copies every item-level change, including the full old and new images of each item, into a Kinesis data stream. Those records leave the table's encryption boundary: they are protected by whatever key and retention the destination stream is configured with, and read by whoever holds kinesis:GetRecords on it, neither of which is governed by the table's KMS key or its resource-based policy. The destination therefore has to be reviewed as a copy of the table in its own right.",
+    "remediation": "Confirm the destination stream is still required, that it is encrypted with a KMS key at least as protected as the table's, and that read access to it is restricted to the consumers that need it",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/kds.html",
+        "https://docs.aws.amazon.com/streams/latest/dev/server-side-encryption.html"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.kinesis_data_stream_destinations",
+            "notNull",
+            ""
+        ],
+        [
+            "dynamodb.regions.id.tables.id.kinesis_data_stream_destinations",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "kinesis_data_stream_destinations"
+}
