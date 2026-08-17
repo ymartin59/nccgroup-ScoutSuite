@@ -33,8 +33,22 @@ class Clusters(AWSResources):
         cluster['region'] = self.region
 
         self._parse_logging(raw_cluster['cluster'], cluster)
+        self._parse_encryption(raw_cluster['cluster'], cluster)
 
         return get_non_provider_id(cluster['name']), cluster
+
+    @staticmethod
+    def _parse_encryption(raw_cluster, cluster):
+        # 'secrets' is the only resource EKS encrypts with a customer key, and the key can be set on
+        # an existing cluster but never changed or removed afterwards
+        key_arns = [
+            config['provider']['keyArn']
+            for config in raw_cluster.get('encryptionConfig') or []
+            if 'secrets' in config.get('resources', []) and config.get('provider', {}).get('keyArn')
+        ]
+
+        cluster['secrets_kms_key'] = key_arns[0] if key_arns else None
+        cluster['secrets_encrypted_with_kms'] = bool(key_arns)
 
     @staticmethod
     def _parse_logging(raw_cluster, cluster):

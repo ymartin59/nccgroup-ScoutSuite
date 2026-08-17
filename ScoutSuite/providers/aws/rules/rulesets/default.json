@@ -520,6 +520,12 @@
                 "level" : "warning"
             }
         ],
+        "eks-cluster-secrets-not-encrypted-with-kms.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "eks-endpoint-private-access-enable.json": [
             {
                 "enabled" : true,
