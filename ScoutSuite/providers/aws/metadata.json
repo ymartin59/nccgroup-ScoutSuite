@@ -137,6 +137,9 @@
                     "callbacks": [
                         [ "process_vpc_peering_connections_callback", {} ]
                     ]
+                },
+                "vpc_endpoints": {
+                    "path": "services.vpc.regions.id.vpc_endpoints"
                 }
             }
         },
@@ -479,6 +482,9 @@
             "resources": {
                 "tables": {
                     "path": "services.dynamodb.regions.id.tables"
+                },
+                "dax_clusters": {
+                    "path": "services.dynamodb.regions.id.dax_clusters"
                 }
             }
         },

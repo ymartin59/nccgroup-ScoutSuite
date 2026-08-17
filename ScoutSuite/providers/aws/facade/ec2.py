@@ -212,6 +212,14 @@ class EC2Facade(AWSBaseFacade):
             print_exception(f'Failed to get peering connections: {e}')
             return []
 
+    async def get_vpc_endpoints(self, region):
+        try:
+            return await AWSFacadeUtils.get_all_pages(
+                'ec2', region, self.session, 'describe_vpc_endpoints', 'VpcEndpoints')
+        except Exception as e:
+            print_exception(f'Failed to get VPC endpoints: {e}')
+            return []
+
     async def get_route_tables(self, region):
         try:
             route_tables = await AWSFacadeUtils.get_all_pages('ec2', region, self.session, 'describe_route_tables', 'RouteTables')

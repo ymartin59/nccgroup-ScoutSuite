@@ -13,8 +13,44 @@
         <div class="list-group-item-text item-margin">Automatic Backups: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.automatic_backups_enabled">{{convert_bool_to_enabled automatic_backups_enabled}}</span></div>
         <div class="list-group-item-text item-margin">On-Demand Backups: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.backup_summaries"><samp>{{value_or_none backup_summaries.length}}</samp></span></div>
         <div class="list-group-item-text item-margin">KMS Encryption: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.sse_enabled">{{convert_bool_to_enabled sse_enabled}}</span></div>
+        <div class="list-group-item-text item-margin">KMS Key: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.kms_master_key_arn"><samp>{{value_or_none kms_master_key_arn}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Deletion Protection: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.deletion_protection_enabled">{{convert_bool_to_enabled deletion_protection_enabled}}</span></div>
         <div class="list-group-item-text item-margin">Item Count: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.item_count"><samp>{{value_or_none item_count}}</samp></span></div>
     </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Network Exposure</h4>
+        <div class="list-group-item-text item-margin">Resource-Based Policy: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.policy">{{#if policy}}Yes{{else}}None{{/if}}</span></div>
+        <div class="list-group-item-text item-margin">Restricted to VPC Endpoint: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.policy_restricts_to_vpc_endpoint">{{convert_bool_to_enabled policy_restricts_to_vpc_endpoint}}</span></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Streams</h4>
+        <div class="list-group-item-text item-margin">DynamoDB Stream: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.stream_enabled">{{convert_bool_to_enabled stream_enabled}}</span></div>
+        <div class="list-group-item-text item-margin">View Type: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.stream_view_type"><samp>{{value_or_none stream_view_type}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Stream ARN: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.latest_stream_arn"><samp>{{value_or_none latest_stream_arn}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Kinesis Destinations: <span id="dynamodb.regions.{{region}}.tables.{{@key}}.kinesis_data_stream_destinations"><samp>{{value_or_none kinesis_data_stream_destinations.length}}</samp></span></div>
+        {{#each kinesis_data_stream_destinations}}
+        <div class="list-group-item-text item-margin"><samp>{{StreamArn}}</samp> ({{DestinationStatus}})</div>
+        {{/each}}
+    </div>
+    {{#if replicas_count}}
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Global Table Replicas</h4>
+        <ul>
+            {{#each replicas}}
+            <li class="list-group-item-text" id="dynamodb.regions.{{../region}}.tables.{{@../key}}.replicas.{{@key}}">
+                <samp>{{region}}</samp>: {{value_or_none replica_status}},
+                KMS key <span id="dynamodb.regions.{{../region}}.tables.{{@../key}}.replicas.{{@key}}.kms_master_key_id"><samp>{{#if kms_master_key_id}}{{kms_master_key_id}}{{else}}AWS owned{{/if}}</samp></span>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if policy}}
+        {{> accordion_policy name = 'Resource-Based Policy' document = policy policy_path = (concat 'dynamodb.regions' region 'tables' @key 'policy')}}
+    {{/if}}
+    {{#if stream_policy}}
+        {{> accordion_policy name = 'Stream Resource-Based Policy' document = stream_policy policy_path = (concat 'dynamodb.regions' region 'tables' @key 'stream_policy')}}
+    {{/if}}
     {{#if tags}}
     <div class="list-group-item">
         <h4>Tags</h4>

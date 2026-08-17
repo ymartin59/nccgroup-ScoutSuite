@@ -1,0 +1,55 @@
+
+<!-- dynamodb DAX clusters -->
+<script id="services.dynamodb.regions.id.dax_clusters.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Information</h4>
+        <div class="list-group-item-text item-margin">ARN: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Status: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.status"><samp>{{value_or_none status}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Node Type: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.node_type"><samp>{{value_or_none node_type}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Nodes: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.total_nodes"><samp>{{value_or_none total_nodes}}</samp></span></div>
+        <div class="list-group-item-text item-margin">IAM Role: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.iam_role_arn"><samp>{{value_or_none iam_role_arn}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Subnet Group: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.subnet_group"><samp>{{value_or_none subnet_group}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Encryption</h4>
+        <div class="list-group-item-text item-margin">Encryption at Rest: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.sse_enabled">{{convert_bool_to_enabled sse_enabled}}</span></div>
+        <div class="list-group-item-text item-margin">Encryption in Transit: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.encryption_in_transit_enabled">{{convert_bool_to_enabled encryption_in_transit_enabled}}</span></div>
+        <div class="list-group-item-text item-margin">Endpoint Encryption Type: <span id="dynamodb.regions.{{region}}.dax_clusters.{{@key}}.endpoint_encryption_type"><samp>{{value_or_none endpoint_encryption_type}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Discovery Endpoint: <samp>{{value_or_none cluster_discovery_endpoint.URL}}</samp></div>
+    </div>
+    {{#if security_groups}}
+    <div class="list-group-item">
+        <h4>Security Groups</h4>
+        <ul>
+            {{#each security_groups}}
+            <li class="list-group-item-text"><samp>{{SecurityGroupIdentifier}}</samp> ({{Status}})</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if tags}}
+    <div class="list-group-item">
+        <h4>Tags</h4>
+        <ul>
+            {{#each tags}}
+            <li class="list-group-item-text"><samp>{{Key}}</samp>: <samp>{{Value}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+</script>
+
+<script>
+    Handlebars.registerPartial("services.dynamodb.regions.id.dax_clusters", $("#services\\.dynamodb\\.regions\\.id\\.dax_clusters\\.partial").html());
+</script>
+
+<!-- Single DAX cluster template -->
+<script id="single_dynamodb_dax_cluster-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.dynamodb.regions.id.dax_clusters'}}
+</script>
+<script>
+    var single_dynamodb_dax_cluster_template = Handlebars.compile($("#single_dynamodb_dax_cluster-template").html());
+</script>
