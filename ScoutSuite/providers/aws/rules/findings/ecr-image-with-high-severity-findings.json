@@ -1,0 +1,26 @@
+{
+    "description": "Image with Critical or High Severity Vulnerabilities",
+    "rationale": "A scan finding only becomes a fix when somebody acts on it, and an image sitting in the registry with critical or high severity vulnerabilities is one that anything pulling it inherits. Unlike a host, a container is not patched in place: the finding stays true for as long as the image exists, and every task, pod or function started from it starts vulnerable. These are also the findings that come with a known exploitation path, which is what separates them from the medium and low counts a scan always returns.",
+    "remediation": "Rebuild the image on an updated base image and with updated dependencies, push it, and expire the affected version so that nothing can still pull it",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html",
+        "https://docs.aws.amazon.com/inspector/latest/user/findings-understanding.html"
+    ],
+    "dashboard_name": "Images",
+    "display_path": "ecr.regions.id.images.id",
+    "path": "ecr.regions.id.images.id",
+    "conditions": [
+        "or",
+        [
+            "ecr.regions.id.images.id.critical_severity_count",
+            "moreThan",
+            "0"
+        ],
+        [
+            "ecr.regions.id.images.id.high_severity_count",
+            "moreThan",
+            "0"
+        ]
+    ],
+    "id_suffix": "finding_severity_counts"
+}

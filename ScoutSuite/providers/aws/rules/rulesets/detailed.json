@@ -481,6 +481,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-image-with-high-severity-findings.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "ecr-registry-basic-image-scanning.json": [
             {
                 "enabled": true,

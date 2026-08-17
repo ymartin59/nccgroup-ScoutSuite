@@ -442,6 +442,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-image-with-high-severity-findings.json": [
+            {
+                "enabled": false,
+                "level": "danger"
+            }
+        ],
         "ecr-registry-basic-image-scanning.json": [
             {
                 "enabled": true,
@@ -466,24 +472,6 @@
                 "level": "warning"
             }
         ],
-        "eks-cluster-logging-enabled.json": [
-            {
-                "enabled" : true,
-                "level" : "warning"
-            }
-        ],
-        "ecs-container-insights-enabled.json": [
-            {
-                "enabled" : true,
-                "level" : "warning"
-            }
-        ],
-        "eks-endpoint-private-access-enable.json": [
-            {
-                "enabled" : true,
-                "level" : "danger"
-            }
-        ],
         "ecr-repository-not-restricted-to-vpc-endpoint.json": [
             {
                 "enabled": false,
@@ -500,6 +488,24 @@
             {
                 "enabled": true,
                 "level": "warning"
+            }
+        ],
+        "eks-cluster-logging-enabled.json": [
+            {
+                "enabled" : true,
+                "level" : "warning"
+            }
+        ],
+        "ecs-container-insights-enabled.json": [
+            {
+                "enabled" : true,
+                "level" : "warning"
+            }
+        ],
+        "eks-endpoint-private-access-enable.json": [
+            {
+                "enabled" : true,
+                "level" : "danger"
             }
         ],
         "elb-listener-allowing-cleartext.json": [
