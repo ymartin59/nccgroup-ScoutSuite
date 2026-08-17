@@ -1,0 +1,315 @@
+# AWS Coverage Gaps — Tracking Checklist
+
+Working document to drive incremental additions to the AWS provider.
+
+**Scope**: what is *collected* (fetched into the inventory), not what is *ruled on*. A missing
+collector means no rule can ever be written; a missing rule on existing data is a separate,
+much cheaper problem.
+
+**Baseline**: 31 services collected in the open-source tree
+(`ScoutSuite/providers/aws/resources/`). Four more — `cognito`, `docdb`, `guardduty`, `ssm` —
+exist only as `private_*` modules and are therefore **not available** in this tree
+(see the `try/except ImportError` blocks in `ScoutSuite/providers/aws/services.py`).
+
+**How to add a service** (pattern to follow, e.g. `vpc`):
+
+1. `ScoutSuite/providers/aws/facade/<svc>.py` — a `<Svc>Facade(AWSBaseFacade)` with `async` getters
+2. register it in `ScoutSuite/providers/aws/facade/base.py`
+3. `ScoutSuite/providers/aws/resources/<svc>/base.py` (+ one file per resource type)
+4. instantiate in `AWSServicesConfig.__init__` (`ScoutSuite/providers/aws/services.py`)
+5. add the service to `ScoutSuite/providers/aws/metadata.json` under the right group
+6. add the required IAM read permissions to the documented policy
+7. write rules under `ScoutSuite/providers/aws/rules/findings/` and wire them into
+   `rules/rulesets/default.json` / `detailed.json`
+
+---
+
+## P0 — Quick wins (facade code already exists or is trivial)
+
+- [ ] **VPC route tables** — `EC2Facade.get_route_tables()` already exists
+      (`ScoutSuite/providers/aws/facade/ec2.py:223`) but is **never called**: dead code.
+      Add `resources/vpc/route_tables.py` and wire it into `resources/vpc/base.py`.
+      Unlocks the single most useful derived attribute in the whole model: **public vs private
+      subnet** (a `0.0.0.0/0` or `::/0` route to an `igw-*` target). Without it, "internet
+      exposed" verdicts on EC2 instances, ELBs, RDS and Lambda-in-VPC are guesses.
+      - [ ] collect routes, target types, associations, main-table flag, propagating VGWs
+      - [ ] derive `is_public` on subnets, propagate to instances / ENIs / load balancers
+- [ ] **Region opt-in status** — extend `resources/account/`. Cheap
+      (`account:ListRegions`), and it tells you which regions are actually enabled, both to
+      scope the scan and to flag regions enabled without a reason.
+- [ ] **EC2 account-level defaults** — `resources/ec2/regional_settings.py` currently holds only
+      EBS default encryption + key. Add:
+      - [ ] account-level IMDS defaults (`GetInstanceMetadataDefaults`: IMDSv2 required, hop limit)
+      - [ ] `GetSnapshotBlockPublicAccessState` (blocks public snapshot sharing region-wide)
+- [ ] **Elastic IPs** (`DescribeAddresses`) — unassociated EIPs, and the mapping public IP → ENI
+      → instance, which is otherwise reconstructed only partially.
+- [ ] **EC2 key pairs** (`DescribeKeyPairs`) — creation date, type (RSA/ED25519), key fingerprints;
+      supports key-rotation and unused-key findings.
+
+## P1 — Account governance and detection
+
+The largest structural gap: ScoutSuite currently has almost no view of *preventive* guardrails
+or of whether AWS's own detection services are switched on.
+
+- [ ] **Organizations** — new service. Only
+      `IAMFacade.get_organizations_root_credentials_managed()`
+      (`ScoutSuite/providers/aws/facade/iam.py:59`) touches Organizations today.
+      - [ ] org description, management account, enabled policy types, `FeatureSet` (ALL vs CONSOLIDATED_BILLING)
+      - [ ] OU tree and member accounts (status, joined date, email)
+      - [ ] **SCPs** — content, targets, effective attachment per account/OU
+      - [ ] RCPs (resource control policies), declarative policies, tag policies, backup policies
+      - [ ] delegated administrators and delegated services
+      - [ ] AI services opt-out policy
+- [ ] **IAM Access Analyzer** — new service. This is AWS's authoritative answer to
+      "what is shared outside this account", covering resource types ScoutSuite does not
+      policy-analyse at all.
+      - [ ] analyzers per region (type: ACCOUNT / ORGANIZATION / *_UNUSED_ACCESS), status
+      - [ ] external-access findings (S3, IAM roles, KMS, SQS, Secrets Manager, Lambda, EFS, RDS snapshots, ECR, SNS)
+      - [ ] unused-access findings (unused roles, unused permissions) if an unused-access analyzer exists
+      - [ ] archive rules (they can silently hide findings)
+- [ ] **GuardDuty** — currently `private_guardduty` only; port an open-source collector.
+      - [ ] detector per region, enabled state, finding publishing frequency
+      - [ ] feature/data-source coverage (S3 logs, EKS audit logs, malware protection, RDS login events, Lambda network logs, runtime monitoring)
+      - [ ] org-level auto-enable configuration, member accounts
+      - [ ] suspended/disabled detectors, IP sets / threat intel sets
+- [ ] **Security Hub** — new service. Referenced only as a *rule reference* in
+      `rules/findings/*.json`; nothing is collected.
+      - [ ] hub per region, enabled state, auto-enable controls, consolidated findings mode
+      - [ ] enabled standards (CIS, AWS FSBP, PCI DSS, NIST) and per-control status
+      - [ ] finding aggregation region, org configuration, delegated admin
+- [ ] **AWS Backup** — new service. Resilience is currently only visible per service
+      (RDS backup retention, DynamoDB PITR); there is no cross-service view.
+      - [ ] backup vaults, **vault lock** (governance vs compliance mode, retention)
+      - [ ] vault access policies (cross-account share = exfil path)
+      - [ ] backup plans, rules, copy actions, cross-region/cross-account copies
+      - [ ] protected resources / coverage gaps, backup vault notifications
+- [ ] **Inspector v2** — enablement per region and per scan type (EC2, ECR, Lambda code/standard),
+      plus suppression rules.
+- [ ] **Macie** — enablement, automated sensitive-data discovery status, classification job coverage
+      of S3 buckets.
+- [ ] **Detective** — graph existence and member accounts (low value alone, cheap alongside GuardDuty).
+- [ ] **CloudTrail — beyond classic trails**. `resources/cloudtrail/trails.py` collects only
+      regular trails.
+      - [ ] organization trails (`IsOrganizationTrail`) distinguished from account trails
+      - [ ] CloudTrail Lake event data stores (retention, termination protection, KMS)
+      - [ ] advanced event selectors (data events on S3/Lambda/DynamoDB), insight selectors
+      - [ ] channels for CloudTrail integrations
+- [ ] **AWS Config — beyond recorders and rules**. `resources/config/` has
+      `recorders.py` + `rules.py` only.
+      - [ ] delivery channels (target bucket/SNS, delivery frequency) — a recorder with a broken
+            delivery channel records nothing usable
+      - [ ] conformance packs and their compliance status
+      - [ ] configuration aggregators (and their authorizations)
+      - [ ] retention configuration, recorder resource-type exclusions
+
+## P2 — Exposure surface (network and application)
+
+- [ ] **API Gateway v1 (REST)** — new service. Currently the single largest application-exposure
+      blind spot: an entire public API tier is invisible to the scanner.
+      - [ ] REST APIs, endpoint configuration (EDGE / REGIONAL / **PRIVATE**), disable-execute-api-endpoint
+      - [ ] **resource policies** (who can invoke, VPCE conditions)
+      - [ ] authorizers (NONE / IAM / Cognito / Lambda) per method, API keys required
+      - [ ] stages: access logging, execution logging level, X-Ray, cache + cache encryption, WAF ACL association, client certificate
+      - [ ] usage plans / throttling, custom domains + minimum TLS policy, mutual TLS
+      - [ ] VPC links, private integrations
+- [ ] **API Gateway v2 (HTTP / WebSocket)** — same axes; distinct API and paging model.
+      - [ ] APIs, protocol type, auto-deploy, CORS configuration (`*` origins)
+      - [ ] JWT / Lambda authorizers, routes with `AuthorizationType: NONE`
+      - [ ] stage access logging, custom domains + TLS policy, mutual TLS
+- [ ] **WAF / WAFv2** — new service. Without it there is no way to tell whether the exposed
+      resources ScoutSuite *does* see are protected.
+      - [ ] Web ACLs (REGIONAL and CLOUDFRONT scopes), default action, rule groups, managed rule sets
+      - [ ] **associated resources** (ALB, API GW stage, CloudFront, AppSync, Cognito UP) — and, by
+            difference, exposed resources with **no** ACL
+      - [ ] logging configuration + redacted fields, sampled-requests setting
+      - [ ] classic WAF / WAF Regional if still in use (legacy accounts)
+- [ ] **Shield Advanced** — subscription state, protected resources, proactive engagement,
+      emergency contacts.
+- [ ] **Internet gateways / NAT gateways / egress-only IGWs** — needed to close the route-table
+      story and to distinguish "no route out" from "NAT'd".
+- [ ] **Transit Gateway** — TGWs, attachments (VPC / VPN / peering / Connect), TGW route tables,
+      associations and propagations, auto-accept-shared-attachments, cross-account attachments.
+      Lateral-movement topology that is entirely absent today.
+- [ ] **Site-to-Site VPN** — connections, tunnel options (IKE versions, DH groups, PSK vs cert),
+      tunnel state, logging; customer gateways; VGWs.
+- [ ] **Client VPN** — endpoints, authentication type, **authorization rules** (all-groups access),
+      split-tunnel, connection logging, self-service portal.
+- [ ] **Security group rules as first-class objects** (`DescribeSecurityGroupRules`) —
+      `resources/ec2/securitygroups.py` parses the embedded permissions, which loses rule IDs,
+      per-rule descriptions and tags. Needed for actionable remediation output and for
+      referenced-prefix-list rules.
+- [ ] **Managed prefix lists** — a rule referencing a prefix list is currently opaque: the CIDRs
+      behind it are never resolved, so a `0.0.0.0/0` hidden in a prefix list is invisible.
+- [ ] **Network Firewall** — firewalls, policies, stateless/stateful rule groups, logging
+      configuration, subnet associations, delete/subnet-change protection.
+- [ ] **Route 53 Resolver** — resolver endpoints (inbound/outbound), rules and shares,
+      **DNS Firewall** rule groups + associations, **query logging** configurations.
+- [ ] **Route 53 DNSSEC** — signing status and KSKs per hosted zone; `resources/route53/`
+      collects zones, records and registered domains only. Also worth adding: dangling
+      records pointing at deprovisioned targets (subdomain takeover) and registrar transfer lock.
+- [ ] **Global Accelerator** — accelerators, listeners, endpoint groups, flow logs.
+- [ ] **VPC Lattice** — service networks, services, auth policies, access-log subscriptions.
+- [ ] **ACM Private CA** — CAs, status, policies (cross-account issuance), audit reports,
+      CRL/OCSP configuration.
+
+## P3 — Compute, data and CI/CD services not collected
+
+- [ ] **Auto Scaling groups + launch templates + launch configurations** — new service, high value.
+      ScoutSuite scans user data of *existing* instances
+      (`resources/ec2/instances.py:31`, `_identify_user_data_secrets`) but nothing of the template
+      that creates the next ones. Every EC2 hardening rule is silently bypassable through a
+      launch template.
+      - [ ] launch templates (all versions, or at least default + latest): **user data** (run the same
+            secret scan), `MetadataOptions` (IMDSv2), AMI id, instance profile, security groups,
+            `AssociatePublicIpAddress`, EBS encryption, IMDS hop limit
+      - [ ] launch configurations (legacy, same fields)
+      - [ ] ASGs: subnets (and therefore public/private via route tables), health checks,
+            suspended processes, instance refresh, mixed-instances policy, tag propagation
+- [ ] **SSM / Systems Manager** — `private_ssm` only; port an open-source collector.
+      - [ ] **Parameter Store**: parameters, type (`String` vs `SecureString`), KMS key, tier,
+            policies — a secret in a plain `String` parameter is a classic finding
+      - [ ] documents owned by the account, and **documents shared publicly** (`Public` share)
+      - [ ] Session Manager preferences: logging to S3/CloudWatch, KMS encryption, run-as user
+      - [ ] managed instances inventory + patch compliance state, patch baselines (approval rules,
+            auto-approval delay), maintenance windows
+      - [ ] State Manager associations, `AmazonLinux`/inventory collection
+- [ ] **OpenSearch Service (and legacy Elasticsearch Service)** — domains, **public vs VPC access**,
+      access policies, fine-grained access control / internal user database, encryption at rest,
+      node-to-node encryption, TLS policy, audit/slow logs, version and EOL status, cold/warm tiers.
+- [ ] **Cognito** — `private_cognito` only; port an open-source collector. User pools (MFA, password
+      policy, advanced security mode, deletion protection), app clients (secret, allowed OAuth flows,
+      callback URLs, token validity, prevent-user-existence-errors), identity pools
+      (**unauthenticated identities allowed**, attached roles and their trust policies, classic flow).
+- [ ] **Amazon MSK / Kafka** — clusters, encryption in transit (client + in-cluster), at-rest KMS,
+      client authentication (TLS/SASL/unauthenticated), public access, logging, `allow.everyone.if.no.acl.found`.
+- [ ] **Kinesis Data Streams / Firehose** — stream encryption (KMS vs none), retention, resource
+      policies, Firehose destination encryption and cross-account delivery.
+- [ ] **EventBridge** — event buses, **resource policies** (cross-account `PutEvents`, wildcard
+      principals), rules and targets (cross-account/cross-region targets are exfil paths),
+      archives, schema registries, API destinations + connections (credentials).
+- [ ] **Step Functions** — state machines, IAM role, logging level (`ALL`/`OFF`), X-Ray,
+      definition (hardcoded secrets, `arn:aws:states:::aws-sdk:*` broad SDK integrations).
+- [ ] **Glue** — data catalog encryption settings + catalog resource policy, connections
+      (credentials, JDBC password), security configurations, jobs
+      (`--enable-*` flags, script location, bookmark encryption), dev endpoints (public SSH),
+      crawlers.
+- [ ] **Athena** — workgroups: result-location encryption, **enforce workgroup configuration**,
+      CloudWatch metrics, query result reuse; data catalogs.
+- [ ] **SageMaker** — notebook instances (**direct internet access**, VPC, KMS, root access),
+      domains and user profiles, training jobs (inter-container encryption, network isolation, VPC),
+      endpoints (KMS, data capture), models.
+- [ ] **CI/CD chain beyond CodeBuild** — `codebuild` is collected, the rest is not, so pipelines
+      with over-privileged roles and permissive GitHub OIDC trust policies go unseen.
+      - [ ] CodePipeline: pipelines, service roles, source providers, cross-account actions, artifact store encryption
+      - [ ] CodeCommit: repos, triggers, approval rule templates, branch protection (via approval rules)
+      - [ ] CodeDeploy: applications, deployment groups, service roles
+      - [ ] CodeArtifact: domains and repository policies (public/cross-account)
+- [ ] **Neptune** — clusters: encryption, IAM auth, public accessibility, audit logs, deletion
+      protection, backup retention.
+- [ ] **DocumentDB** — `private_docdb` only; port an open-source collector (TLS, audit logs,
+      encryption, deletion protection, backup retention).
+- [ ] **FSx** — file systems, encryption/KMS, backups, public subnet placement, SMB/NFS exposure.
+- [ ] **Storage Gateway / S3 Glacier vaults / DataSync / Transfer Family**
+      - [ ] Glacier vault access policies + vault lock
+      - [ ] Transfer Family servers: protocols (FTP without TLS), identity provider type, endpoint
+            type (public vs VPC), logging, security policy / TLS version
+- [ ] **Amazon MQ** — brokers: public accessibility, encryption, audit logs, engine version, auth strategy.
+- [ ] **AppSync** — GraphQL APIs: auth types (**API_KEY**), API keys and expiry, logging (field-level),
+      WAF association, private API visibility, resolver data sources.
+- [ ] **Amplify / AppFlow / Batch / WorkSpaces / Lightsail** — lower priority, but each hosts
+      internet-facing or credential-bearing resources invisible today.
+- [ ] **ElastiCache Serverless / MemoryDB** — `elasticache` covers clusters; serverless caches and
+      MemoryDB (ACLs, TLS, encryption) are separate APIs.
+
+## P4 — Gaps *inside* services already collected
+
+These are cheaper than new services (facade + resource file already exist) and often close a
+rule gap directly.
+
+- [ ] **IAM — identity providers**. `resources/iam/` has users, groups, roles, policies,
+      credential reports, password policy, account summary. Missing:
+      - [ ] **SAML providers** (metadata, expiry) and **OIDC providers** (client IDs, thumbprints) —
+            without these, federation is invisible and GitHub Actions OIDC trust policies
+            (`sub` wildcard = any repo can assume the role) cannot be evaluated
+      - [ ] server certificates (expiry, legacy uploads)
+      - [ ] instance profiles as standalone objects (currently only reached via roles,
+            `facade/iam.py:180`) — orphaned profiles are invisible
+      - [ ] service-linked roles flagged as such, so they stop polluting "unused role" findings
+      - [ ] `GenerateServiceLastAccessedDetails` per principal — the basis for real
+            least-privilege findings rather than policy-text heuristics
+      - [ ] role `MaxSessionDuration`, `PermissionsBoundary` on users and roles
+      - [ ] account-level MFA / root-session settings, `GetAccountAuthorizationDetails` as a
+            single-call optimisation
+- [ ] **Lambda** — `facade/awslambda.py` gets functions, access policy, env variables, role.
+      Missing: VPC configuration, layers (and their versions/permissions), **code signing**
+      configuration, reserved/provisioned concurrency, dead-letter queues, function URLs
+      (**`AuthType: NONE` = unauthenticated public HTTPS endpoint**), runtime EOL status,
+      tracing config, ephemeral storage.
+- [ ] **S3** — bucket-level and account-level Public Access Block are covered
+      (`resources/s3/base.py:19`, `facade/s3.py:344`). Missing: **Object Lock** configuration,
+      replication rules (cross-account/cross-region destinations), lifecycle rules,
+      **Object Ownership / ACLs disabled** (`BucketOwnerEnforced`), Requester Pays,
+      notification configuration, transfer acceleration, access points and multi-region access
+      points (each with its own policy and PAB), directory buckets (S3 Express One Zone).
+- [ ] **KMS** — `resources/kms/` has keys and grants. Missing: **key policies** as parsed
+      documents (cross-account / wildcard principals), aliases, multi-region key replicas,
+      custom key stores (CloudHSM/external), key origin (`EXTERNAL` / `AWS_CLOUDHSM`).
+- [ ] **EC2** — missing: instance connect endpoints, dedicated hosts, capacity reservations,
+      spot fleet requests, `DescribeInstanceAttribute` for `disableApiTermination` /
+      `disableApiStop`, EBS snapshot cross-account share targets beyond the public/private flag,
+      AMI deprecation and block-public-access-for-AMIs state.
+- [ ] **VPC** — `resources/vpc/` has flow logs, NACLs, peering connections, subnets, endpoints.
+      Missing: **VPC endpoint services** (who is allowed to connect, acceptance required,
+      `AllowedPrincipals` with `*`), endpoint **policies** parsed for wildcards, DHCP option sets,
+      DNS support/hostname flags per VPC, default VPC flagged as such, IPAM pools.
+- [ ] **ECS** — cluster/service/task-definition coverage should include: task role vs execution
+      role distinction, `privileged` containers, host network mode, bind-mount host paths,
+      secrets passed as plain `environment` vs `secrets`, ECS Exec + its logging/KMS, container
+      insights, capacity providers, public IP assignment on services.
+- [ ] **EKS** — beyond the recently added rules: access entries and the access-config
+      authentication mode, add-ons and their versions, Pod Identity associations, IRSA OIDC
+      provider linkage, control-plane logging types actually enabled, secrets encryption
+      (envelope encryption with KMS), Fargate profiles.
+- [ ] **RDS** — missing: DB proxies (TLS required, IAM auth, secrets), cluster-level vs
+      instance-level parameter groups' security-relevant parameters
+      (`rds.force_ssl`, `log_statement`, `pgaudit`), Blue/Green deployments,
+      manual snapshot cross-account share targets, Performance Insights KMS, Aurora Serverless v2,
+      certificate authority / CA rotation status, engine EOL.
+- [ ] **CloudFront** — distributions are collected; add origin access control (OAC) vs legacy OAI,
+      geo restrictions, field-level encryption, response headers policies (HSTS/CSP),
+      custom-origin protocol policy (HTTP-only to origin), logging (standard + realtime),
+      **WAF association**, `KeyGroups` / signed URLs, functions and Lambda@Edge associations.
+- [ ] **SNS / SQS** — resource policies are collected; ensure parsed evaluation of wildcard
+      principals and missing `aws:SourceArn`/`aws:SourceAccount` conditions, plus
+      SQS DLQ presence, SNS subscription protocols (unencrypted HTTP), SNS FIFO, KMS on both.
+- [ ] **Secrets Manager** — add resource policies (cross-account), rotation configuration
+      (enabled, interval, rotation Lambda), replica regions, KMS key (default `aws/secretsmanager`
+      vs CMK), last-accessed date (unused secrets).
+- [ ] **DynamoDB** — add resource-based policies, global tables / replica encryption,
+      Streams configuration, TTL, export/import to S3, deletion protection.
+- [ ] **ECR** — add registry-level scanning configuration and replication rules, pull-through
+      cache rules, registry policy (distinct from repository policies), immutable tags per repo.
+- [ ] **Account** — `resources/account/contacts.py` only. Add: primary contact information,
+      account-level challenge questions presence, IAM user access to Billing console
+      (`iam:AccountBillingConsoleAccess`), root MFA type (hardware vs virtual, from account summary),
+      centrally managed root credentials state (already fetched at `facade/iam.py:59` — expose it).
+- [ ] **Service Quotas / Trusted Advisor** — quota headroom for security-relevant limits
+      (e.g. VPCs, IAM roles) and Trusted Advisor security checks (requires Business+ support).
+
+---
+
+## Cross-cutting items
+
+- [ ] **Resource tags everywhere** — several collectors drop tags (e.g. `resources/vpc/*`).
+      Tags are how an inventory maps resources to owners and environments; without them a
+      posture report is not actionable.
+- [ ] **Resource Explorer or Resource Groups Tagging API sweep** — a cheap way to enumerate
+      *everything* in the account and diff it against what ScoutSuite collected, i.e. an
+      automatic "coverage gap" report per scan instead of this hand-maintained file.
+- [ ] **RAM (Resource Access Manager)** — resource shares, shared principals, external-share
+      allowed flag. Cross-cutting because it changes the blast radius of subnets, TGWs, prefix
+      lists, license configurations and Route 53 rules alike.
+- [ ] **IAM permissions documentation** — every service added above needs its read-only actions
+      appended to the documented scan policy, otherwise the additions fail silently in the field.
+- [ ] **Region handling for global services** — new global services (Organizations, Access
+      Analyzer at org level, Shield, WAF CLOUDFRONT scope) must not be fetched per region.
