@@ -1,0 +1,26 @@
+{
+    "description": "Cluster Not Delivering Broker Logs",
+    "rationale": "CloudTrail records the calls made to the MSK API, not what happens on the Kafka protocol, so it never shows which client connected, which credential it used, which topic it read or why an authorization was refused. Those events only exist in the broker logs, and MSK discards them unless a delivery destination is configured. Without them an incident involving the data in the topics cannot be reconstructed, and repeated authentication failures, the usual first sign of a credential being tried, go unnoticed.",
+    "remediation": "Enable broker log delivery on the cluster to CloudWatch Logs, Firehose or S3, and retain the logs long enough to cover an investigation",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-logging.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.cluster_type",
+            "equal",
+            "PROVISIONED"
+        ],
+        [
+            "msk.regions.id.clusters.id.broker_logs_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "broker_logs_enabled"
+}

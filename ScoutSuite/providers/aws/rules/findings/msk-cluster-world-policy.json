@@ -1,0 +1,44 @@
+{
+    "description": "Cluster Authorized to All Principals",
+    "rationale": "A cluster policy allowing an MSK action to all principals grants it to any AWS account, not only to principals of the account owning the cluster, and it stands on its own without needing a matching permission on the caller's side. The actions a cluster policy governs are the ones that let another account reach the brokers privately, so a statement written this way lets anyone holding any set of AWS credentials establish a VPC connection to the cluster and then present itself to the brokers as a regular client, at which point the Kafka authentication and ACLs are all that remain.",
+    "remediation": "Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\":\"*\"} in the cluster policy, or restrict it to the accounts and organization expected to connect",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/mvpc-cross-account-permissions.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/aws-access-mult-vpc.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id.policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.",
+            "withKey",
+            "policy"
+        ],
+        [
+            "msk.regions.id.clusters.id.policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "msk.regions.id.clusters.id.policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "msk.regions.id.clusters.id.policy.Statement.id"
+            ]
+        ]
+    ]
+}

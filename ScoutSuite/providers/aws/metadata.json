@@ -104,6 +104,18 @@
                     "path": "services.sqs.regions.id.queues"
                 }
             }
+        },
+        "msk": {
+            "resources": {
+                "clusters": {
+                    "cols": 2,
+                    "path": "services.msk.regions.id.clusters"
+                },
+                "configurations": {
+                    "cols": 2,
+                    "path": "services.msk.regions.id.configurations"
+                }
+            }
         }
     },
     "network": {

@@ -1,0 +1,21 @@
+{
+    "description": "Cluster Publishing Cluster-Level Metrics Only",
+    "rationale": "At the DEFAULT monitoring level MSK publishes a small set of metrics aggregated over the whole cluster, which is enough to see that something is wrong and not enough to see where. A single broker saturating its network, a partition whose replicas have stopped catching up, or a consumer group falling behind are all invisible in the aggregate, and those are the shapes that an unexpected consumer, an unnoticed replication break or a partial outage take. Per-broker metrics are what make the difference between the two states observable while it matters.",
+    "remediation": "Raise the monitoring level of the cluster to at least PER_BROKER, and to PER_TOPIC_PER_BROKER where the traffic of individual topics needs to be followed",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/metrics-details.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.enhanced_monitoring_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "enhanced_monitoring"
+}

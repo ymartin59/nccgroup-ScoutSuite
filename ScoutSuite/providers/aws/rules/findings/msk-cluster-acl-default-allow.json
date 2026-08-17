@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Granting Full Access to Topics without an ACL",
+    "rationale": "With allow.everyone.if.no.acl.found left at its default of true, a topic that has no ACL of its own is readable and writable by every client that reaches the cluster. Access control then applies only to the topics somebody remembered to protect, and each new topic starts out open until an ACL is added, which inverts the order that makes a mistake safe. The effect is not visible from the cluster settings either: the topics look configured, and the gap only shows in the absence of an ACL. Setting the property to false makes an unprotected topic unreachable rather than public.",
+    "remediation": "Set allow.everyone.if.no.acl.found to false in the MSK configuration of the cluster, after writing the ACLs the clients need, or move the cluster to SASL/IAM where access is decided by IAM policies",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-acls.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.acl_default_allow_effective",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "acl_default_allow"
+}

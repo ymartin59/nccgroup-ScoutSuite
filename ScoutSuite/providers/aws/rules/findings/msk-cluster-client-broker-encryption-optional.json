@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Allowing Plaintext alongside TLS",
+    "rationale": "TLS_PLAINTEXT opens both an encrypted and an unencrypted listener and lets each client decide which one to use, so the protection of the data in transit depends on the configuration of every producer and consumer rather than on the cluster. A client that was never configured for TLS, or one whose configuration is reset by a redeploy, silently falls back to sending records and SASL/SCRAM passwords in the clear, and nothing on the cluster side reports the downgrade. The setting is meant as a temporary state while clients are migrated, not as a resting configuration.",
+    "remediation": "Once every client speaks TLS, set the client-broker encryption of the cluster to TLS so the plaintext listener is closed",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-encryption.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/data-protection.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.encryption_in_transit_client_broker",
+            "equal",
+            "TLS_PLAINTEXT"
+        ]
+    ],
+    "id_suffix": "encryption_in_transit_client_broker"
+}

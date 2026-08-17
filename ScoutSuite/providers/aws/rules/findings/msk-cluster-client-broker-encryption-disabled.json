@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Refusing TLS between Clients and Brokers",
+    "rationale": "A cluster set to PLAINTEXT carries every produced and consumed record, and the SASL/SCRAM password of every client that authenticates, in the clear across the VPC. Anything positioned on that path reads the data stream directly: another workload on a shared subnet, a VPC flow mirroring session, a peered network, or a compromised instance running a packet capture. The setting also leaves the clients with no way to tell a broker from an impostor, so an attacker able to answer on the broker address collects the credentials the clients present.",
+    "remediation": "Set the client-broker encryption of the cluster to TLS, after configuring the clients for TLS and, if needed, moving them over during a TLS_PLAINTEXT window",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-encryption.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/data-protection.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.client_broker_plaintext_only",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_in_transit_client_broker"
+}

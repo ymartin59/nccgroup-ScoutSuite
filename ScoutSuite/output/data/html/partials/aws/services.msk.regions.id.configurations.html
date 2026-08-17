@@ -1,0 +1,36 @@
+<!-- MSK Configurations partial -->
+<script id="services.msk.regions.id.configurations.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="msk.regions.{{region}}.configurations.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="msk.regions.{{region}}.configurations.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">State: <span id="msk.regions.{{region}}.configurations.{{@key}}.state"><samp>{{value_or_none state}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="msk.regions.{{region}}.configurations.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Kafka versions: <span id="msk.regions.{{region}}.configurations.{{@key}}.kafka_versions">{{#each kafka_versions}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Latest revision: <span id="msk.regions.{{region}}.configurations.{{@key}}.latest_revision"><samp>{{value_or_none latest_revision}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Latest revision created at: <span id="msk.regions.{{region}}.configurations.{{@key}}.latest_revision_creation_time"><samp>{{value_or_none latest_revision_creation_time}}</samp></span></div>
+    </div>
+    {{#if server_properties}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Server properties of the latest revision</h4>
+      <ul>
+        {{#each server_properties}}
+        <li class="list-group-item-text"><samp>{{@key}}</samp> = <samp>{{this}}</samp></li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.msk.regions.id.configurations", $("#services\\.msk\\.regions\\.id\\.configurations\\.partial").html());
+  </script>
+  <!-- Single MSK configuration instance template -->
+  <script id="single_msk_configuration-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.msk.regions.id.configurations' }}
+  </script>
+  <script>
+    var single_msk_configuration_template = Handlebars.compile($("#single_msk_configuration-template").html());
+  </script>

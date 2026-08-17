@@ -1126,6 +1126,78 @@
                 "level": "danger"
             }
         ],
+        "msk-cluster-acl-default-allow.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "msk-cluster-at-rest-encryption-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-auto-create-topics-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-broker-logs-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-client-broker-encryption-disabled.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "msk-cluster-client-broker-encryption-optional.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-deprecated-kafka-version.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-enhanced-monitoring-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-in-cluster-encryption-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "msk-cluster-public-access-enabled.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "msk-cluster-unauthenticated-access-enabled.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "msk-cluster-world-policy.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "rds-instance-backup-disabled.json": [
             {
                 "enabled": true,

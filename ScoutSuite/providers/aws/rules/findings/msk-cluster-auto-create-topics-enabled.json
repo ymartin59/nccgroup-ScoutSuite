@@ -1,0 +1,21 @@
+{
+    "description": "Cluster Creating Topics on Demand",
+    "rationale": "With auto.create.topics.enable set to true, a client that produces to or asks for an unknown topic causes the broker to create it, with the default partition count, the default replication factor and no ACL of its own. A typo in a client configuration therefore silently creates a parallel topic that consumers never read, and any client able to reach the cluster can fill it, which is a way to consume broker storage that no quota or authorization step intercepts. Topics created this way also inherit whatever the cluster does in the absence of an ACL.",
+    "remediation": "Set auto.create.topics.enable to false in the MSK configuration of the cluster and create the topics explicitly, with the partitions, replication factor and ACLs they need",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/bestpractices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.auto_create_topics_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "auto_create_topics_enabled"
+}

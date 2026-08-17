@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Encrypted at Rest with an AWS Managed Key",
+    "rationale": "MSK always encrypts the broker volumes, but a cluster created without a key of its own falls back on the AWS managed alias/aws/kafka key. That key has a policy the account cannot edit, so access to the data it protects cannot be narrowed, audited against a key policy, or revoked by disabling the key. It also cannot be shared, which means a snapshot or a copy of the data never leaves the boundary AWS chose for it. A customer managed key restores all of that, and its use is recorded in CloudTrail per calling principal.",
+    "remediation": "Recreate the cluster with a customer managed KMS key for encryption at rest, as the key cannot be changed after creation, and restrict its key policy to the roles the cluster and its operators use",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-encryption.html",
+        "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.encryption_at_rest_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_at_rest_kms_key"
+}

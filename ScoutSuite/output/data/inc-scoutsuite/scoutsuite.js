@@ -1233,7 +1233,7 @@ function makeTitle(title) {
     console.log(title)
 
     const uppercaseTitles = [
-        'acm', 'aks', 'ec2', 'ecr', 'ecs', 'efs', 'eks', 'gke', 'iam', 'kms', 'rbac',
+        'acm', 'aks', 'ec2', 'ecr', 'ecs', 'efs', 'eks', 'gke', 'iam', 'kms', 'msk', 'rbac',
         'rds', 'sns', 'ses', 'sqs', 'vpc', 'elb', 'elbv2', 'emr', 'dns', 'oss', 'ram',
     ]
 

@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Accepting Unauthenticated Clients",
+    "rationale": "Unauthenticated access lets any host able to open a TCP connection to a broker act as a Kafka client, with no credential to present and no identity to record. Reaching the brokers is then the whole of the access control, and a compromised instance, a peered VPC or an overly wide security group is enough: the client can read every topic, write into any of them and, when automatic topic creation is on, create its own. Nothing in CloudTrail or in the broker logs distinguishes one such client from another, so the traffic cannot be attributed after the fact.",
+    "remediation": "Turn off unauthenticated access on the cluster and require SASL/IAM, SASL/SCRAM or mTLS, after moving the clients over to an authenticated listener",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/kafka_apis_iam.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-authentication.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.unauthenticated_access_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "unauthenticated_access_enabled"
+}

@@ -1,0 +1,80 @@
+<!-- MSK Clusters partial -->
+<script id="services.msk.regions.id.clusters.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="msk.regions.{{region}}.clusters.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Cluster type: <span id="msk.regions.{{region}}.clusters.{{@key}}.cluster_type"><samp>{{value_or_none cluster_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">State: <span id="msk.regions.{{region}}.clusters.{{@key}}.state"><samp>{{value_or_none state}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="msk.regions.{{region}}.clusters.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Kafka version: <span id="msk.regions.{{region}}.clusters.{{@key}}.kafka_version"><samp>{{value_or_none kafka_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Kafka version status: <span id="msk.regions.{{region}}.clusters.{{@key}}.kafka_version_status"><samp>{{value_or_none kafka_version_status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Broker nodes: <span id="msk.regions.{{region}}.clusters.{{@key}}.number_of_broker_nodes"><samp>{{value_or_none number_of_broker_nodes}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance type: <span id="msk.regions.{{region}}.clusters.{{@key}}.instance_type"><samp>{{value_or_none instance_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Storage volume size (GiB): <span id="msk.regions.{{region}}.clusters.{{@key}}.storage_volume_size"><samp>{{value_or_none storage_volume_size}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Storage mode: <span id="msk.regions.{{region}}.clusters.{{@key}}.storage_mode"><samp>{{value_or_none storage_mode}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Client subnets: <span id="msk.regions.{{region}}.clusters.{{@key}}.client_subnets">{{#each client_subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="msk.regions.{{region}}.clusters.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Network type: <span id="msk.regions.{{region}}.clusters.{{@key}}.network_type"><samp>{{value_or_none network_type}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Access</h4>
+      <div class="list-group-item-text item-margin">Authentication: <span id="msk.regions.{{region}}.clusters.{{@key}}.authentication_methods">{{#each authentication_methods}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Unauthenticated access: <span id="msk.regions.{{region}}.clusters.{{@key}}.unauthenticated_access_enabled">{{convert_bool_to_enabled unauthenticated_access_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">SASL/SCRAM secrets: <span id="msk.regions.{{region}}.clusters.{{@key}}.scram_secrets_count"><samp>{{value_or_none scram_secrets_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">mTLS certificate authorities: <span id="msk.regions.{{region}}.clusters.{{@key}}.tls_certificate_authorities">{{#each tls_certificate_authorities}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Public access: <span id="msk.regions.{{region}}.clusters.{{@key}}.public_access_type"><samp>{{value_or_none public_access_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">VPC connectivity: <span id="msk.regions.{{region}}.clusters.{{@key}}.vpc_connectivity_enabled">{{convert_bool_to_enabled vpc_connectivity_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">ZooKeeper connect string: <span id="msk.regions.{{region}}.clusters.{{@key}}.zookeeper_connect_string"><samp>{{value_or_none zookeeper_connect_string}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ZooKeeper connect string (TLS): <span id="msk.regions.{{region}}.clusters.{{@key}}.zookeeper_connect_string_tls"><samp>{{value_or_none zookeeper_connect_string_tls}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Encryption</h4>
+      <div class="list-group-item-text item-margin">Client to broker: <span id="msk.regions.{{region}}.clusters.{{@key}}.encryption_in_transit_client_broker"><samp>{{value_or_none encryption_in_transit_client_broker}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Between brokers: <span id="msk.regions.{{region}}.clusters.{{@key}}.encryption_in_cluster">{{convert_bool_to_enabled encryption_in_cluster}}</span></div>
+      <div class="list-group-item-text item-margin">At rest KMS key: <span id="msk.regions.{{region}}.clusters.{{@key}}.encryption_at_rest_kms_key"><samp>{{value_or_none encryption_at_rest_kms_key}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="msk.regions.{{region}}.clusters.{{@key}}.encryption_at_rest_with_cmk"><samp>{{value_or_none encryption_at_rest_with_cmk}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Monitoring</h4>
+      <div class="list-group-item-text item-margin">Broker logs: <span id="msk.regions.{{region}}.clusters.{{@key}}.broker_logs_enabled">{{convert_bool_to_enabled broker_logs_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">CloudWatch log group: <span id="msk.regions.{{region}}.clusters.{{@key}}.broker_logs_cloudwatch_log_group"><samp>{{value_or_none broker_logs_cloudwatch_log_group}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Firehose delivery stream: <span id="msk.regions.{{region}}.clusters.{{@key}}.broker_logs_firehose_delivery_stream"><samp>{{value_or_none broker_logs_firehose_delivery_stream}}</samp></span></div>
+      <div class="list-group-item-text item-margin">S3 bucket: <span id="msk.regions.{{region}}.clusters.{{@key}}.broker_logs_s3_bucket"><samp>{{value_or_none broker_logs_s3_bucket}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Enhanced monitoring: <span id="msk.regions.{{region}}.clusters.{{@key}}.enhanced_monitoring"><samp>{{value_or_none enhanced_monitoring}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Open monitoring JMX exporter: <span id="msk.regions.{{region}}.clusters.{{@key}}.open_monitoring_jmx_exporter_enabled">{{convert_bool_to_enabled open_monitoring_jmx_exporter_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Open monitoring node exporter: <span id="msk.regions.{{region}}.clusters.{{@key}}.open_monitoring_node_exporter_enabled">{{convert_bool_to_enabled open_monitoring_node_exporter_enabled}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Broker configuration</h4>
+      <div class="list-group-item-text item-margin">Configuration ARN: <span id="msk.regions.{{region}}.clusters.{{@key}}.configuration_arn"><samp>{{value_or_none configuration_arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Configuration revision: <span id="msk.regions.{{region}}.clusters.{{@key}}.configuration_revision"><samp>{{value_or_none configuration_revision}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Kafka ACLs default to allow: <span id="msk.regions.{{region}}.clusters.{{@key}}.acl_default_allow"><samp>{{value_or_none acl_default_allow}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Automatic topic creation: <span id="msk.regions.{{region}}.clusters.{{@key}}.auto_create_topics_enabled"><samp>{{value_or_none auto_create_topics_enabled}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Unclean leader election: <span id="msk.regions.{{region}}.clusters.{{@key}}.unclean_leader_election_enabled"><samp>{{value_or_none unclean_leader_election_enabled}}</samp></span></div>
+      {{#if server_properties}}
+      <div class="list-group-item-text item-margin">Server properties:
+        <ul>
+          {{#each server_properties}}
+          <li class="list-group-item-text"><samp>{{@key}}</samp> = <samp>{{this}}</samp></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    {{#if policy}}
+      {{> accordion_policy name = 'Cluster Policy' document = policy policy_path = (concat 'msk.regions' region 'clusters' @key 'policy')}}
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.msk.regions.id.clusters", $("#services\\.msk\\.regions\\.id\\.clusters\\.partial").html());
+  </script>
+  <!-- Single MSK cluster instance template -->
+  <script id="single_msk_cluster-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.msk.regions.id.clusters' }}
+  </script>
+  <script>
+    var single_msk_cluster_template = Handlebars.compile($("#single_msk_cluster-template").html());
+  </script>

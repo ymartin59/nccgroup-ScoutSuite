@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Brokers Reachable from the Internet",
+    "rationale": "Turning on public access gives every broker an elastic IP and publishes its Kafka port on the internet, so the security groups of the cluster become the only boundary left between the brokers and untargeted scanning. A Kafka broker is not a service designed to sit at that edge: it exposes the full protocol before any topic-level authorization is consulted, and the credentials it accepts are long-lived. Clients that genuinely live outside the VPC are served by a VPC connection or by a private endpoint without any of this exposure.",
+    "remediation": "Disable public access on the cluster and reach the brokers from within the VPC, through VPC peering, Transit Gateway or a multi-VPC private connection",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/public-access.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/aws-access-mult-vpc.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/security-best-practices.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.public_access_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "public_access_type"
+}

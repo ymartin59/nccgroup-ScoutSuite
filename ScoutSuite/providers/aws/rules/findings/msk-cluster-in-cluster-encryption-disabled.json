@@ -1,0 +1,21 @@
+{
+    "description": "Cluster Not Encrypting Traffic between Brokers",
+    "rationale": "Replication is how a record reaches the brokers that did not receive it, so every message written to a replicated topic crosses the network between brokers as well. With in-cluster encryption off that traffic is plaintext, in the availability zones and subnets the cluster spans, which puts the full contents of the topics back on the wire even when the clients themselves connect over TLS. The setting can only be chosen when the cluster is created, so a cluster left this way keeps the gap for its entire life.",
+    "remediation": "Recreate the cluster with encryption in transit within the cluster enabled, and migrate the topics over, as the setting cannot be changed afterwards",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/msk-encryption.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/data-protection.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.encryption_in_cluster",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_in_cluster"
+}

@@ -180,8 +180,13 @@ or of whether AWS's own detection services are switched on.
       policy, advanced security mode, deletion protection), app clients (secret, allowed OAuth flows,
       callback URLs, token validity, prevent-user-existence-errors), identity pools
       (**unauthenticated identities allowed**, attached roles and their trust policies, classic flow).
-- [ ] **Amazon MSK / Kafka** — clusters, encryption in transit (client + in-cluster), at-rest KMS,
-      client authentication (TLS/SASL/unauthenticated), public access, logging, `allow.everyone.if.no.acl.found`.
+- [x] **Amazon MSK / Kafka** — done, as the `msk` service (boto3 `kafka`): provisioned and
+      serverless clusters, encryption in transit (client-broker + in-cluster), at-rest KMS key and
+      whether it is customer managed, client authentication (IAM/SCRAM/mTLS/unauthenticated), SCRAM
+      secrets, public access and multi-VPC connectivity, cluster policy, broker logs, monitoring
+      level, Kafka version support status, and the server properties of the configuration each
+      cluster runs (`allow.everyone.if.no.acl.found`, `auto.create.topics.enable`), plus the region's
+      MSK configurations as a separate resource.
 - [ ] **Kinesis Data Streams / Firehose** — stream encryption (KMS vs none), retention, resource
       policies, Firehose destination encryption and cross-account delivery.
 - [ ] **EventBridge** — event buses, **resource policies** (cross-account `PutEvents`, wildcard

@@ -1,0 +1,21 @@
+{
+    "description": "Cluster Running a Deprecated Apache Kafka Version",
+    "rationale": "MSK marks a Kafka version as deprecated once it stops offering it for new clusters, which is also the point where the patches it receives thin out and then stop. Existing clusters keep running, so nothing breaks and nothing prompts an upgrade, while the published vulnerabilities of the Kafka release accumulate against a version that will not be fixed. A deprecated version is also refused by later MSK features and can only be left behind by an in-place upgrade, which needs planning and gets harder the further behind the cluster falls.",
+    "remediation": "Upgrade the cluster to a Kafka version MSK still lists as active, after checking the compatible versions and the client compatibility of the upgrade path",
+    "references": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/supported-kafka-versions.html",
+        "https://docs.aws.amazon.com/msk/latest/developerguide/version-upgrades.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "msk.regions.id.clusters.id",
+    "path": "msk.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "msk.regions.id.clusters.id.kafka_version_deprecated",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "kafka_version"
+}
