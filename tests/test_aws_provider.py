@@ -7,6 +7,7 @@ from ScoutSuite.providers import get_provider
 from ScoutSuite.providers.aws.authentication_strategy import AWSCredentials
 from ScoutSuite.providers.base.authentication_strategy import AuthenticationException
 from ScoutSuite.providers.base.authentication_strategy_factory import get_authentication_strategy
+from ScoutSuite.providers.aws.facade.s3 import S3Facade
 from ScoutSuite.providers.aws.resources.ec2.instances import EC2Instances
 
 class Object(object):
@@ -173,3 +174,36 @@ hats off to TRON: HereIsSomethingThatAppearsAtEndOfLineMCP
             "0000000000/1111111111/2222222222/3333333",
             "HereIsSomethingThatAppearsAtEndOfLineMCP"
         ]
+
+
+class TestS3FacadeClass(unittest.TestCase):
+    @staticmethod
+    def _buckets(*regions):
+        return [{'Name': f'bucket-{index}', 'region': region} for index, region in enumerate(regions)]
+
+    def test_filter_buckets_in_scope_without_scope(self):
+        facade = S3Facade()
+        buckets = self._buckets('us-east-1', 'eu-west-1', None)
+
+        assert facade._filter_buckets_in_scope(buckets) == buckets
+
+    def test_filter_buckets_in_scope_with_chosen_regions(self):
+        facade = S3Facade()
+        facade.regions = ['us-east-1', 'us-east-2']
+        buckets = self._buckets('us-east-1', 'eu-west-1', 'us-east-2')
+
+        assert [b['region'] for b in facade._filter_buckets_in_scope(buckets)] == ['us-east-1', 'us-east-2']
+
+    def test_filter_buckets_in_scope_with_excluded_regions(self):
+        facade = S3Facade()
+        facade.excluded_regions = ['eu-west-1']
+        buckets = self._buckets('us-east-1', 'eu-west-1')
+
+        assert [b['region'] for b in facade._filter_buckets_in_scope(buckets)] == ['us-east-1']
+
+    def test_filter_buckets_in_scope_keeps_unknown_region(self):
+        facade = S3Facade()
+        facade.regions = ['us-east-1']
+        buckets = self._buckets('eu-west-1', None)
+
+        assert [b['Name'] for b in facade._filter_buckets_in_scope(buckets)] == ['bucket-1']

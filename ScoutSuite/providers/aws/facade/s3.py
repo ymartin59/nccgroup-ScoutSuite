@@ -1,5 +1,7 @@
 import json
 
+import boto3
+
 from botocore.exceptions import ClientError
 
 from ScoutSuite.core.console import print_exception, print_debug, print_warning
@@ -9,6 +11,13 @@ from ScoutSuite.providers.utils import run_concurrently, get_and_set_concurrentl
 
 
 class S3Facade(AWSBaseFacade):
+    def __init__(self, session: boto3.session.Session = None):
+        super().__init__(session)
+        # S3 is both a global and a regional service: the requested region scope is used to select the
+        # endpoints queried and to discard the buckets located outside of it.
+        self.regions = []
+        self.excluded_regions = []
+
     async def get_buckets(self):
         try:
             # If there are regions specified, try for each of them until one works.
@@ -18,6 +27,7 @@ class S3Facade(AWSBaseFacade):
             buckets = []
             exception = None
             region_list = self.regions if self.regions else await run_concurrently(lambda: self.session.get_available_regions('s3'))
+            region_list = [r for r in region_list if r not in self.excluded_regions]
             for region in region_list:
                 try:
                     client = AWSFacadeUtils.get_client('s3', self.session, region)
@@ -37,6 +47,12 @@ class S3Facade(AWSBaseFacade):
         else:
             # We need first to retrieve bucket locations before retrieving bucket details
             await get_and_set_concurrently([self._get_and_set_s3_bucket_location], buckets, region=region)
+
+            # ListBuckets returns the buckets of the whole account, whatever the endpoint's region, so the
+            # requested region scope has to be applied here, before fetching any bucket details
+            buckets = self._filter_buckets_in_scope(buckets)
+            if not buckets:
+                return []
 
             # Then we can retrieve bucket details concurrently
             await get_and_set_concurrently(
@@ -79,6 +95,39 @@ class S3Facade(AWSBaseFacade):
             region = None
 
         bucket['region'] = region
+
+    def _filter_buckets_in_scope(self, buckets: []):
+        """
+        Discards the buckets located outside of the requested region scope, i.e. not in the regions passed
+        with --regions or in a region passed with --exclude-regions. Buckets whose location could not be
+        determined are kept, as there is no way to tell whether they are in scope.
+
+        :param buckets: list of buckets, with their 'region' attribute already set
+
+        :return: the list of the buckets which are in scope
+        """
+
+        if not self.regions and not self.excluded_regions:
+            return buckets
+
+        buckets_in_scope = []
+        out_of_scope_count = {}
+        for bucket in buckets:
+            region = bucket.get('region')
+            if not region:
+                print_debug('Keeping bucket {} as its region could not be determined'.format(bucket['Name']))
+                buckets_in_scope.append(bucket)
+            elif (self.regions and region not in self.regions) or region in self.excluded_regions:
+                out_of_scope_count[region] = out_of_scope_count.get(region, 0) + 1
+            else:
+                buckets_in_scope.append(bucket)
+
+        if out_of_scope_count:
+            print_debug('Skipping {} bucket(s) outside of the requested regions: {}'.format(
+                sum(out_of_scope_count.values()),
+                ', '.join('{} in {}'.format(count, region) for region, count in sorted(out_of_scope_count.items()))))
+
+        return buckets_in_scope
 
     async def _get_and_set_s3_bucket_logging(self, bucket: {}):
         client = AWSFacadeUtils.get_client('s3', self.session, bucket['region'], )
