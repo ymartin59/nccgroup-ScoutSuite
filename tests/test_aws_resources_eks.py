@@ -1,6 +1,47 @@
 import unittest
+import freezegun
 
 from ScoutSuite.providers.aws.resources.eks.clusters import Clusters
+
+
+@freezegun.freeze_time("2024-01-01")
+class TestAWSEKSClusterVersionSupport(unittest.TestCase):
+
+    def _parse_version_support(self, version, raw_cluster=None):
+        cluster = {'version': version}
+        Clusters._parse_version_support(Clusters(None, 'eu-west-1'), raw_cluster or {}, cluster)
+        return cluster
+
+    def test_version_still_under_standard_support(self):
+        cluster = self._parse_version_support('1.28')
+
+        assert cluster['version_unsupported'] is False
+        assert cluster['version_end_of_standard_support'] == '2024-11-26'
+
+    def test_version_past_end_of_standard_support(self):
+        cluster = self._parse_version_support('1.22')
+
+        assert cluster['version_unsupported'] is True
+        assert cluster['version_end_of_standard_support'] == '2023-06-04'
+
+    def test_version_older_than_the_table(self):
+        # No date is transcribed for those versions, they went out of support well before the oldest
+        cluster = self._parse_version_support('1.19')
+
+        assert cluster['version_unsupported'] is True
+        assert cluster['version_end_of_standard_support'] is None
+
+    def test_version_newer_than_the_table(self):
+        cluster = self._parse_version_support('1.42')
+
+        assert cluster['version_unsupported'] is False
+        assert cluster['version_end_of_standard_support'] is None
+
+    def test_support_type(self):
+        cluster = self._parse_version_support('1.22', {'upgradePolicy': {'supportType': 'EXTENDED'}})
+
+        assert cluster['upgrade_support_type'] == 'EXTENDED'
+        assert self._parse_version_support('1.22')['upgrade_support_type'] is None
 
 
 class TestAWSEKSClusters(unittest.TestCase):

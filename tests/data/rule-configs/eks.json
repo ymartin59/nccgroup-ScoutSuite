@@ -44,7 +44,10 @@
                             "type_logging_authenticator": true,
                             "type_logging_controllerManager": true,
                             "type_logging_scheduler": true,
-                            "version": "1.28"
+                            "upgrade_support_type": "STANDARD",
+                            "version": "1.28",
+                            "version_end_of_standard_support": "2024-11-26",
+                            "version_unsupported": false
                         },
                         "scoutid-9b33046ed39d182e3adafa9045ad6787d4bbc321": {
                             "arn": "arn:aws:eks:eu-west-1:123456789012:cluster/legacy",
@@ -83,7 +86,10 @@
                             "type_logging_authenticator": false,
                             "type_logging_controllerManager": false,
                             "type_logging_scheduler": false,
-                            "version": "1.21"
+                            "upgrade_support_type": "EXTENDED",
+                            "version": "1.21",
+                            "version_end_of_standard_support": "2023-02-15",
+                            "version_unsupported": true
                         },
                         "scoutid-d9390b2c40115621a794999e812abc00bf9e5c7b": {
                             "arn": "arn:aws:eks:eu-west-1:123456789012:cluster/staging",
@@ -123,7 +129,10 @@
                             "type_logging_authenticator": true,
                             "type_logging_controllerManager": false,
                             "type_logging_scheduler": false,
-                            "version": "1.27"
+                            "upgrade_support_type": "STANDARD",
+                            "version": "1.27",
+                            "version_end_of_standard_support": "2024-07-24",
+                            "version_unsupported": false
                         }
                     },
                     "clusters_count": 3,

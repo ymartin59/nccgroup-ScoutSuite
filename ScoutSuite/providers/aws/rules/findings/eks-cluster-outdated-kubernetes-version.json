@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Running a Kubernetes Version Past Standard Support",
+    "rationale": "Once a Kubernetes version reaches the end of its standard support, EKS stops shipping patches for it for free: the cluster either sits in extended support, where fixes keep coming but at a higher price and only for a further limited period, or it is upgraded by AWS on its own schedule, which is an unplanned control plane change on a production cluster. The longer a cluster stays behind, the larger the upgrade becomes, since versions have to be crossed one minor at a time and each one may remove an API the workloads still call.",
+    "remediation": "Plan the upgrade of the cluster and of its nodegroups to a version still under standard support, one minor version at a time, after checking the deprecated APIs each step removes",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/extended-support-control.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.version_unsupported",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "version"
+}
