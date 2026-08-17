@@ -481,6 +481,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-registry-basic-image-scanning.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ecr-registry-world-policy.json": [
             {
                 "enabled": true,

@@ -1,0 +1,26 @@
+{
+    "description": "Registry Using Basic Image Scanning",
+    "rationale": "Basic scanning only looks at the operating system packages of an image, and only when it is asked to. Everything the application itself depends on, which is where most of the exploitable vulnerabilities of a container are, is invisible to it, and a scan describes the image as of the day it ran: a vulnerability published afterwards is never reported for an image nobody pushes again. Enhanced scanning hands the repositories to Amazon Inspector, which covers programming language packages as well and re-evaluates images as new vulnerabilities appear.",
+    "remediation": "Set the private registry scanning configuration to enhanced scanning with a continuous scan rule matching all repositories",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html",
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-settings.html"
+    ],
+    "dashboard_name": "Registries",
+    "display_path": "ecr.regions.id.registry_settings.id",
+    "path": "ecr.regions.id.registry_settings.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories_count",
+            "moreThan",
+            "0"
+        ],
+        [
+            "ecr.regions.id.registry_settings.id.scan_type",
+            "equal",
+            "BASIC"
+        ]
+    ],
+    "id_suffix": "scan_type"
+}
