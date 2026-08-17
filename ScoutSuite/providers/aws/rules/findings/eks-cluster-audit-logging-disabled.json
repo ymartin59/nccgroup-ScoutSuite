@@ -1,0 +1,29 @@
+{
+    "description": "Cluster Audit Logging Disabled",
+    "rationale": "CloudTrail records the calls made to the EKS API, such as creating or updating a cluster, but says nothing about what happens inside it: reading a Secret, execing into a pod or editing a role binding are Kubernetes API calls, and the audit log is the only place they are recorded. Without it there is no way to tell afterwards which identity acted on which object, so an intrusion that stays within the cluster leaves no trace the account can consult, and the missing period can never be reconstructed.",
+    "remediation": "Enable the audit log type on the cluster, and forward the /aws/eks/<cluster>/cluster log group to wherever the account's logs are retained and monitored",
+    "compliance": [
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "2.1.1"
+        }
+    ],
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/detective.html",
+        "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.type_logging_audit",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "type_logging_audit"
+}
