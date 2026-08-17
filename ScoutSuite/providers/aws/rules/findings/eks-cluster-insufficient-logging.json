@@ -1,0 +1,32 @@
+{
+    "description": "Cluster Emitting Only Part of the Control Plane Logs",
+    "rationale": "The five control plane log types answer different questions, and a cluster that emits some of them looks logged while leaving gaps nobody notices until an investigation needs them. The API server log records the requests, the authenticator log records how an IAM identity was mapped to a Kubernetes subject, and the controller manager and scheduler logs record what the cluster then did on its own: dropping any of them removes a step from the chain, and log types can only be turned on for the future.",
+    "remediation": "Enable the remaining control plane log types on the cluster",
+    "compliance": [
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "2.1.1"
+        }
+    ],
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.logging_enabled_types",
+            "notEmpty",
+            ""
+        ],
+        [
+            "eks.regions.id.clusters.id.logging_disabled_types",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "logging_disabled_types"
+}

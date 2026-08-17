@@ -502,6 +502,12 @@
                 "level": "warning"
             }
         ],
+        "eks-cluster-insufficient-logging.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-logging-enabled.json": [
             {
                 "enabled" : true,
