@@ -1,0 +1,43 @@
+{
+    "description": "Table Authorized to All Principals",
+    "rationale": "A resource-based policy that allows a DynamoDB action to all principals grants access to any AWS account, not merely to any principal within the account owning the table. Unlike an IAM policy, it needs no counterpart on the caller's side to take effect, so such a statement is sufficient on its own to expose the table's items to the Internet at large.",
+    "remediation": "Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\":\"*\"} in the affected table policy, or restrict it with a condition on the calling account, organization or principal",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-resource-based.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id.policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.",
+            "withKey",
+            "policy"
+        ],
+        [
+            "dynamodb.regions.id.tables.id.policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "dynamodb.regions.id.tables.id.policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "dynamodb.regions.id.tables.id.policy.Statement.id"
+            ]
+        ]
+    ]
+}

@@ -40,9 +40,102 @@
                             "name": "pitr-only",
                             "sse_enabled": false,
                             "table_status": "ACTIVE"
+                        },
+                        "66666666-6666-6666-6666-666666666666": {
+                            "arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/public-policy",
+                            "automatic_backups_enabled": true,
+                            "backup_summaries": [
+                                {
+                                    "BackupName": "public-policy-2024-01-01",
+                                    "BackupStatus": "AVAILABLE"
+                                }
+                            ],
+                            "id": "66666666-6666-6666-6666-666666666666",
+                            "item_count": 11,
+                            "name": "public-policy",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": "dynamodb:*",
+                                        "Effect": "Allow",
+                                        "Principal": "*",
+                                        "Resource": "arn:aws:dynamodb:eu-west-1:123456789012:table/public-policy"
+                                    },
+                                    {
+                                        "Action": "dynamodb:DeleteTable",
+                                        "Effect": "Deny",
+                                        "Principal": "*",
+                                        "Resource": "arn:aws:dynamodb:eu-west-1:123456789012:table/public-policy"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "sse_enabled": true,
+                            "table_status": "ACTIVE"
+                        },
+                        "77777777-7777-7777-7777-777777777777": {
+                            "arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/org-scoped-policy",
+                            "automatic_backups_enabled": true,
+                            "backup_summaries": [
+                                {
+                                    "BackupName": "org-scoped-policy-2024-01-01",
+                                    "BackupStatus": "AVAILABLE"
+                                }
+                            ],
+                            "id": "77777777-7777-7777-7777-777777777777",
+                            "item_count": 5,
+                            "name": "org-scoped-policy",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": "dynamodb:GetItem",
+                                        "Condition": {
+                                            "StringEquals": {
+                                                "aws:PrincipalOrgID": "o-abcdefghij"
+                                            }
+                                        },
+                                        "Effect": "Allow",
+                                        "Principal": {
+                                            "AWS": "*"
+                                        },
+                                        "Resource": "arn:aws:dynamodb:eu-west-1:123456789012:table/org-scoped-policy"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "sse_enabled": true,
+                            "table_status": "ACTIVE"
+                        },
+                        "88888888-8888-8888-8888-888888888888": {
+                            "arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/account-scoped-policy",
+                            "automatic_backups_enabled": true,
+                            "backup_summaries": [
+                                {
+                                    "BackupName": "account-scoped-policy-2024-01-01",
+                                    "BackupStatus": "AVAILABLE"
+                                }
+                            ],
+                            "id": "88888888-8888-8888-8888-888888888888",
+                            "item_count": 9,
+                            "name": "account-scoped-policy",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": "dynamodb:*",
+                                        "Effect": "Allow",
+                                        "Principal": {
+                                            "AWS": "arn:aws:iam::210987654321:root"
+                                        },
+                                        "Resource": "arn:aws:dynamodb:eu-west-1:123456789012:table/account-scoped-policy"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "sse_enabled": true,
+                            "table_status": "ACTIVE"
                         }
                     },
-                    "tables_count": 3
+                    "tables_count": 6
                 },
                 "us-east-1": {
                     "region": "us-east-1",

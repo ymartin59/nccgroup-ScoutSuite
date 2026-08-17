@@ -124,6 +124,12 @@
                 "level": "danger"
             }
         ],
+        "dynamodb-table-world-policy.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "ec2-ami-public.json": [
             {
                 "enabled": true,
