@@ -559,6 +559,12 @@
                 "level": "danger"
             }
         ],
+        "eks-nodegroup-custom-ami.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "elb-listener-allowing-cleartext.json": [
             {
                 "enabled": true,

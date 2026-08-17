@@ -1,0 +1,21 @@
+{
+    "description": "Nodegroup Running a Custom AMI",
+    "rationale": "A nodegroup whose AMI type is CUSTOM runs an image the account is responsible for: EKS no longer publishes updated releases for it, so the kernel, the container runtime and the kubelet are only patched when whoever built the image rebuilds it and the nodegroup is rolled. The optimized AMIs are also the images the EKS release process validates against each Kubernetes version, and they ship the hardening and the bootstrap script the service expects, none of which a custom image is guaranteed to keep.",
+    "remediation": "Move the nodegroup to an EKS optimized AMI type, or keep a documented pipeline that rebuilds the custom image on the current EKS optimized release and rolls the nodegroup",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-amis.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/infrastructure.html"
+    ],
+    "dashboard_name": "Nodegroups",
+    "display_path": "eks.regions.id.nodegroups.id",
+    "path": "eks.regions.id.nodegroups.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.nodegroups.id.amiType",
+            "equal",
+            "CUSTOM"
+        ]
+    ],
+    "id_suffix": "amiType"
+}
