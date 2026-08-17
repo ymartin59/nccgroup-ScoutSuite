@@ -191,11 +191,24 @@ class ECRFacade(AWSBaseFacade):
                           'does not support DescribePullThroughCacheRules')
             return
 
+        # DescribePullThroughCacheRules is not exposed as a paginator by every botocore version,
+        # page through it by hand
+        rules = []
+        next_token = None
         try:
-            registry['pullThroughCacheRules'] = await AWSFacadeUtils.get_all_pages(
-                'ecr', region, self.session, 'describe_pull_through_cache_rules', 'pullThroughCacheRules')
+            while True:
+                arguments = {'nextToken': next_token} if next_token else {}
+                response = await run_concurrently(
+                    lambda arguments=arguments: client.describe_pull_through_cache_rules(**arguments))
+                rules.extend(response.get('pullThroughCacheRules', []))
+                next_token = response.get('nextToken')
+                if not next_token:
+                    break
         except Exception as e:
             print_exception('Failed to describe the ECR pull through cache rules: {}'.format(e))
+            return
+
+        registry['pullThroughCacheRules'] = rules
 
     async def get_images(self, region: str, repository_name: str):
         try:
