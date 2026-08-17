@@ -1,0 +1,22 @@
+{
+    "description": "Cluster Mapping IAM Principals Through the aws-auth ConfigMap",
+    "rationale": "With authentication left on CONFIG_MAP, who can reach the cluster is decided by a ConfigMap in kube-system rather than by the EKS API. Editing it takes Kubernetes permissions instead of IAM permissions, the change is not recorded in CloudTrail, and a malformed edit locks every principal out of the cluster at once with no way back in. Access entries move the same mappings behind the EKS API, so granting cluster access becomes an IAM action that CloudTrail records and that IAM policies and SCPs can restrict.",
+    "remediation": "Switch the cluster authentication mode to API_AND_CONFIG_MAP, recreate the aws-auth mappings as access entries, then switch to API to retire the ConfigMap",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.authentication_mode",
+            "equal",
+            "CONFIG_MAP"
+        ]
+    ],
+    "id_suffix": "authentication_mode"
+}

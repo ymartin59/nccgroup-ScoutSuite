@@ -42,8 +42,18 @@ class Clusters(AWSResources):
 
         self._parse_logging(raw_cluster['cluster'], cluster)
         self._parse_encryption(raw_cluster['cluster'], cluster)
+        self._parse_access_config(raw_cluster['cluster'], cluster)
 
         return get_non_provider_id(cluster['name']), cluster
+
+    @staticmethod
+    def _parse_access_config(raw_cluster, cluster):
+        # Clusters created before access entries existed report no access configuration at all, and
+        # the aws-auth ConfigMap is then the only thing that maps IAM principals to the cluster
+        access_config = raw_cluster.get('accessConfig') or {}
+        cluster['authentication_mode'] = access_config.get('authenticationMode', 'CONFIG_MAP')
+        cluster['bootstrap_cluster_creator_admin_permissions'] = \
+            access_config.get('bootstrapClusterCreatorAdminPermissions')
 
     async def _parse_service_account_iam_roles(self, raw_cluster, cluster, oidc_provider_urls):
         # Every cluster is handed an OIDC issuer URL, but IAM roles for service accounts only work

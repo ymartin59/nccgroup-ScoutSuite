@@ -535,6 +535,12 @@
                 "level": "danger"
             }
         ],
+        "eks-cluster-authentication-mode-config-map.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-endpoint-publicly-accessible.json": [
             {
                 "enabled": true,
