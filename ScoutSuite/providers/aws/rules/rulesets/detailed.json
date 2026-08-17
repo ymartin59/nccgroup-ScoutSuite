@@ -565,6 +565,12 @@
                 "level": "warning"
             }
         ],
+        "eks-nodegroup-version-behind-cluster.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "elb-listener-allowing-cleartext.json": [
             {
                 "enabled": true,

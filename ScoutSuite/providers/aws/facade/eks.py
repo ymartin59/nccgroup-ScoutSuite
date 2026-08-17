@@ -26,6 +26,10 @@ class EKSFacade(AWSBaseFacade):
 
         return [cluster for cluster in clusters if cluster]
 
+    async def get_cluster(self, region: str, cluster_name: str) -> Dict:
+        raw_cluster = await self._get_cluster(cluster_name, region)
+        return raw_cluster.get('cluster', {})
+
     async def get_nodegroups(self, region: str, cluster_name: str):
         try:
             nodegroup_names = await AWSFacadeUtils.get_all_pages(

@@ -1,0 +1,21 @@
+{
+    "description": "Nodegroup Behind the Cluster Kubernetes Version",
+    "rationale": "The nodes carry the kubelet, the container runtime and the kernel that actually run the workloads, so a nodegroup left on an older Kubernetes version keeps running the AMI release built for that version and misses the fixes shipped since, including those for kubelet and container escape issues. A control plane upgrade does nothing for the nodes, and EKS only supports a limited version skew, so a nodegroup that stays behind eventually blocks the next control plane upgrade as well.",
+    "remediation": "Update the nodegroup to the Kubernetes version of the cluster, which replaces its nodes with instances running the matching EKS optimized AMI release",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html"
+    ],
+    "dashboard_name": "Nodegroups",
+    "display_path": "eks.regions.id.nodegroups.id",
+    "path": "eks.regions.id.nodegroups.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.nodegroups.id.version_behind_cluster",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "Nodegroup_version"
+}

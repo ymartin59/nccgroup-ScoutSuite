@@ -108,6 +108,7 @@
                             "amiType": "AL2023_x86_64_STANDARD",
                             "capacityType": "ON_DEMAND",
                             "clusterName": "production",
+                            "cluster_version": "1.28",
                             "created_at": "2023-09-04 11:19:33",
                             "desiredSize": 3,
                             "diskSize": 50,
@@ -118,7 +119,8 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-production",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/production/managed-nodes/e40cf894",
                             "region": "eu-west-1",
-                            "status": "ACTIVE"
+                            "status": "ACTIVE",
+                            "version_behind_cluster": false
                         },
                         "scoutid-a05052c4e459bffcaeb514af6a080b8ad9c68d98": {
                             "MaxSize": 6,
@@ -128,6 +130,7 @@
                             "amiType": "CUSTOM",
                             "capacityType": "ON_DEMAND",
                             "clusterName": "legacy",
+                            "cluster_version": "1.21",
                             "created_at": "2021-08-19 15:51:08",
                             "desiredSize": 3,
                             "diskSize": 50,
@@ -138,7 +141,8 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-legacy",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/legacy/legacy-nodes/0328ca10",
                             "region": "eu-west-1",
-                            "status": "ACTIVE"
+                            "status": "ACTIVE",
+                            "version_behind_cluster": true
                         },
                         "scoutid-d38906ce8b6e748b60a7b56ff6b8d63898b7ed9a": {
                             "MaxSize": 6,
@@ -148,6 +152,7 @@
                             "amiType": "AL2_x86_64",
                             "capacityType": "SPOT",
                             "clusterName": "staging",
+                            "cluster_version": "1.27",
                             "created_at": "2023-06-27 08:41:52",
                             "desiredSize": 3,
                             "diskSize": 50,
@@ -158,7 +163,8 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-staging",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/staging/spot-nodes/f5b0d655",
                             "region": "eu-west-1",
-                            "status": "ACTIVE"
+                            "status": "ACTIVE",
+                            "version_behind_cluster": false
                         }
                     },
                     "nodegroups_count": 3,
