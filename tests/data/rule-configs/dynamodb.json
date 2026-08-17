@@ -63,6 +63,7 @@
                             ],
                             "latest_stream_arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/well-protected/stream/2024-01-01T00:00:00.000",
                             "name": "well-protected",
+                            "policy_restricts_to_vpc_endpoint": false,
                             "replicas": {
                                 "ap-south-1": {
                                     "id": "ap-south-1",
@@ -96,6 +97,7 @@
                             "item_count": 7,
                             "kinesis_data_stream_destinations": [],
                             "name": "no-backups",
+                            "policy_restricts_to_vpc_endpoint": false,
                             "replicas": {},
                             "replicas_count": 0,
                             "sse_enabled": false,
@@ -111,6 +113,7 @@
                             "kinesis_data_stream_destinations": [],
                             "latest_stream_arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/pitr-only/stream/2024-01-01T00:00:00.000",
                             "name": "pitr-only",
+                            "policy_restricts_to_vpc_endpoint": false,
                             "sse_enabled": false,
                             "stream_enabled": true,
                             "stream_view_type": "KEYS_ONLY",
@@ -145,6 +148,7 @@
                                 ],
                                 "Version": "2012-10-17"
                             },
+                            "policy_restricts_to_vpc_endpoint": false,
                             "sse_enabled": true,
                             "table_status": "ACTIVE"
                         },
@@ -178,6 +182,7 @@
                                 ],
                                 "Version": "2012-10-17"
                             },
+                            "policy_restricts_to_vpc_endpoint": false,
                             "sse_enabled": true,
                             "table_status": "ACTIVE"
                         },
@@ -206,11 +211,45 @@
                                 ],
                                 "Version": "2012-10-17"
                             },
+                            "policy_restricts_to_vpc_endpoint": false,
+                            "sse_enabled": true,
+                            "table_status": "ACTIVE"
+                        },
+                        "99999999-9999-9999-9999-999999999999": {
+                            "arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/vpce-restricted",
+                            "automatic_backups_enabled": true,
+                            "backup_summaries": [
+                                {
+                                    "BackupName": "vpce-restricted-2024-01-01",
+                                    "BackupStatus": "AVAILABLE"
+                                }
+                            ],
+                            "deletion_protection_enabled": true,
+                            "id": "99999999-9999-9999-9999-999999999999",
+                            "item_count": 23,
+                            "name": "vpce-restricted",
+                            "policy": {
+                                "Statement": [
+                                    {
+                                        "Action": "dynamodb:*",
+                                        "Condition": {
+                                            "StringNotEquals": {
+                                                "aws:SourceVpce": "vpce-0123456789abcdef0"
+                                            }
+                                        },
+                                        "Effect": "Deny",
+                                        "Principal": "*",
+                                        "Resource": "arn:aws:dynamodb:eu-west-1:123456789012:table/vpce-restricted"
+                                    }
+                                ],
+                                "Version": "2012-10-17"
+                            },
+                            "policy_restricts_to_vpc_endpoint": true,
                             "sse_enabled": true,
                             "table_status": "ACTIVE"
                         }
                     },
-                    "tables_count": 6
+                    "tables_count": 7
                 },
                 "us-east-1": {
                     "dax_clusters": {
@@ -248,6 +287,7 @@
                             "id": "44444444-4444-4444-4444-444444444444",
                             "item_count": 128,
                             "name": "on-demand-backups-only",
+                            "policy_restricts_to_vpc_endpoint": false,
                             "replicas": {
                                 "eu-west-1": {
                                     "id": "eu-west-1",
@@ -269,6 +309,7 @@
                             "id": "55555555-5555-5555-5555-555555555555",
                             "item_count": 3,
                             "name": "undetermined",
+                            "policy_restricts_to_vpc_endpoint": false,
                             "sse_enabled": false,
                             "table_status": "ACTIVE"
                         }
@@ -283,7 +324,7 @@
                     "tables_count": 0
                 }
             },
-            "tables_count": 5
+            "tables_count": 9
         }
     }
 }

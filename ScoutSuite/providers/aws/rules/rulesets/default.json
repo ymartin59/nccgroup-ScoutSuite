@@ -136,6 +136,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-not-restricted-to-vpc-endpoint.json": [
+            {
+                "enabled": false,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-point-in-time-recovery-disabled.json": [
             {
                 "enabled": true,

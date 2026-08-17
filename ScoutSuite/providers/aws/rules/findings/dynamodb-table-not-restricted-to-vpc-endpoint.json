@@ -1,0 +1,21 @@
+{
+    "description": "Table Reachable from Outside a VPC Endpoint",
+    "rationale": "DynamoDB has no network-level access control of its own: its endpoint is public and any principal holding valid credentials can call it from anywhere on the Internet, so a leaked access key is immediately usable from outside the account's network. Combining a gateway VPC endpoint with a resource-based policy conditioned on aws:SourceVpce is the only way to require that requests arrive through the VPC, which turns stolen credentials alone into an insufficient means of reaching the data.",
+    "remediation": "Create a gateway VPC endpoint for DynamoDB in the VPCs that use the table, then add a statement to the table policy denying every request whose aws:SourceVpce is not one of them",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/vpc-endpoints-dynamodb.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-resource-based.html"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.policy_restricts_to_vpc_endpoint",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "policy_restricts_to_vpc_endpoint"
+}
