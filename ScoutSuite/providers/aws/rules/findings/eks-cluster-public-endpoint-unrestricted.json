@@ -1,0 +1,33 @@
+{
+    "description": "Cluster Public Endpoint Open to the Internet",
+    "rationale": "The CIDR allow list is the only network control left once the API server is published publicly, and 0.0.0.0/0 removes it: the control plane accepts connections from every address on the internet, so credential stuffing, a leaked kubeconfig or a flaw in the API server can be exercised from anywhere. Restricting the list to the ranges administrators and CI actually come from does not replace authentication, but it takes the cluster out of reach of untargeted scanning and limits an exposure window to the addresses on the list.",
+    "remediation": "Restrict the public access CIDRs of the cluster to the ranges that need to reach the API server, or disable public access once private access is enabled",
+    "compliance": [
+        {
+            "name": "CIS Amazon EKS Benchmark",
+            "version": "1.0.1",
+            "reference": "5.4.1"
+        }
+    ],
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.endpointPublicAccess",
+            "true",
+            ""
+        ],
+        [
+            "eks.regions.id.clusters.id.public_access_cidrs",
+            "containAtLeastOneOf",
+            "0.0.0.0/0"
+        ]
+    ],
+    "id_suffix": "public_access_cidrs"
+}

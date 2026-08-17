@@ -28,6 +28,9 @@ class Clusters(AWSResources):
         cluster['version'] = raw_cluster['cluster']['version']
         cluster['endpointPublicAccess'] = raw_cluster['cluster']['resourcesVpcConfig']['endpointPublicAccess']
         cluster['endpointPrivateAccess'] = raw_cluster['cluster']['resourcesVpcConfig']['endpointPrivateAccess']
+        # Only meaningful while public access is enabled, and left at its 0.0.0.0/0 default otherwise
+        cluster['public_access_cidrs'] = \
+            raw_cluster['cluster']['resourcesVpcConfig'].get('publicAccessCidrs', [])
         cluster['cluster_sg_group'] = raw_cluster['cluster']['resourcesVpcConfig']['clusterSecurityGroupId']
         cluster['cluster_vpc'] = raw_cluster['cluster']['resourcesVpcConfig']['vpcId']
         cluster['region'] = self.region

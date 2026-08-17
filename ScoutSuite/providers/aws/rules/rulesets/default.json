@@ -520,6 +520,12 @@
                 "level" : "warning"
             }
         ],
+        "eks-cluster-public-endpoint-unrestricted.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "eks-cluster-secrets-not-encrypted-with-kms.json": [
             {
                 "enabled": true,
