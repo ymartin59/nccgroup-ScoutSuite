@@ -1,0 +1,27 @@
+{
+    "description": "Flow Log Not Delivering Records",
+    "rationale": "A flow log that exists but no longer delivers is worse than a missing one: the VPC and its subnets keep passing every \"flow logging enabled\" check while nothing reaches the destination. Delivery breaks silently and stays broken, typically because the publishing IAM role was deleted or lost its permissions, the CloudWatch log group was removed, or the destination bucket policy was tightened. AWS reports the cause in the delivery error message but never backfills the records missed in the meantime, so the gap only surfaces during an investigation, over exactly the period being investigated.",
+    "remediation": "Read the flow log's delivery error message, fix the destination or the publishing IAM role it points at, then replace the flow log, as an existing one cannot be reconfigured. Flow logs publishing to Amazon S3 report no delivery status, so confirm those are live by checking for recent objects under their destination prefix.",
+    "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-cwl.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_FlowLog.html"
+    ],
+    "dashboard_name": "Flow Logs",
+    "display_path": "vpc.regions.id.flow_logs.id",
+    "path": "vpc.regions.id.flow_logs.id",
+    "conditions": [
+        "or",
+        [
+            "vpc.regions.id.flow_logs.id.deliver_logs_status",
+            "equal",
+            "FAILED"
+        ],
+        [
+            "vpc.regions.id.flow_logs.id.flow_log_status",
+            "notEqual",
+            "ACTIVE"
+        ]
+    ],
+    "id_suffix": "deliver_logs_status"
+}

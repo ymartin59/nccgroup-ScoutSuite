@@ -1571,6 +1571,12 @@
                 "level": "warning"
             }
         ],
+        "vpc-flow-log-not-delivering.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "vpc-network-acl-not-used.json": [
             {
                 "enabled": true,

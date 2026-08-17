@@ -1,0 +1,89 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "vpc": {
+            "flow_logs_count": 4,
+            "regions": {
+                "eu-west-1": {
+                    "flow_logs": {
+                        "fl-0a1b2c3d4e5f60718": {
+                            "arn": "arn:aws:vpc:eu-west-1::flow-log/fl-0a1b2c3d4e5f60718",
+                            "creation_time": "2023-09-04 11:02:47",
+                            "deliver_logs_error_message": null,
+                            "deliver_logs_status": "SUCCESS",
+                            "flow_log_status": "ACTIVE",
+                            "id": "fl-0a1b2c3d4e5f60718",
+                            "log_destination": "arn:aws:logs:eu-west-1:123456789012:log-group:/aws/vpc/flow-logs:*",
+                            "log_destination_type": "cloud-watch-logs",
+                            "log_format": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+                            "max_aggregation_interval": 600,
+                            "name": "fl-0a1b2c3d4e5f60718",
+                            "resource_id": "vpc-0123456789abcdef0",
+                            "tags": null,
+                            "traffic_type": "ALL"
+                        },
+                        "fl-1b2c3d4e5f6071829": {
+                            "arn": "arn:aws:vpc:eu-west-1::flow-log/fl-1b2c3d4e5f6071829",
+                            "creation_time": "2022-03-17 08:41:12",
+                            "deliver_logs_error_message": "Access error",
+                            "deliver_logs_status": "FAILED",
+                            "flow_log_status": "ACTIVE",
+                            "id": "fl-1b2c3d4e5f6071829",
+                            "log_destination": "arn:aws:logs:eu-west-1:123456789012:log-group:/aws/vpc/flow-logs-legacy:*",
+                            "log_destination_type": "cloud-watch-logs",
+                            "log_format": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+                            "max_aggregation_interval": 600,
+                            "name": "fl-1b2c3d4e5f6071829",
+                            "resource_id": "vpc-0fedcba987654321a",
+                            "tags": null,
+                            "traffic_type": "ALL"
+                        },
+                        "fl-2c3d4e5f607182930": {
+                            "arn": "arn:aws:vpc:eu-west-1::flow-log/fl-2c3d4e5f607182930",
+                            "creation_time": "2024-05-22 16:09:35",
+                            "deliver_logs_error_message": null,
+                            "deliver_logs_status": null,
+                            "flow_log_status": "ACTIVE",
+                            "id": "fl-2c3d4e5f607182930",
+                            "log_destination": "arn:aws:s3:::flow-logs-123456789012",
+                            "log_destination_type": "s3",
+                            "log_format": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+                            "max_aggregation_interval": 60,
+                            "name": "fl-2c3d4e5f607182930",
+                            "resource_id": "subnet-0123456789abcdef1",
+                            "tags": null,
+                            "traffic_type": "ALL"
+                        },
+                        "fl-3d4e5f6071829304a": {
+                            "arn": "arn:aws:vpc:eu-west-1::flow-log/fl-3d4e5f6071829304a",
+                            "creation_time": "2021-11-02 19:23:58",
+                            "deliver_logs_error_message": null,
+                            "deliver_logs_status": null,
+                            "flow_log_status": null,
+                            "id": "fl-3d4e5f6071829304a",
+                            "log_destination": "arn:aws:logs:eu-west-1:123456789012:log-group:/aws/vpc/flow-logs-sandbox:*",
+                            "log_destination_type": "cloud-watch-logs",
+                            "log_format": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+                            "max_aggregation_interval": 600,
+                            "name": "fl-3d4e5f6071829304a",
+                            "resource_id": "vpc-0aaaabbbbccccddde",
+                            "tags": null,
+                            "traffic_type": "REJECT"
+                        }
+                    },
+                    "flow_logs_count": 4,
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "region": "eu-west-1"
+                },
+                "us-east-1": {
+                    "flow_logs": {},
+                    "flow_logs_count": 0,
+                    "id": "us-east-1",
+                    "name": "us-east-1",
+                    "region": "us-east-1"
+                }
+            }
+        }
+    }
+}
