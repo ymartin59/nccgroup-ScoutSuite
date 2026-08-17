@@ -1,0 +1,43 @@
+{
+    "description": "Repository Authorized to All Principals",
+    "rationale": "A repository policy allowing an ECR action to all principals grants it to any AWS account, not merely to any principal within the account owning the repository. Unlike an IAM policy it needs no counterpart on the caller's side, so such a statement is sufficient on its own to let anyone holding any set of AWS credentials pull the images. Container images are rarely written with that audience in mind: they carry the application's source, its dependency versions, and often enough a configuration file or a build argument that was never meant to leave the account.",
+    "remediation": "Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\":\"*\"} in the affected repository policy, or restrict it with a condition on the calling account, organization or principal",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "ecr.regions.id.repositories.id",
+    "path": "ecr.regions.id.repositories.id.policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories.id.",
+            "withKey",
+            "policy"
+        ],
+        [
+            "ecr.regions.id.repositories.id.policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "ecr.regions.id.repositories.id.policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "ecr.regions.id.repositories.id.policy.Statement.id"
+            ]
+        ]
+    ]
+}
