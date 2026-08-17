@@ -1,0 +1,21 @@
+{
+    "description": "Cluster Granting Admin Permissions to Its Creator",
+    "rationale": "When a cluster is bootstrapped with creator admin permissions, the principal that created it holds cluster-admin without any access entry saying so, which makes the grant invisible to whoever reviews who can act on the cluster. It is also durable in the wrong way: the principal is often a pipeline role or a role many people can assume, and the permission stays attached to that ARN for the life of the cluster. Since the grant is set at creation and cannot be added later, a cluster created by an automated deployment usually ends up handing cluster-admin to the automation itself.",
+    "remediation": "Create an access entry with the Kubernetes groups the creator actually needs, then disable the cluster creator admin permissions",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html",
+        "https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html"
+    ],
+    "dashboard_name": "Clusters",
+    "display_path": "eks.regions.id.clusters.id",
+    "path": "eks.regions.id.clusters.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.clusters.id.bootstrap_cluster_creator_admin_permissions",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "bootstrap_cluster_creator_admin_permissions"
+}

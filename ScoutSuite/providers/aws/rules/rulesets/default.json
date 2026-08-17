@@ -502,6 +502,12 @@
                 "level": "warning"
             }
         ],
+        "eks-cluster-creator-admin-permissions.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-cluster-endpoint-publicly-accessible.json": [
             {
                 "enabled": true,
