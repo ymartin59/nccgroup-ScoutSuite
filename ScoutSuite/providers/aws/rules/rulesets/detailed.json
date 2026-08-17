@@ -481,6 +481,12 @@
                 "level": "danger"
             }
         ],
+        "ecr-repository-no-encryption-with-kms.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ecr-repository-no-lifecycle-policy.json": [
             {
                 "enabled": true,

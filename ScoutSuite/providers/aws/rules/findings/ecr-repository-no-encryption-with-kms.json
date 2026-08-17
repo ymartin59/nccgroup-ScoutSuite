@@ -1,0 +1,21 @@
+{
+    "description": "Repository Not Encrypted with a KMS Key",
+    "rationale": "Repository contents are always encrypted at rest, but a repository created with AES256 uses an S3 managed key that resides outside the account: it has no key policy the account owner can restrict, its use does not appear in CloudTrail, and access to the images it protects can neither be revoked nor audited independently of ECR permissions. Encrypting the repository with a KMS key restores that control, and with a customer managed key the account also owns the key policy, the grants and the rotation.",
+    "remediation": "Recreate the repository with a KMS encryption configuration naming a customer managed key, as the encryption settings of an existing repository cannot be changed, then push the images that must be kept",
+    "references": [
+        "https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/ecr-controls.html#ecr-5"
+    ],
+    "dashboard_name": "Repositories",
+    "display_path": "ecr.regions.id.repositories.id",
+    "path": "ecr.regions.id.repositories.id",
+    "conditions": [
+        "and",
+        [
+            "ecr.regions.id.repositories.id.encrypted_with_kms_key",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "kms_key"
+}
