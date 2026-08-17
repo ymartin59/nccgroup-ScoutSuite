@@ -1,0 +1,53 @@
+{
+    "description": "Managed Policy Allows All _ARG_0_ Actions",
+    "rationale": "A statement listing <samp>_ARG_0_:*</samp> grants every action the service offers, including the ones that change who else can reach the data rather than merely reading or writing it, and it silently extends to any action AWS adds to the service later. For DynamoDB this covers <samp>PutResourcePolicy</samp>, which lets the holder attach a resource-based policy opening the table to any principal, and <samp>DeleteTable</samp>, so the grant is not bounded by the resources it names.",
+    "remediation": "Replace the <samp>_ARG_0_:*</samp> action with the specific actions the principal requires",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "iam.policies.id",
+    "path": "iam.policies.id.PolicyDocument.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "iam.policies.id.arn",
+            "notContainString",
+            "arn:aws:iam::aws:policy/aws-service-role"
+        ],
+        [
+            "iam.policies.id.PolicyDocument.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "and",
+            [
+                "iam.policies.id.PolicyDocument.Statement.id.",
+                "withKey",
+                "Action"
+            ],
+            [
+                "iam.policies.id.PolicyDocument.Statement.id.Action",
+                "containAtLeastOneOf",
+                [
+                    "_ARG_0_:*"
+                ]
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "iam.policies.id.PolicyDocument.Statement.id"
+            ]
+        ]
+    ],
+    "key": "iam-managed-policy-allows-_ARG_0_-full-privileges",
+    "arg_names": [
+        "Service namespace"
+    ]
+}

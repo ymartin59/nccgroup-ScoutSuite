@@ -681,6 +681,15 @@
                 "level": "danger"
             }
         ],
+        "iam-managed-policy-allows-service-full-privileges.json": [
+            {
+                "args": [
+                    "dynamodb"
+                ],
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "iam-managed-policy-allows-non-sts-action.json": [
             {
                 "enabled": false,

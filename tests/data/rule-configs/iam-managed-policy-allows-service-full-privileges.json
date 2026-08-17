@@ -1,0 +1,129 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "iam": {
+            "policies": {
+                "ANPAAAAAAAAAAAAAAAAAA": {
+                    "PolicyDocument": {
+                        "Statement": [
+                            {
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ],
+                        "Version": "2012-10-17"
+                    },
+                    "arn": "arn:aws:iam::123456789012:policy/DynamoDBFullAccessAnywhere",
+                    "id": "ANPAAAAAAAAAAAAAAAAAA",
+                    "name": "DynamoDBFullAccessAnywhere"
+                },
+                "ANPABBBBBBBBBBBBBBBBB": {
+                    "PolicyDocument": {
+                        "Statement": [
+                            {
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "arn:aws:dynamodb:eu-west-1:123456789012:table/orders"
+                                ]
+                            },
+                            {
+                                "Action": [
+                                    "dynamodb:GetItem",
+                                    "dynamodb:Query"
+                                ],
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ],
+                        "Version": "2012-10-17"
+                    },
+                    "arn": "arn:aws:iam::123456789012:policy/OrdersTableOwner",
+                    "id": "ANPABBBBBBBBBBBBBBBBB",
+                    "name": "OrdersTableOwner"
+                },
+                "ANPACCCCCCCCCCCCCCCCC": {
+                    "PolicyDocument": {
+                        "Statement": [
+                            {
+                                "Action": [
+                                    "*"
+                                ],
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "*"
+                                ]
+                            },
+                            {
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Effect": "Deny",
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ],
+                        "Version": "2012-10-17"
+                    },
+                    "arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+                    "id": "ANPACCCCCCCCCCCCCCCCC",
+                    "name": "AdministratorAccess"
+                },
+                "ANPADDDDDDDDDDDDDDDDD": {
+                    "PolicyDocument": {
+                        "Statement": [
+                            {
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Condition": {
+                                    "StringEquals": {
+                                        "aws:PrincipalOrgID": "o-abcdefghij"
+                                    }
+                                },
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ],
+                        "Version": "2012-10-17"
+                    },
+                    "arn": "arn:aws:iam::123456789012:policy/DynamoDBFullAccessInOrg",
+                    "id": "ANPADDDDDDDDDDDDDDDDD",
+                    "name": "DynamoDBFullAccessInOrg"
+                },
+                "ANPAEEEEEEEEEEEEEEEEE": {
+                    "PolicyDocument": {
+                        "Statement": [
+                            {
+                                "Action": [
+                                    "dynamodb:*"
+                                ],
+                                "Effect": "Allow",
+                                "Resource": [
+                                    "*"
+                                ]
+                            }
+                        ],
+                        "Version": "2012-10-17"
+                    },
+                    "arn": "arn:aws:iam::aws:policy/aws-service-role/DynamoDBReplicationServiceRolePolicy",
+                    "id": "ANPAEEEEEEEEEEEEEEEEE",
+                    "name": "DynamoDBReplicationServiceRolePolicy"
+                }
+            },
+            "policies_count": 5
+        }
+    }
+}
