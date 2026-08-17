@@ -1,0 +1,21 @@
+{
+    "description": "Global Table Replica Not Encrypted with a KMS Key",
+    "rationale": "A global table replica holds a full copy of the table's items in another region, and it is encrypted by a key in that region rather than by the key protecting the source table. When no key is configured the replica falls back to an AWS owned key, which has no key policy the account owner can restrict, does not appear in CloudTrail and cannot be independently revoked. A table carefully encrypted with a customer managed key therefore keeps an unprotected copy of its data elsewhere, and the weakest replica sets the effective protection of the whole global table.",
+    "remediation": "Configure a KMS key for the replica in its own region, matching the protection applied to the source table",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html",
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html"
+    ],
+    "dashboard_name": "Replicas",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id.replicas.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.replicas.id.kms_master_key_id",
+            "null",
+            ""
+        ]
+    ],
+    "id_suffix": "kms_master_key_id"
+}

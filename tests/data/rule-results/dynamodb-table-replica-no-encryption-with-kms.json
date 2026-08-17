@@ -1,0 +1,4 @@
+[
+    "dynamodb.regions.eu-west-1.tables.11111111-1111-1111-1111-111111111111.replicas.ap-south-1.kms_master_key_id",
+    "dynamodb.regions.us-east-1.tables.44444444-4444-4444-4444-444444444444.replicas.eu-west-1.kms_master_key_id"
+]

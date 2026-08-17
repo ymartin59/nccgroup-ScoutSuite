@@ -148,6 +148,12 @@
                 "level": "danger"
             }
         ],
+        "dynamodb-table-replica-no-encryption-with-kms.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-world-policy.json": [
             {
                 "enabled": true,
