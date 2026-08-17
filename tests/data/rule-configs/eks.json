@@ -158,6 +158,9 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-production",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/production/managed-nodes/e40cf894",
                             "region": "eu-west-1",
+                            "remote_access_source_security_groups": [],
+                            "remote_access_ssh_enabled": false,
+                            "remote_access_ssh_key": null,
                             "status": "ACTIVE",
                             "version_behind_cluster": false
                         },
@@ -180,6 +183,9 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-legacy",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/legacy/legacy-nodes/0328ca10",
                             "region": "eu-west-1",
+                            "remote_access_source_security_groups": [],
+                            "remote_access_ssh_enabled": true,
+                            "remote_access_ssh_key": "ops-shared-key",
                             "status": "ACTIVE",
                             "version_behind_cluster": true
                         },
@@ -202,6 +208,11 @@
                             "nodeRole": "arn:aws:iam::123456789012:role/eks-node-staging",
                             "nodegroupArn": "arn:aws:eks:eu-west-1:123456789012:nodegroup/staging/spot-nodes/f5b0d655",
                             "region": "eu-west-1",
+                            "remote_access_source_security_groups": [
+                                "sg-0f1e2d3c4b5a69788"
+                            ],
+                            "remote_access_ssh_enabled": true,
+                            "remote_access_ssh_key": "staging-key",
                             "status": "ACTIVE",
                             "version_behind_cluster": false
                         }

@@ -1,0 +1,22 @@
+{
+    "description": "Nodegroup with Remote SSH Access Enabled",
+    "rationale": "A nodegroup configured with an EC2 key pair keeps port 22 open on every node it creates, and when no source security group is given with the key EKS opens it to 0.0.0.0/0. Reaching a node that way lands on the host with access to the kubelet, to the container runtime and to the credentials of every pod scheduled on it, authenticated by a key file that is shared, hard to rotate and absent from CloudTrail. Session Manager gives the same access without an open port or a standing key, and records who connected.",
+    "remediation": "Remove the remote access configuration from the nodegroup and reach the nodes through Session Manager, or at least restrict remote access to a source security group",
+    "references": [
+        "https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html",
+        "https://docs.aws.amazon.com/eks/latest/best-practices/infrastructure.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html"
+    ],
+    "dashboard_name": "Nodegroups",
+    "display_path": "eks.regions.id.nodegroups.id",
+    "path": "eks.regions.id.nodegroups.id",
+    "conditions": [
+        "and",
+        [
+            "eks.regions.id.nodegroups.id.remote_access_ssh_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "remote_access_ssh_key"
+}

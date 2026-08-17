@@ -601,6 +601,12 @@
                 "level": "warning"
             }
         ],
+        "eks-nodegroup-remote-ssh-access-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "eks-nodegroup-version-behind-cluster.json": [
             {
                 "enabled": true,

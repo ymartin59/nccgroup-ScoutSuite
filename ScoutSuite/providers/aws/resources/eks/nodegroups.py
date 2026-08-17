@@ -46,6 +46,12 @@ class Nodegroups(AWSResources):
         node['diskSize'] = raw_nodegroup.get('diskSize')
         node['nodeRole'] = raw_nodegroup.get('nodeRole')
 
+        # An SSH key with no source security group opens port 22 of every node to 0.0.0.0/0
+        remote_access = raw_nodegroup.get('remoteAccess') or {}
+        node['remote_access_ssh_key'] = remote_access.get('ec2SshKey')
+        node['remote_access_source_security_groups'] = remote_access.get('sourceSecurityGroups') or []
+        node['remote_access_ssh_enabled'] = bool(remote_access.get('ec2SshKey'))
+
         # EKS refuses to run a nodegroup ahead of its control plane, so any difference here means
         # the nodegroup is the one lagging behind
         node['cluster_version'] = cluster_version
