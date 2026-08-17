@@ -15,6 +15,7 @@
                                     "BackupStatus": "AVAILABLE"
                                 }
                             ],
+                            "deletion_protection_enabled": true,
                             "id": "11111111-1111-1111-1111-111111111111",
                             "item_count": 42,
                             "name": "well-protected",
@@ -25,6 +26,7 @@
                             "arn": "arn:aws:dynamodb:eu-west-1:123456789012:table/no-backups",
                             "automatic_backups_enabled": false,
                             "backup_summaries": [],
+                            "deletion_protection_enabled": false,
                             "id": "22222222-2222-2222-2222-222222222222",
                             "item_count": 7,
                             "name": "no-backups",
@@ -149,6 +151,7 @@
                                     "BackupStatus": "AVAILABLE"
                                 }
                             ],
+                            "deletion_protection_enabled": false,
                             "id": "44444444-4444-4444-4444-444444444444",
                             "item_count": 128,
                             "name": "on-demand-backups-only",

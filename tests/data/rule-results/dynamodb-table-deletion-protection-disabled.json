@@ -1,0 +1,4 @@
+[
+    "dynamodb.regions.eu-west-1.tables.22222222-2222-2222-2222-222222222222.deletion_protection_enabled",
+    "dynamodb.regions.us-east-1.tables.44444444-4444-4444-4444-444444444444.deletion_protection_enabled"
+]

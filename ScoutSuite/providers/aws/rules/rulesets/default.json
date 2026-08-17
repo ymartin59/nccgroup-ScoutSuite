@@ -106,6 +106,12 @@
                 "level": "warning"
             }
         ],
+        "dynamodb-table-deletion-protection-disabled.json": [
+            {
+                "enabled": false,
+                "level": "warning"
+            }
+        ],
         "dynamodb-table-no-encryption-with-kms.json": [
             {
                 "enabled": true,

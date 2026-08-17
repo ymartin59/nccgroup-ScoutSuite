@@ -1,0 +1,20 @@
+{
+    "description": "Table Deletion Protection Disabled",
+    "rationale": "DeleteTable removes a table and every item in it in a single call, and no confirmation stands between a mistyped table name, an over-broad automation run or a compromised credential and the loss of the data. Deletion protection makes the call fail until the setting is explicitly turned off, which turns an accidental deletion into a deliberate two-step action.",
+    "remediation": "Enable deletion protection on the table, and keep it enabled on any table holding data that is not trivially reproducible",
+    "references": [
+        "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.Basics.html#WorkingWithTables.Basics.DeletionProtection"
+    ],
+    "dashboard_name": "Tables",
+    "display_path": "dynamodb.regions.id.tables.id",
+    "path": "dynamodb.regions.id.tables.id",
+    "conditions": [
+        "and",
+        [
+            "dynamodb.regions.id.tables.id.deletion_protection_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "deletion_protection_enabled"
+}
