@@ -5,19 +5,88 @@
     </div>
     <div class="list-group-item">
         <h4 class="list-group-item-heading">Information</h4>
-        <div class="list-group-item-text item-margin">ARN: <span id="awslambda.regions{{region}}.functions.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+        <div class="list-group-item-text item-margin">ARN: <span id="awslambda.regions.{{region}}.functions.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
         <div class="list-group-item-text item-margin">Description: <span id="awslambda.regions.{{region}}.functions.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
         <div class="list-group-item-text item-margin">Last Modified: <span id="awslambda.regions.{{region}}.functions.{{@key}}.last_modified"><samp>{{format_date last_modified}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Package type: <span id="awslambda.regions.{{region}}.functions.{{@key}}.package_type"><samp>{{value_or_none package_type}}</samp></span></div>
         <div class="list-group-item-text item-margin">Runtime: <span id="awslambda.regions.{{region}}.functions.{{@key}}.runtime"><samp>{{value_or_none runtime}}</samp></span></div>
         <div class="list-group-item-text item-margin">Runtime deprecated: <span class="awslambda.regions.{{region}}.functions.{{@key}}.runtime_deprecated"><samp>{{value_or_none runtime_deprecated}}</samp></span></div>
         <div class="list-group-item-text item-margin">Runtime deprecation date: <span class="awslambda.regions.{{region}}.functions.{{@key}}.runtime_deprecated"><samp>{{value_or_none date_runtime_deprecated}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Runtime updates: <span id="awslambda.regions.{{region}}.functions.{{@key}}.runtime_update_mode"><samp>{{value_or_none runtime_update_mode}}</samp></span></div>
         <div class="list-group-item-text item-margin">Version: <span id="awslambda.regions.{{region}}.functions.{{@key}}.version"><samp>{{value_or_none version}}</samp></span></div>
         <div class="list-group-item-text item-margin">Revision ID: <span id="awslambda.regions.{{region}}.functions.{{@key}}.revision_id"><samp>{{value_or_none revision_id}}</samp></span></div>
         <div class="list-group-item-text item-margin">Execution Role: <a href="javascript:showObject('services.iam.roles.{{value_or_none execution_role.RoleId}}')">{{value_or_none execution_role.RoleName}}</a></div>
         <div class="list-group-item-text item-margin">Handler: <span id="awslambda.regions.{{region}}.functions.{{@key}}.handler"><samp>{{value_or_none handler}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Architectures: <samp>{{#each architectures}}{{this}} {{/each}}</samp></div>
         <div class="list-group-item-text item-margin">Code Size: <span id="awslambda.regions.{{region}}.functions.{{@key}}.code_size"><samp>{{value_or_none code_size}}</samp></span></div>
         <div class="list-group-item-text item-margin">Memory Size: <span id="awslambda.regions.{{region}}.functions.{{@key}}.memory_size"><samp>{{value_or_none memory_size}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Ephemeral storage: <span id="awslambda.regions.{{region}}.functions.{{@key}}.ephemeral_storage"><samp>{{value_or_none ephemeral_storage}}</samp></span></div>
         <div class="list-group-item-text item-margin">Timeout: <span id="awslambda.regions.{{region}}.functions.{{@key}}.timeout"><samp>{{value_or_none timeout}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Active tracing: <span id="awslambda.regions.{{region}}.functions.{{@key}}.tracing_mode"><samp>{{value_or_none tracing_mode}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Log group: <samp>{{value_or_none log_group}}</samp></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Function URL</h4>
+        <div class="list-group-item-text item-margin">Configured: <span id="awslambda.regions.{{region}}.functions.{{@key}}.url_configured"><samp>{{value_or_none url_configured}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Unauthenticated: <span id="awslambda.regions.{{region}}.functions.{{@key}}.url_unauthenticated"><samp>{{value_or_none url_unauthenticated}}</samp></span></div>
+        <div class="list-group-item-text item-margin">CORS allows any origin: <span id="awslambda.regions.{{region}}.functions.{{@key}}.url_cors_allows_all_origins"><samp>{{value_or_none url_cors_allows_all_origins}}</samp></span></div>
+        {{#each url_configs}}
+        <div class="list-group-item-text item-margin">
+            <samp>{{qualifier}}</samp>: <samp>{{value_or_none url}}</samp>
+            (auth type <samp>{{value_or_none auth_type}}</samp>, invoke mode <samp>{{value_or_none invoke_mode}}</samp>,
+            allowed origins <samp>{{#if cors_allow_origins}}{{#each cors_allow_origins}}{{this}} {{/each}}{{else}}none{{/if}}</samp>,
+            credentials <samp>{{value_or_none cors_allow_credentials}}</samp>)
+        </div>
+        {{/each}}
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Networking</h4>
+        <div class="list-group-item-text item-margin">Attached to a VPC: <span id="awslambda.regions.{{region}}.functions.{{@key}}.in_vpc"><samp>{{value_or_none in_vpc}}</samp></span></div>
+        <div class="list-group-item-text item-margin">VPC: <samp>{{value_or_none vpc_config.vpc_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Subnets:
+            {{#each vpc_config.subnet_ids}}
+            <a href="javascript:findAndShowEC2Object('regions.vpcs.subnets', '{{this}}')">{{this}}</a>
+            {{else}}<samp>None</samp>{{/each}}
+        </div>
+        <div class="list-group-item-text item-margin">Security groups:
+            {{#each vpc_config.security_group_ids}}
+            <a href="javascript:findAndShowEC2Object('regions.vpcs.security_groups', '{{this}}')">{{this}}</a>
+            {{else}}<samp>None</samp>{{/each}}
+        </div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Code signing and layers</h4>
+        <div class="list-group-item-text item-margin">Code signing configured: <span id="awslambda.regions.{{region}}.functions.{{@key}}.code_signing_enabled"><samp>{{value_or_none code_signing_enabled}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Untrusted artifact on deployment: <span id="awslambda.regions.{{region}}.functions.{{@key}}.code_signing_untrusted_artifact_policy"><samp>{{value_or_none code_signing_untrusted_artifact_policy}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Trusted publishers:
+            <samp>{{#if code_signing_allowed_publishers}}{{#each code_signing_allowed_publishers}}{{this}} {{/each}}{{else}}None{{/if}}</samp>
+        </div>
+        <div class="list-group-item-text item-margin">Signing profile version: <samp>{{value_or_none signing_profile_version_arn}}</samp></div>
+        <div class="list-group-item-text item-margin">Layers owned by another account: <span id="awslambda.regions.{{region}}.functions.{{@key}}.uses_external_layer"><samp>{{value_or_none uses_external_layer}}</samp></span></div>
+        {{#each layers}}
+        <div class="list-group-item-text item-margin"><samp>{{arn}}</samp> (account <samp>{{value_or_none account_id}}</samp>, {{value_or_none code_size}} bytes)</div>
+        {{/each}}
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Concurrency and failure handling</h4>
+        <div class="list-group-item-text item-margin">Reserved concurrency: <span id="awslambda.regions.{{region}}.functions.{{@key}}.reserved_concurrency"><samp>{{value_or_none reserved_concurrency}}</samp></span></div>
+        {{#each provisioned_concurrency_configs}}
+        <div class="list-group-item-text item-margin">Provisioned concurrency for <samp>{{arn}}</samp>: <samp>{{value_or_none requested}}</samp> requested, <samp>{{value_or_none allocated}}</samp> allocated (<samp>{{value_or_none status}}</samp>)</div>
+        {{/each}}
+        <div class="list-group-item-text item-margin">Asynchronous failures kept: <span id="awslambda.regions.{{region}}.functions.{{@key}}.async_failures_captured"><samp>{{value_or_none async_failures_captured}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Dead letter queue: <samp>{{value_or_none dead_letter_target_arn}}</samp></div>
+        {{#each event_invoke_configs}}
+        <div class="list-group-item-text item-margin">
+            <samp>{{qualifier}}</samp>: on failure <samp>{{value_or_none on_failure_destination}}</samp>,
+            on success <samp>{{value_or_none on_success_destination}}</samp>,
+            up to <samp>{{value_or_none maximum_retry_attempts}}</samp> retries
+        </div>
+        {{/each}}
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Environment variables</h4>
+        <div class="list-group-item-text item-margin">Encrypted with a customer managed key: <span id="awslambda.regions.{{region}}.functions.{{@key}}.environment_encrypted_with_cmk"><samp>{{value_or_none environment_encrypted_with_cmk}}</samp></span></div>
+        <div class="list-group-item-text item-margin">KMS key: <samp>{{value_or_none kms_key_arn}}</samp></div>
     </div>
     {{#if access_policy}}
     <div class="list-group-item">

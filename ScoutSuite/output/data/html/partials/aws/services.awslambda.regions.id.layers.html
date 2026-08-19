@@ -1,0 +1,44 @@
+<!-- Lambda layer partial -->
+<script id="services.awslambda.regions.id.layers.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Information</h4>
+        <div class="list-group-item-text item-margin">Name: <samp>{{value_or_none name}}</samp></div>
+        <div class="list-group-item-text item-margin">ARN: <samp>{{value_or_none arn}}</samp></div>
+        <div class="list-group-item-text item-margin">Latest version: <samp>{{value_or_none latest_version}}</samp></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading accordion-heading">Versions
+            {{> count_badge count=versions_count}}
+        </h4>
+        {{#each versions}}
+        <div class="list-group-item-text item-margin">
+            <div>Version <samp>{{value_or_none version}}</samp>, published <samp>{{format_date created_date}}</samp></div>
+            <div>ARN: <samp>{{value_or_none arn}}</samp></div>
+            <div>Description: <samp>{{value_or_none description}}</samp></div>
+            <div>Compatible runtimes: <samp>{{#if compatible_runtimes}}{{#each compatible_runtimes}}{{this}} {{/each}}{{else}}any{{/if}}</samp></div>
+            <div>Compatible architectures: <samp>{{#if compatible_architectures}}{{#each compatible_architectures}}{{this}} {{/each}}{{else}}any{{/if}}</samp></div>
+            <div>License: <samp>{{value_or_none license_info}}</samp></div>
+            {{#if policy}}
+            {{> accordion_policy name = 'Permission Policy' policy_path = (concat 'awslambda.regions' ../region 'layers' ../name 'versions' version 'policy') document = policy}}
+            {{else}}
+            <div>Shared with: <samp>Nobody outside the account</samp></div>
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script>
+    Handlebars.registerPartial("services.awslambda.regions.id.layers", $("#services\\.awslambda\\.regions\\.id\\.layers\\.partial").html());
+</script>
+
+<!-- Single awslambda layer template -->
+<script id="single_awslambda_layer-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.awslambda.regions.id.layers'}}
+</script>
+<script>
+    var single_awslambda_layer_template = Handlebars.compile($("#single_awslambda_layer-template").html());
+</script>
