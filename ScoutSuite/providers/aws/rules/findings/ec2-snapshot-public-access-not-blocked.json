@@ -1,0 +1,21 @@
+{
+    "description": "EBS Snapshot Public Access Not Blocked in the Region",
+    "rationale": "A public EBS snapshot is a full copy of a disk handed to everyone, and it is one API call and one wrong argument away: ModifySnapshotAttribute with the group 'all' is how it happens, usually while trying to share a snapshot with another account. The data does not have to be interesting for the leak to matter, snapshots of root volumes carrying instance profiles, configuration files, source trees and database contents. Blocking public access at the region level makes the mistake impossible rather than detectable, and it applies to snapshots created after it is turned on, which no per-snapshot review can promise.",
+    "remediation": "Enable block public access for snapshots in every region, with EnableSnapshotBlockPublicAccess set to block-all-sharing, which also revokes the snapshots already shared publicly, or block-new-sharing where existing shares have to be kept",
+    "references": [
+        "https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_EnableSnapshotBlockPublicAccess.html"
+    ],
+    "dashboard_name": "Regions",
+    "display_path": "ec2.regions.id.regional_settings.id",
+    "path": "ec2.regions.id.regional_settings.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.regional_settings.id.snapshot_public_sharing_blocked",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "snapshot_public_sharing_blocked"
+}

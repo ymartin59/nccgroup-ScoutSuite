@@ -1,0 +1,22 @@
+{
+    "description": "Region Instance Metadata Defaults Not Requiring IMDSv2",
+    "rationale": "The account-level metadata defaults decide what an instance launched with no metadata option of its own gets, which covers every launch template, launch configuration and console launch that leaves the setting out. With IMDSv2 not required there, IMDSv1 stays available on those instances: the metadata service, and the credentials of the instance profile it hands out, then answer an unauthenticated GET, which is what turns a server-side request forgery in an application into a set of AWS credentials. Requiring IMDSv2 in the defaults closes it for everything launched afterwards at once, instead of one template at a time, and it is the only place that covers what nobody remembered to configure.",
+    "remediation": "Set the region's instance metadata defaults to require IMDSv2, with ModifyInstanceMetadataDefaults and HttpTokens set to required, after confirming that the running workloads use IMDSv2",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-options.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceMetadataDefaults.html",
+        "https://aws.amazon.com/blogs/security/get-the-full-benefits-of-imdsv2-and-disable-imdsv1-across-your-aws-infrastructure/"
+    ],
+    "dashboard_name": "Regions",
+    "display_path": "ec2.regions.id.regional_settings.id",
+    "path": "ec2.regions.id.regional_settings.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.regional_settings.id.instance_metadata_defaults_require_imdsv2",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "instance_metadata_defaults_require_imdsv2"
+}

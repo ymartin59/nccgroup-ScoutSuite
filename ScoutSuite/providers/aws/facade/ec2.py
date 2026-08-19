@@ -308,6 +308,19 @@ class EC2Facade(AWSBaseFacade):
             print_exception(f'Failed to retrieve EC2 instance metadata defaults: {e}')
             return {}
 
+    async def get_snapshot_block_public_access_state(self, region):
+        """Whether the region refuses to let EBS snapshots be shared publicly, whatever the snapshot
+        permissions say. It is a guardrail above the snapshots themselves, so it holds for the ones
+        created after it as well."""
+
+        ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)
+        try:
+            response = await run_concurrently(lambda: ec2_client.get_snapshot_block_public_access_state())
+            return response.get('State')
+        except Exception as e:
+            print_exception(f'Failed to retrieve EBS snapshot block public access state: {e}')
+            return None
+
     async def get_ebs_default_encryption_key(self, region):
         ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)
         try:

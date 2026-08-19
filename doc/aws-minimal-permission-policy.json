@@ -66,6 +66,7 @@
         "ec2:GetEbsDefaultKmsKeyId",
         "ec2:GetEbsEncryptionByDefault",
         "ec2:GetInstanceMetadataDefaults",
+        "ec2:GetSnapshotBlockPublicAccessState",
         "ecr:BatchGetRepositoryScanningConfiguration",
         "ecr:DescribeImageScanFindings",
         "ecr:DescribeImages",

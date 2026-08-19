@@ -1,0 +1,21 @@
+{
+    "description": "Region Instance Metadata Defaults with an Excessive Hop Limit",
+    "rationale": "The hop limit is the IP time-to-live of the metadata service response, and one hop reaches the instance and nothing else. Set higher in the account-level defaults, the metadata service of every instance launched without a hop limit of its own answers past the instance: a container on a bridged or overlay network reaches it, and so does any process able to make the instance forward a request. The credentials of the instance profile then stop belonging to the instance and belong to whatever runs on it, which is exactly the boundary a container platform is supposed to keep.",
+    "remediation": "Set the region's instance metadata defaults to a hop limit of 1, with ModifyInstanceMetadataDefaults, and raise it only on the individual instances whose container networking genuinely needs a second hop",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyInstanceMetadataDefaults.html"
+    ],
+    "dashboard_name": "Regions",
+    "display_path": "ec2.regions.id.regional_settings.id",
+    "path": "ec2.regions.id.regional_settings.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.regional_settings.id.instance_metadata_defaults_hop_limit_excessive",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "instance_metadata_defaults_hop_limit_excessive"
+}

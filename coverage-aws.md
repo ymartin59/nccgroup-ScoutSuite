@@ -45,10 +45,11 @@ exist only as `private_*` modules and are therefore **not available** in this tr
       without having been part of any original design and can be turned off again.
       - [ ] left out: using the result to scope the scan, `build_region_list()` still calling
             `ec2:DescribeRegions` on its own.
-- [ ] **EC2 account-level defaults** — `resources/ec2/regional_settings.py` currently holds only
-      EBS default encryption + key. Add:
-      - [ ] account-level IMDS defaults (`GetInstanceMetadataDefaults`: IMDSv2 required, hop limit)
-      - [ ] `GetSnapshotBlockPublicAccessState` (blocks public snapshot sharing region-wide)
+- [x] **EC2 account-level defaults** — done, under `ec2.regions.id.regional_settings` next to the
+      EBS default encryption and key that were already there.
+      - [x] account-level IMDS defaults (`GetInstanceMetadataDefaults`: IMDSv2 required, hop limit),
+            collected with the launch templates and now ruled on
+      - [x] `GetSnapshotBlockPublicAccessState` (blocks public snapshot sharing region-wide)
 - [ ] **Elastic IPs** (`DescribeAddresses`) — unassociated EIPs, and the mapping public IP → ENI
       → instance, which is otherwise reconstructed only partially.
 - [ ] **EC2 key pairs** (`DescribeKeyPairs`) — creation date, type (RSA/ED25519), key fingerprints;

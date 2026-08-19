@@ -27,3 +27,16 @@ class RegionalSettings(AWSResources):
         self[0]['instance_metadata_default_http_tokens'] = metadata_defaults.get('HttpTokens')
         self[0]['instance_metadata_default_hop_limit'] = metadata_defaults.get('HttpPutResponseHopLimit')
         self[0]['instance_metadata_defaults_require_imdsv2'] = metadata_defaults.get('HttpTokens') == 'required'
+        # One hop reaches the instance and nothing else. Beyond that the metadata service, and the
+        # credentials of the instance profile it hands out, answer containers and any process able to
+        # make the instance forward a request. A hop limit of -1 means no account-level preference.
+        hop_limit = metadata_defaults.get('HttpPutResponseHopLimit')
+        self[0]['instance_metadata_defaults_hop_limit_excessive'] = \
+            hop_limit is not None and hop_limit > 1
+
+        # A region-wide refusal to share EBS snapshots publicly, which holds whatever the permissions
+        # of an individual snapshot say, including the ones created after it was turned on.
+        state = await self.facade.ec2.get_snapshot_block_public_access_state(self.region)
+        self[0]['snapshot_block_public_access_state'] = state
+        self[0]['snapshot_public_sharing_blocked'] = state in ('block-all-sharing', 'block-new-sharing')
+        self[0]['snapshot_public_sharing_fully_blocked'] = state == 'block-all-sharing'

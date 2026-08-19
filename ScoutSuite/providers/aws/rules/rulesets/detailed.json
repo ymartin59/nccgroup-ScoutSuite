@@ -283,6 +283,18 @@
                 "level": "warning"
             }
         ],
+        "ec2-instance-metadata-defaults-hop-limit-excessive.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "ec2-instance-metadata-defaults-imdsv2-not-required.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ec2-instance-type.json": [
             {
                 "args": [
@@ -551,6 +563,12 @@
             {
                 "enabled": false,
                 "level": "danger"
+            }
+        ],
+        "ec2-snapshot-public-access-not-blocked.json": [
+            {
+                "enabled": true,
+                "level": "warning"
             }
         ],
         "ec2-unused-security-group.json": [

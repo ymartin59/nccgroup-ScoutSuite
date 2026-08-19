@@ -1,0 +1,4 @@
+[
+    "ec2.regions.ap-northeast-2.regional_settings.0.instance_metadata_defaults_require_imdsv2",
+    "ec2.regions.ap-south-1.regional_settings.0.instance_metadata_defaults_require_imdsv2"
+]

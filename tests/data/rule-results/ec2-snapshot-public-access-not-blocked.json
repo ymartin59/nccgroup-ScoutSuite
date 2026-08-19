@@ -1,0 +1,4 @@
+[
+    "ec2.regions.ap-northeast-2.regional_settings.0.snapshot_public_sharing_blocked",
+    "ec2.regions.eu-central-1.regional_settings.0.snapshot_public_sharing_blocked"
+]
