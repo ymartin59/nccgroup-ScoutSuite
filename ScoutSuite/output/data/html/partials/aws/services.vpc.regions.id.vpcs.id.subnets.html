@@ -18,6 +18,8 @@
                 <div class="list-group-item-text">CIDR Block: <samp>{{CidrBlock}}</samp></div>
                 <div class="list-group-item-text">IPv6 CIDR Block: {{value_or_none CidrBlockv6}}</div>
                 <div class="list-group-item-text">Public IP on Launch: {{convert_bool_to_enabled MapPublicIpOnLaunch}}</div>
+                <div class="list-group-item-text">Route table: {{#if route_table_id}}<a href="javascript:showObject('services.vpc.regions.{{region}}.vpcs.{{vpc}}.route_tables.{{route_table_id}}')">{{route_table_id}}</a>{{else}}<samp>None</samp>{{/if}}</div>
+                <div class="list-group-item-text">Public subnet: <span id="vpc.regions.{{region}}.vpcs.{{vpc}}.subnets.{{@key}}.is_public"><samp>{{value_or_none is_public}}</samp></span></div>
             </div>
             <div class="list-group-item">
                 <h4 class="list-group-item-heading accordion-heading">Instances

@@ -1,0 +1,21 @@
+{
+    "description": "Route Table with a Blackhole Route",
+    "rationale": "A blackhole route points at a target that no longer exists, typically a deleted NAT gateway, network interface, peering connection or transit gateway attachment. Traffic to its destination is dropped without notice, which breaks the connectivity the route was written for while leaving the intent in place. The dangerous part is the return: identifiers of peering connections and network interfaces are reused, and a new resource created with the identifier the route still names revives the route and starts carrying traffic to a target nobody chose. Blackhole routes also disguise the real topology, an audit reading them as live paths that are in fact dead.",
+    "remediation": "Delete the blackhole routes, or repoint them at the intended target if the connectivity is still needed",
+    "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Route.html"
+    ],
+    "dashboard_name": "Route Tables",
+    "display_path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "conditions": [
+        "and",
+        [
+            "vpc.regions.id.vpcs.id.route_tables.id.blackhole_routes",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "blackhole_routes"
+}

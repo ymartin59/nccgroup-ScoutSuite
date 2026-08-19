@@ -12,6 +12,8 @@ from ScoutSuite.providers.utils import run_concurrently
 class EC2Facade(AWSBaseFacade):
     regional_flow_logs_cache_locks = {}
     flow_logs_cache = {}
+    regional_route_tables_cache_locks = {}
+    route_tables_cache = {}
 
     def __init__(self, session: boto3.session.Session, owner_id: str):
         self.owner_id = owner_id
@@ -178,7 +180,9 @@ class EC2Facade(AWSBaseFacade):
             print_exception(f'Failed to describe EC2 subnets: {e}')
             return None
         else:
-            await get_and_set_concurrently([self._get_and_set_subnet_flow_logs], subnets, region=region)
+            await get_and_set_concurrently(
+                [self._get_and_set_subnet_flow_logs, self._get_and_set_subnet_route_table],
+                subnets, region=region)
             return subnets
 
     async def _get_and_set_subnet_flow_logs(self, subnet: {}, region: str):
@@ -186,6 +190,23 @@ class EC2Facade(AWSBaseFacade):
         subnet['flow_logs'] = \
             [flow_log for flow_log in self.flow_logs_cache[region]
              if flow_log['ResourceId'] == subnet['SubnetId'] or flow_log['ResourceId'] == subnet['VpcId']]
+
+    async def _get_and_set_subnet_route_table(self, subnet: {}, region: str):
+        """The route table that actually decides where the subnet's traffic goes: the one explicitly
+        associated with it, or, when it has none, the main route table of its VPC. Which one applies
+        is what makes the subnet public or private, and AWS reports it nowhere on the subnet."""
+
+        route_tables = await self.get_route_tables(region, subnet['VpcId'])
+
+        explicit_table = next(
+            (route_table for route_table in route_tables
+             if any(association.get('SubnetId') == subnet['SubnetId']
+                    for association in route_table.get('Associations', []))), None)
+        main_table = next(
+            (route_table for route_table in route_tables
+             if any(association.get('Main') for association in route_table.get('Associations', []))), None)
+
+        subnet['route_table'] = explicit_table or main_table
 
     async def get_peering_connections(self, region):
         try:
@@ -203,13 +224,29 @@ class EC2Facade(AWSBaseFacade):
             print_exception(f'Failed to get VPC endpoints: {e}')
             return []
 
-    async def get_route_tables(self, region):
+    async def get_route_tables(self, region: str, vpc: str = None):
+        """Route tables of a region, or of a single VPC. They are read once per region and cached,
+        as both the route table resources and every subnet of the region need them."""
+
         try:
-            route_tables = await AWSFacadeUtils.get_all_pages('ec2', region, self.session, 'describe_route_tables', 'RouteTables')
-            return route_tables
+            await self.cache_route_tables(region)
         except Exception as e:
-            print_exception('Failed to get route tables: {}'.format(e))
+            print_exception(f'Failed to get EC2 route tables: {e}')
             return []
+
+        route_tables = self.route_tables_cache[region]
+        if vpc:
+            return [route_table for route_table in route_tables if route_table.get('VpcId') == vpc]
+        return route_tables
+
+    async def cache_route_tables(self, region: str):
+        async with self.regional_route_tables_cache_locks.setdefault(region, asyncio.Lock()):
+            if region in self.route_tables_cache:
+                return
+
+            self.route_tables_cache[region] = \
+                await AWSFacadeUtils.get_all_pages(
+                    'ec2', region, self.session, 'describe_route_tables', 'RouteTables')
 
     async def get_launch_templates(self, region: str):
         try:

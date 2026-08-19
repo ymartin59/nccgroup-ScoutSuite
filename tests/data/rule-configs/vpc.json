@@ -74,16 +74,269 @@
                     "flow_logs_count": 4,
                     "id": "eu-west-1",
                     "name": "eu-west-1",
-                    "region": "eu-west-1"
+                    "region": "eu-west-1",
+                    "route_tables_count": 5,
+                    "subnets_count": 2,
+                    "vpcs": {
+                        "vpc-0123456789abcdef0": {
+                            "arn": "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-0123456789abcdef0",
+                            "cidr_block": "10.0.0.0/16",
+                            "default": false,
+                            "id": "vpc-0123456789abcdef0",
+                            "name": "main-vpc",
+                            "route_tables": {
+                                "rtb-0main1111111111111": {
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:route-table/rtb-0main1111111111111",
+                                    "associations_count": 0,
+                                    "blackhole_routes": [],
+                                    "gateways": [],
+                                    "id": "rtb-0main1111111111111",
+                                    "is_public": true,
+                                    "main": true,
+                                    "name": "main",
+                                    "owner_id": "123456789012",
+                                    "permissive_peering_routes": [],
+                                    "propagating_vgws": [],
+                                    "routes": [
+                                        {
+                                            "destination": "10.0.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRouteTable",
+                                            "state": "active",
+                                            "target": "local",
+                                            "target_type": "local"
+                                        },
+                                        {
+                                            "destination": "0.0.0.0/0",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "igw-0123456789abcdef0",
+                                            "target_type": "internet_gateway"
+                                        },
+                                        {
+                                            "destination": "::/0",
+                                            "destination_type": "ipv6",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "igw-0123456789abcdef0",
+                                            "target_type": "internet_gateway"
+                                        }
+                                    ],
+                                    "routes_count": 3,
+                                    "subnets": [],
+                                    "tags": null,
+                                    "used": true,
+                                    "vpc_id": "vpc-0123456789abcdef0"
+                                },
+                                "rtb-1private222222222": {
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:route-table/rtb-1private222222222",
+                                    "associations_count": 1,
+                                    "blackhole_routes": [],
+                                    "gateways": [],
+                                    "id": "rtb-1private222222222",
+                                    "is_public": false,
+                                    "main": false,
+                                    "name": "private",
+                                    "owner_id": "123456789012",
+                                    "permissive_peering_routes": [],
+                                    "propagating_vgws": [],
+                                    "routes": [
+                                        {
+                                            "destination": "10.0.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRouteTable",
+                                            "state": "active",
+                                            "target": "local",
+                                            "target_type": "local"
+                                        },
+                                        {
+                                            "destination": "0.0.0.0/0",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "nat-0123456789abcdef0",
+                                            "target_type": "nat_gateway"
+                                        },
+                                        {
+                                            "destination": "::/0",
+                                            "destination_type": "ipv6",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "eigw-0123456789abcdef0",
+                                            "target_type": "egress_only_internet_gateway"
+                                        }
+                                    ],
+                                    "routes_count": 3,
+                                    "subnets": [
+                                        "subnet-0123456789abcdef1"
+                                    ],
+                                    "tags": null,
+                                    "used": true,
+                                    "vpc_id": "vpc-0123456789abcdef0"
+                                },
+                                "rtb-2peering3333333333": {
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:route-table/rtb-2peering3333333333",
+                                    "associations_count": 1,
+                                    "blackhole_routes": [
+                                        "192.168.5.0/24"
+                                    ],
+                                    "gateways": [],
+                                    "id": "rtb-2peering3333333333",
+                                    "is_public": false,
+                                    "main": false,
+                                    "name": "peering",
+                                    "owner_id": "123456789012",
+                                    "permissive_peering_routes": [
+                                        "10.0.0.0/8"
+                                    ],
+                                    "propagating_vgws": [],
+                                    "routes": [
+                                        {
+                                            "destination": "10.0.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRouteTable",
+                                            "state": "active",
+                                            "target": "local",
+                                            "target_type": "local"
+                                        },
+                                        {
+                                            "destination": "10.0.0.0/8",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "pcx-0123456789abcdef0",
+                                            "target_type": "peering_connection"
+                                        },
+                                        {
+                                            "destination": "192.168.5.0/24",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRoute",
+                                            "state": "blackhole",
+                                            "target": "pcx-0fedcba9876543210",
+                                            "target_type": "peering_connection"
+                                        }
+                                    ],
+                                    "routes_count": 3,
+                                    "subnets": [
+                                        "subnet-1123456789abcdef2"
+                                    ],
+                                    "tags": null,
+                                    "used": true,
+                                    "vpc_id": "vpc-0123456789abcdef0"
+                                },
+                                "rtb-3unused44444444444": {
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:route-table/rtb-3unused44444444444",
+                                    "associations_count": 0,
+                                    "blackhole_routes": [],
+                                    "gateways": [],
+                                    "id": "rtb-3unused44444444444",
+                                    "is_public": false,
+                                    "main": false,
+                                    "name": "leftover",
+                                    "owner_id": "123456789012",
+                                    "permissive_peering_routes": [],
+                                    "propagating_vgws": [],
+                                    "routes": [
+                                        {
+                                            "destination": "10.0.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRouteTable",
+                                            "state": "active",
+                                            "target": "local",
+                                            "target_type": "local"
+                                        }
+                                    ],
+                                    "routes_count": 1,
+                                    "subnets": [],
+                                    "tags": null,
+                                    "used": false,
+                                    "vpc_id": "vpc-0123456789abcdef0"
+                                },
+                                "rtb-4gateway555555555": {
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:route-table/rtb-4gateway555555555",
+                                    "associations_count": 1,
+                                    "blackhole_routes": [],
+                                    "gateways": [
+                                        "vgw-0123456789abcdef0"
+                                    ],
+                                    "id": "rtb-4gateway555555555",
+                                    "is_public": false,
+                                    "main": false,
+                                    "name": "edge",
+                                    "owner_id": "123456789012",
+                                    "permissive_peering_routes": [],
+                                    "propagating_vgws": [
+                                        "vgw-0123456789abcdef0"
+                                    ],
+                                    "routes": [
+                                        {
+                                            "destination": "10.0.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRouteTable",
+                                            "state": "active",
+                                            "target": "local",
+                                            "target_type": "local"
+                                        },
+                                        {
+                                            "destination": "10.1.0.0/16",
+                                            "destination_type": "ipv4",
+                                            "origin": "CreateRoute",
+                                            "state": "active",
+                                            "target": "vgw-0123456789abcdef0",
+                                            "target_type": "virtual_private_gateway"
+                                        }
+                                    ],
+                                    "routes_count": 2,
+                                    "subnets": [],
+                                    "tags": null,
+                                    "used": true,
+                                    "vpc_id": "vpc-0123456789abcdef0"
+                                }
+                            },
+                            "route_tables_count": 5,
+                            "state": "available",
+                            "subnets": {
+                                "subnet-0123456789abcdef1": {
+                                    "AvailabilityZone": "eu-west-1a",
+                                    "CidrBlock": "10.0.1.0/24",
+                                    "MapPublicIpOnLaunch": false,
+                                    "VpcId": "vpc-0123456789abcdef0",
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:subnet/subnet-0123456789abcdef1",
+                                    "id": "subnet-0123456789abcdef1",
+                                    "is_public": false,
+                                    "name": "private-a",
+                                    "route_table_id": "rtb-1private222222222"
+                                },
+                                "subnet-2123456789abcdef3": {
+                                    "AvailabilityZone": "eu-west-1b",
+                                    "CidrBlock": "10.0.2.0/24",
+                                    "MapPublicIpOnLaunch": true,
+                                    "VpcId": "vpc-0123456789abcdef0",
+                                    "arn": "arn:aws:ec2:eu-west-1:123456789012:subnet/subnet-2123456789abcdef3",
+                                    "id": "subnet-2123456789abcdef3",
+                                    "is_public": true,
+                                    "name": "inherits-main",
+                                    "route_table_id": "rtb-0main1111111111111"
+                                }
+                            },
+                            "subnets_count": 2
+                        }
+                    }
                 },
                 "us-east-1": {
                     "flow_logs": {},
                     "flow_logs_count": 0,
                     "id": "us-east-1",
                     "name": "us-east-1",
-                    "region": "us-east-1"
+                    "region": "us-east-1",
+                    "route_tables_count": 0,
+                    "subnets_count": 0,
+                    "vpcs": {}
                 }
-            }
+            },
+            "route_tables_count": 5,
+            "subnets_count": 2
         }
     }
 }

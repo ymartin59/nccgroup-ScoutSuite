@@ -1,0 +1,26 @@
+{
+    "description": "Main Route Table Routing to an Internet Gateway",
+    "rationale": "The main route table governs every subnet that is not explicitly associated with another one, so a default route to an internet gateway in it makes each of those subnets public. Nothing on the subnet says so and no action is needed to inherit it: a subnet created without an association, which is how the console creates one when the field is left alone, silently lands on the public path, and so does every instance, database and load balancer placed in it. The default VPC ships in exactly this state. Keeping the main route table private inverts the failure mode, an unassociated subnet then being unreachable rather than exposed, which surfaces immediately instead of years later.",
+    "remediation": "Remove the 0.0.0.0/0 and ::/0 routes to the internet gateway from the main route table, create a dedicated public route table carrying them, and associate it explicitly with the subnets that are meant to be public",
+    "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#RouteTables",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html"
+    ],
+    "dashboard_name": "Route Tables",
+    "display_path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "conditions": [
+        "and",
+        [
+            "vpc.regions.id.vpcs.id.route_tables.id.main",
+            "true",
+            ""
+        ],
+        [
+            "vpc.regions.id.vpcs.id.route_tables.id.is_public",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "main"
+}

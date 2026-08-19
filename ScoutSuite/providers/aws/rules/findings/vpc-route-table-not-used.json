@@ -1,0 +1,20 @@
+{
+    "description": "Unused Route Table",
+    "rationale": "Maintaining unused resources increases risks of misconfigurations and increases the difficulty of audits. A route table associated with no subnet and no gateway, and not the main table of its VPC, decides nothing today, yet it is one association away from taking effect, and the routes it holds were written for a topology that may no longer exist.",
+    "remediation": "Delete the route tables that are associated with no subnet and no gateway",
+    "references": [
+        "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html"
+    ],
+    "dashboard_name": "Route Tables",
+    "display_path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "conditions": [
+        "and",
+        [
+            "vpc.regions.id.vpcs.id.route_tables.id.used",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "used"
+}

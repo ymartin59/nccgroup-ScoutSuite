@@ -82,6 +82,10 @@ class AWSProvider(BaseProvider):
         if 'ec2' in self.service_list and 'vpc' in self.service_list:
             self._match_instances_and_vpcs()
             self._match_instances_and_subnets()
+            self._propagate_subnet_exposure()
+
+        if 'elb' in self.service_list and 'vpc' in self.service_list:
+            self._propagate_subnet_exposure_to_load_balancers()
         
         if 'ec2' in self.service_list and 'codebuild' in self.service_list:
             self._update_sg_usage_codebuild()
@@ -445,6 +449,40 @@ class AWSProvider(BaseProvider):
                     if detail not in details:
                         ec2_instances[instance_key].pop(detail, None)
         return ec2_instances
+
+    def _propagate_subnet_exposure(self):
+        """Carry onto EC2 instances and network interfaces whether the subnet holding them is public,
+        a fact only the subnet's route table knows. Reachability from the Internet needs all three of
+        a public subnet, a public address and a security group letting the traffic through; without
+        the first, a rule reading the other two is guessing."""
+
+        for region_id, region_config in self.services['ec2']['regions'].items():
+            for vpc_id, vpc_config in region_config.get('vpcs', {}).items():
+                for instance in vpc_config.get('instances', {}).values():
+                    instance['in_public_subnet'] = \
+                        self._is_public_subnet(region_id, vpc_id, instance.get('SubnetId'))
+                    for network_interface in instance.get('network_interfaces', {}).values():
+                        network_interface['in_public_subnet'] = \
+                            self._is_public_subnet(region_id, vpc_id, network_interface.get('SubnetId'))
+                for network_interface in vpc_config.get('network_interfaces', {}).values():
+                    network_interface['in_public_subnet'] = \
+                        self._is_public_subnet(region_id, vpc_id, network_interface.get('SubnetId'))
+
+    def _propagate_subnet_exposure_to_load_balancers(self):
+        """A load balancer spans several subnets, and a single public one among them is enough to put
+        it on the public path, whatever the others are."""
+
+        for region_id, region_config in self.services['elb']['regions'].items():
+            for vpc_id, vpc_config in region_config.get('vpcs', {}).items():
+                for load_balancer in vpc_config.get('elbs', {}).values():
+                    load_balancer['in_public_subnet'] = \
+                        any(self._is_public_subnet(region_id, vpc_id, subnet_id)
+                            for subnet_id in load_balancer.get('Subnets', []))
+
+    def _is_public_subnet(self, region_id, vpc_id, subnet_id):
+        subnet = self.services['vpc']['regions'].get(region_id, {}).get('vpcs', {}) \
+            .get(vpc_id, {}).get('subnets', {}).get(subnet_id)
+        return bool(subnet) and bool(subnet.get('is_public'))
 
     def _match_instances_and_vpcs(self):
         ec2_instances = self._get_ec2_instances_details(['id', 'vpc', 'region'])  # fetch all EC2 instances with only required fields

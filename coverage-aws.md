@@ -26,14 +26,18 @@ exist only as `private_*` modules and are therefore **not available** in this tr
 
 ## P0 — Quick wins (facade code already exists or is trivial)
 
-- [ ] **VPC route tables** — `EC2Facade.get_route_tables()` already exists
-      (`ScoutSuite/providers/aws/facade/ec2.py:223`) but is **never called**: dead code.
-      Add `resources/vpc/route_tables.py` and wire it into `resources/vpc/base.py`.
-      Unlocks the single most useful derived attribute in the whole model: **public vs private
-      subnet** (a `0.0.0.0/0` or `::/0` route to an `igw-*` target). Without it, "internet
-      exposed" verdicts on EC2 instances, ELBs, RDS and Lambda-in-VPC are guesses.
-      - [ ] collect routes, target types, associations, main-table flag, propagating VGWs
-      - [ ] derive `is_public` on subnets, propagate to instances / ENIs / load balancers
+- [x] **VPC route tables** — done. Route tables are collected per VPC
+      (`vpc.regions.id.vpcs.id.route_tables`), read once per region and cached, as every subnet of
+      the region needs them too. Unlocks the single most useful derived attribute in the whole
+      model: **public vs private subnet** (an active `0.0.0.0/0` or `::/0` route to an `igw-*`
+      target).
+      - [x] routes flattened to a destination and a target with the type of each, associated
+            subnets and gateways, main-table flag, propagating VGWs, blackhole routes, peering
+            routes broader than the largest possible VPC CIDR block
+      - [x] `is_public` and `route_table_id` derived on subnets, `in_public_subnet` propagated to
+            EC2 instances, network interfaces and ELB load balancers
+      - [ ] left out: propagation to RDS instances (whose subnets come through a DB subnet group),
+            ELBv2 load balancers (which do not collect their subnets) and Lambda-in-VPC
 - [ ] **Region opt-in status** — extend `resources/account/`. Cheap
       (`account:ListRegions`), and it tells you which regions are actually enabled, both to
       scope the scan and to flag regions enabled without a reason.

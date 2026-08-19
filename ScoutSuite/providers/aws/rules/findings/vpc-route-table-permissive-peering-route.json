@@ -1,0 +1,33 @@
+{
+    "description": "Route Table with an Overly Permissive Peering Route",
+    "rationale": "A VPC peering connection carries whatever the route tables on both sides point at it, so the routes are the access control: peering itself grants nothing and restricts nothing. A route broader than a /16 cannot be justified by the peer's address space, a VPC CIDR block being at most a /16, so it necessarily covers addresses the peer does not own, and a default route to a peering connection hands the peer the whole of the outbound path. The effect is that every host reachable through the peer becomes reachable from this VPC, and each new subnet created on the far side is included without any change on this one.",
+    "remediation": "Replace the route with one route per subnet or host that has to be reached through the peering connection, keeping the destinations inside the peer's own CIDR block",
+    "compliance": [
+        {
+            "name": "CIS Amazon Web Services Foundations",
+            "version": "1.1.0",
+            "reference": "4.5"
+        },
+        {
+            "name": "CIS Amazon Web Services Foundations",
+            "version": "1.2.0",
+            "reference": "4.4"
+        }
+    ],
+    "references": [
+        "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html",
+        "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-cidr-blocks.html"
+    ],
+    "dashboard_name": "Route Tables",
+    "display_path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "path": "vpc.regions.id.vpcs.id.route_tables.id",
+    "conditions": [
+        "and",
+        [
+            "vpc.regions.id.vpcs.id.route_tables.id.permissive_peering_routes",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "permissive_peering_routes"
+}

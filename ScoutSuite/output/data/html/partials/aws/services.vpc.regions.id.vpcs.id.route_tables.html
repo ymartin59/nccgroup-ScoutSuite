@@ -1,0 +1,67 @@
+<!-- VPC route tables partial -->
+<script id="services.vpc.regions.id.vpcs.id.route_tables.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Information</h4>
+        <div class="list-group-item-text item-margin">ID: <samp>{{id}}</samp></div>
+        <div class="list-group-item-text item-margin">ARN: <samp>{{arn}}</samp></div>
+        <div class="list-group-item-text item-margin">VPC ID: <samp>{{vpc_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Main route table: <span id="vpc.regions.{{region}}.vpcs.{{vpc}}.route_tables.{{@key}}.main"><samp>{{value_or_none main}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Routes to an internet gateway: <span id="vpc.regions.{{region}}.vpcs.{{vpc}}.route_tables.{{@key}}.is_public"><samp>{{value_or_none is_public}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Used: <span id="vpc.regions.{{region}}.vpcs.{{vpc}}.route_tables.{{@key}}.used"><samp>{{value_or_none used}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading accordion-heading">Routes
+            {{> count_badge count=routes_count}}
+        </h4>
+        <ul id="vpc.regions.{{region}}.vpcs.{{vpc}}.route_tables.{{@key}}.routes">
+            {{#each routes}}
+            <li class="list-group-item-text"><samp>{{value_or_none destination}}</samp> &rarr; <samp>{{value_or_none target}}</samp> ({{value_or_none target_type}}), state: <samp>{{value_or_none state}}</samp>, origin: <samp>{{value_or_none origin}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading accordion-heading">Associated subnets
+            {{> count_badge count=subnets.length}}
+        </h4>
+        <ul>
+            {{#each subnets}}
+            <li class="list-group-item-text"><a href="javascript:showObject('services.vpc.regions.{{../region}}.vpcs.{{../vpc}}.subnets.{{this}}')">{{this}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{#if gateways}}
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Associated gateways</h4>
+        <ul>
+            {{#each gateways}}
+            <li class="list-group-item-text"><samp>{{this}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{#if propagating_vgws}}
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Propagating virtual private gateways</h4>
+        <ul>
+            {{#each propagating_vgws}}
+            <li class="list-group-item-text"><samp>{{this}}</samp></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+</script>
+
+<script>
+  Handlebars.registerPartial("services.vpc.regions.id.vpcs.id.route_tables", $("#services\\.vpc\\.regions\\.id\\.vpcs\\.id\\.route_tables\\.partial").html());
+</script>
+
+<!-- Single VPC route table template -->
+<script id="single_vpc_route_table-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.vpc.regions.id.vpcs.id.route_tables'}}
+</script>
+<script>
+    var single_vpc_route_table_template = Handlebars.compile($("#single_vpc_route_table-template").html());
+</script>

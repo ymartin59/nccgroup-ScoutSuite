@@ -1733,7 +1733,31 @@
                 "level": "warning"
             }
         ],
+        "vpc-main-route-table-with-internet-gateway-route.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "vpc-network-acl-not-used.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "vpc-route-table-not-used.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "vpc-route-table-permissive-peering-route.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "vpc-route-table-with-blackhole-route.json": [
             {
                 "enabled": true,
                 "level": "warning"

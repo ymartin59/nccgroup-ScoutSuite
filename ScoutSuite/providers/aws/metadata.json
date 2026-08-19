@@ -140,6 +140,10 @@
                         [ "match_roles_and_vpc_flowlogs_callback", {} ]
                     ]
                 },
+                "route_tables": {
+                    "cols": 2,
+                    "path": "services.vpc.regions.id.vpcs.id.route_tables"
+                },
                 "subnets": {
                     "cols": 2,
                     "path": "services.vpc.regions.id.vpcs.id.subnets"
