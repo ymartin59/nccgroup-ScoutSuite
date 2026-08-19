@@ -19,6 +19,10 @@
                 "contacts": {
                     "cols": 2,
                     "path": "services.account.contacts"
+                },
+                "region_opt_status": {
+                    "cols": 2,
+                    "path": "services.account.region_opt_status"
                 }
             }
         },

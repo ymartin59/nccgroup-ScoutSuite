@@ -7,6 +7,12 @@
                 "level": "warning"
             }
         ],
+        "account-region-enabled-by-opt-in.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "account-security-contact-details-missing.json": [
             {
                 "enabled": true,

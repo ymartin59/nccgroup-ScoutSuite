@@ -1,0 +1,22 @@
+{
+    "description": "Region Enabled by Opt-In",
+    "rationale": "An enabled region is a place where resources can be created, and it needs the same coverage as any other: a CloudTrail trail, Config recording, GuardDuty, and whatever guardrails the account relies on. Opt-in regions are the ones that fall through: they were turned on for a trial, a migration or a latency experiment, the resources left behind them are outside every dashboard anyone looks at, and an attacker who obtains credentials naturally works where nobody is watching. Unlike the regions enabled by default, they can be turned off again, which removes the surface entirely instead of asking to have it monitored.",
+    "remediation": "Disable the regions the account does not use, from the account settings or with account:DisableRegion, and confirm that logging, detection and guardrails cover the ones that stay. Deny access to unused regions with an SCP for the regions that cannot be disabled",
+    "references": [
+        "https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html",
+        "https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/organizations.html",
+        "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html#example-scp-deny-region"
+    ],
+    "dashboard_name": "Regions",
+    "display_path": "account.region_opt_status.id",
+    "path": "account.region_opt_status.id",
+    "conditions": [
+        "and",
+        [
+            "account.region_opt_status.id.enabled_by_opt_in",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "enabled_by_opt_in"
+}

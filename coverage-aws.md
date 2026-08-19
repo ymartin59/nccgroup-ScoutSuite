@@ -38,9 +38,13 @@ exist only as `private_*` modules and are therefore **not available** in this tr
             EC2 instances, network interfaces and ELB load balancers
       - [ ] left out: propagation to RDS instances (whose subnets come through a DB subnet group),
             ELBv2 load balancers (which do not collect their subnets) and Lambda-in-VPC
-- [ ] **Region opt-in status** — extend `resources/account/`. Cheap
-      (`account:ListRegions`), and it tells you which regions are actually enabled, both to
-      scope the scan and to flag regions enabled without a reason.
+- [x] **Region opt-in status** — done. `account:ListRegions` is collected as
+      `account.region_opt_status`, giving every region of the partition with the account's opt-in
+      status for it, and the derived `enabled` / `enabled_by_default` / `enabled_by_opt_in` flags.
+      A rule flags the regions enabled by opt-in, which carry the same exposure as the default ones
+      without having been part of any original design and can be turned off again.
+      - [ ] left out: using the result to scope the scan, `build_region_list()` still calling
+            `ec2:DescribeRegions` on its own.
 - [ ] **EC2 account-level defaults** — `resources/ec2/regional_settings.py` currently holds only
       EBS default encryption + key. Add:
       - [ ] account-level IMDS defaults (`GetInstanceMetadataDefaults`: IMDSv2 required, hop limit)

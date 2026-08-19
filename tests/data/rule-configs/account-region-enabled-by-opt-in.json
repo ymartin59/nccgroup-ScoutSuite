@@ -1,0 +1,64 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "account": {
+            "region_opt_status": {
+                "af-south-1": {
+                    "enabled": true,
+                    "enabled_by_default": false,
+                    "enabled_by_opt_in": true,
+                    "id": "af-south-1",
+                    "name": "af-south-1",
+                    "opt_status": "ENABLED",
+                    "region": "af-south-1"
+                },
+                "ap-east-1": {
+                    "enabled": true,
+                    "enabled_by_default": false,
+                    "enabled_by_opt_in": true,
+                    "id": "ap-east-1",
+                    "name": "ap-east-1",
+                    "opt_status": "ENABLING",
+                    "region": "ap-east-1"
+                },
+                "eu-south-2": {
+                    "enabled": false,
+                    "enabled_by_default": false,
+                    "enabled_by_opt_in": false,
+                    "id": "eu-south-2",
+                    "name": "eu-south-2",
+                    "opt_status": "DISABLING",
+                    "region": "eu-south-2"
+                },
+                "eu-west-1": {
+                    "enabled": true,
+                    "enabled_by_default": true,
+                    "enabled_by_opt_in": false,
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "opt_status": "ENABLED_BY_DEFAULT",
+                    "region": "eu-west-1"
+                },
+                "me-south-1": {
+                    "enabled": false,
+                    "enabled_by_default": false,
+                    "enabled_by_opt_in": false,
+                    "id": "me-south-1",
+                    "name": "me-south-1",
+                    "opt_status": "DISABLED",
+                    "region": "me-south-1"
+                },
+                "us-east-1": {
+                    "enabled": true,
+                    "enabled_by_default": true,
+                    "enabled_by_opt_in": false,
+                    "id": "us-east-1",
+                    "name": "us-east-1",
+                    "opt_status": "ENABLED_BY_DEFAULT",
+                    "region": "us-east-1"
+                }
+            },
+            "region_opt_status_count": 6
+        }
+    }
+}

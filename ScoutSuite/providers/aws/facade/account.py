@@ -13,6 +13,17 @@ class AccountFacade(AWSBaseFacade):
         except Exception as e:
             print_exception(f'Failed to retrieve account contact details: {e}')
 
+    async def get_regions(self):
+        """Every region of the partition together with the account's opt-in status for it, which is
+        what tells the regions actually enabled from those merely available."""
+
+        try:
+            return await AWSFacadeUtils.get_all_pages(
+                'account', None, self.session, 'list_regions', 'Regions')
+        except Exception as e:
+            print_exception(f'Failed to retrieve account region opt-in status: {e}')
+            return []
+
     async def get_alternate_contact(self, contact_type):
         client = AWSFacadeUtils.get_client('account', self.session)
         try:
