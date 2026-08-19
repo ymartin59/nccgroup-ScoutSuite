@@ -1,0 +1,44 @@
+{
+    "description": "Function Authorized to All Principals",
+    "rationale": "A resource-based policy statement allowing an invocation to all principals grants it to every AWS account, not only to principals of the account owning the function, and it stands on its own: the caller needs no matching permission on their side. Anyone holding any set of AWS credentials can therefore invoke the function, and the function then runs with its execution role, reaching whatever that role reaches. Such a statement is usually left behind by a service integration that was pointed at the function without the source account or source ARN condition that would have narrowed it back down to the intended caller.",
+    "remediation": "Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\":\"*\"} from the function policy, or add a Condition on aws:SourceArn, aws:SourceAccount or aws:PrincipalOrgID restricting it to the caller the integration actually needs",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "awslambda.regions.id.functions.id",
+    "path": "awslambda.regions.id.functions.id.access_policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.",
+            "withKey",
+            "access_policy"
+        ],
+        [
+            "awslambda.regions.id.functions.id.access_policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "awslambda.regions.id.functions.id.access_policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "awslambda.regions.id.functions.id.access_policy.Statement.id"
+            ]
+        ]
+    ]
+}

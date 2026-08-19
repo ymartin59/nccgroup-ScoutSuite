@@ -277,11 +277,24 @@ rule gap directly.
       - [ ] role `MaxSessionDuration`, `PermissionsBoundary` on users and roles
       - [ ] account-level MFA / root-session settings, `GetAccountAuthorizationDetails` as a
             single-call optimisation
-- [ ] **Lambda** — `facade/awslambda.py` gets functions, access policy, env variables, role.
-      Missing: VPC configuration, layers (and their versions/permissions), **code signing**
-      configuration, reserved/provisioned concurrency, dead-letter queues, function URLs
-      (**`AuthType: NONE` = unauthenticated public HTTPS endpoint**), runtime EOL status,
-      tracing config, ephemeral storage.
+- [x] **Lambda** — done. On top of the functions, access policy, env variables and role that were
+      already collected: **function URLs** with their auth type and CORS settings, VPC configuration
+      (which also revives the security-group cross-link the report metadata was already asking for),
+      the **code signing** configuration and its untrusted-artifact policy, reserved and provisioned
+      concurrency, dead letter queue *and* on-failure destination, runtime management mode (whether
+      AWS may patch the runtime by itself), env-var KMS key, the layers a function loads with the
+      account owning each, tracing mode, ephemeral storage, architectures, package type and log
+      group. **Layers** are a new resource, `awslambda.regions.id.layers`, with every published
+      version and its permission policy. Thirteen rules: a function URL with `AuthType: NONE` and
+      one allowing any CORS origin, a function policy and a layer version policy open to all
+      principals, a layer owned by another account, code signing absent or only warning, runtime
+      updates not automatic, a function off the VPC, env variables on the AWS managed key,
+      asynchronous failures discarded, no reserved concurrency, and tracing not active. The
+      pre-existing runtime deprecation rule is now in `default.json` as well. Package type gates the
+      code signing and runtime rules, since a container image function has neither. Left out:
+      **runtime EOL status still comes from the hard-coded table** in `resources/awslambda/`
+      `functions.py` (no API exposes it), the layer version *contents* are not read, and event source
+      mappings are not collected.
 - [ ] **S3** — bucket-level and account-level Public Access Block are covered
       (`resources/s3/base.py:19`, `facade/s3.py:344`). Missing: **Object Lock** configuration,
       replication rules (cross-account/cross-region destinations), lifecycle rules,

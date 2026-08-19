@@ -1,0 +1,21 @@
+{
+    "description": "Function Using a Layer from Another Account",
+    "rationale": "A layer is unpacked into the function's file system before the handler runs, and its code executes with the function's execution role and its network access. When the layer belongs to another account, that code was built and published outside this account: it was never reviewed here, the account that owns it decides what a new version contains, and it can be deleted from under the function. Published versions are immutable, so the risk is not that the archive changes underneath the function, it is that part of what runs in the account comes from a supply chain nobody here controls or scans.",
+    "remediation": "Confirm each layer owner is a party the account intends to run code from, and for third-party layers republish a reviewed copy into an account of your own so the archive that runs is one you built and can scan",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/adding-layers.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.uses_external_layer",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "uses_external_layer"
+}

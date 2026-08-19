@@ -3,45 +3,262 @@
     "services": {
         "awslambda": {
             "filters": {},
-            "findings": {
-                "awslambda-runtime-deprecated": {
-                    "checked_items": 2,
-                    "class_suffix": "runtime_deprecated",
-                    "compliance": null,
-                    "dashboard_name": "Functions",
-                    "description": "Lambda Function Using Deprecated Runtime",
-                    "flagged_items": 1,
-                    "items": [
-                        "awslambda.regions.us-east-1.functions.scoutid-b47af3e35341b60759c8e3c3e426b5b0216a1e35.runtime_deprecated"
-                    ],
-                    "level": "warning",
-                    "path": "awslambda.regions.id.functions.id",
-                    "rationale": "Deprecated Lambda runtimes no longer receive security updates.",
-                    "references": [
-                        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
-                    ],
-                    "remediation": "Switch to a newer, supported runtime.",
-                    "service": "Lambda"
-                }
-            },
-            "functions_count": 2,
+            "findings": {},
+            "functions_count": 4,
+            "layers_count": 2,
             "regions": {
                 "us-east-1": {
                     "functions": {
+                        "scoutid-1c77599f2a80e2373565bb53c9bc8354bbb6018b": {
+                            "access_policy": {
+                                "Id": "default",
+                                "Statement": [],
+                                "Version": "2012-10-17"
+                            },
+                            "architectures": [
+                                "arm64"
+                            ],
+                            "arn": "arn:aws:lambda:us-east-1:123456789012:function:Test4",
+                            "async_failures_captured": true,
+                            "code_sha256": "b1c2d3e4f5061728394a5b6c7d8e9f00112233445566778899aabbccddeeff00",
+                            "code_signing_allowed_publishers": [
+                                "arn:aws:signer:us-east-1:123456789012:/signing-profiles/ReleasePipeline/9vT5NcJmAa"
+                            ],
+                            "code_signing_config_arn": "arn:aws:lambda:us-east-1:123456789012:code-signing-config:csc-1b2c3d4e5f6071829",
+                            "code_signing_enabled": true,
+                            "code_signing_enforced": false,
+                            "code_signing_untrusted_artifact_policy": "Warn",
+                            "code_size": 8241,
+                            "date_runtime_deprecated": "2027-04-30",
+                            "dead_letter_target_arn": null,
+                            "description": "Signed in warn mode",
+                            "env_variable_names": [
+                                "QUEUE_URL"
+                            ],
+                            "env_variable_values": [
+                                "https://sqs.us-east-1.amazonaws.com/123456789012/Test4"
+                            ],
+                            "env_variables": {
+                                "QUEUE_URL": "https://sqs.us-east-1.amazonaws.com/123456789012/Test4"
+                            },
+                            "environment_encrypted_with_cmk": true,
+                            "ephemeral_storage": 512,
+                            "event_invoke_configs": {
+                                "$LATEST": {
+                                    "maximum_event_age_in_seconds": 3600,
+                                    "maximum_retry_attempts": 1,
+                                    "on_failure_destination": "arn:aws:sqs:us-east-1:123456789012:Test4-failures",
+                                    "on_success_destination": null,
+                                    "qualifier": "$LATEST"
+                                }
+                            },
+                            "execution_role": null,
+                            "external_layers": [],
+                            "handler": "index.handler",
+                            "has_env_variables": true,
+                            "in_vpc": true,
+                            "kms_key_arn": "arn:aws:kms:us-east-1:123456789012:key/0b1c2d3e-4f50-6172-8394-a5b6c7d8e9f0",
+                            "last_modified": "2023-12-11T17:04:33.000+0000",
+                            "layers": [
+                                {
+                                    "account_id": "123456789012",
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:2",
+                                    "code_size": 12903,
+                                    "signing_job_arn": null,
+                                    "signing_profile_version_arn": null
+                                }
+                            ],
+                            "log_group": "/aws/lambda/Test4",
+                            "memory_size": 256,
+                            "name": "Test4",
+                            "on_failure_destinations": [
+                                "arn:aws:sqs:us-east-1:123456789012:Test4-failures"
+                            ],
+                            "package_type": "Zip",
+                            "provisioned_concurrency_configs": [
+                                {
+                                    "allocated": 2,
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:function:Test4:live",
+                                    "requested": 2,
+                                    "status": "READY"
+                                }
+                            ],
+                            "region": "us-east-1",
+                            "reserved_concurrency": 5,
+                            "reserved_concurrency_configured": true,
+                            "revision_id": "d41f8c2b-9a3e-4b17-8c6d-2e5f7a9b1c48",
+                            "role_arn": "arn:aws:iam::123456789012:role/Test4-role",
+                            "runtime": "nodejs22.x",
+                            "runtime_deprecated": false,
+                            "runtime_update_mode": "Auto",
+                            "runtime_updates_automatic": true,
+                            "runtime_version_arn": "arn:aws:lambda:us-east-1::runtime:5a3f1c9e2b7d4086af51c3e9d7b02465",
+                            "signing_job_arn": null,
+                            "signing_profile_version_arn": null,
+                            "snap_start": {
+                                "ApplyOn": "None",
+                                "OptimizationStatus": "Off"
+                            },
+                            "state": "Active",
+                            "timeout": 15,
+                            "tracing_config": {
+                                "Mode": "PassThrough"
+                            },
+                            "tracing_enabled": false,
+                            "tracing_mode": "PassThrough",
+                            "url_configs": {
+                                "$LATEST": {
+                                    "auth_type": "AWS_IAM",
+                                    "cors_allow_credentials": false,
+                                    "cors_allow_headers": [
+                                        "content-type"
+                                    ],
+                                    "cors_allow_methods": [
+                                        "POST"
+                                    ],
+                                    "cors_allow_origins": [
+                                        "*"
+                                    ],
+                                    "creation_time": "2023-11-02T09:12:41.000+0000",
+                                    "invoke_mode": "BUFFERED",
+                                    "qualifier": "$LATEST",
+                                    "url": "https://abcdefghijklmnopqrstuvwxyz0123.lambda-url.us-east-1.on.aws/"
+                                }
+                            },
+                            "url_configured": true,
+                            "url_cors_allows_all_origins": true,
+                            "url_unauthenticated": false,
+                            "uses_external_layer": false,
+                            "version": "$LATEST",
+                            "vpc_config": {
+                                "ipv6_allowed_for_dual_stack": false,
+                                "security_group_ids": [
+                                    "sg-0a1b2c3d4e5f60718"
+                                ],
+                                "subnet_ids": [
+                                    "subnet-0d1b6f4a9c1e3a7b2",
+                                    "subnet-05c2e9a7b3f1d8e64"
+                                ],
+                                "vpc_id": "vpc-0f4a0e18a3b4e7cf1"
+                            }
+                        },
+                        "scoutid-5e595222cbfbfb16faea2f3a75daea5986605b17": {
+                            "access_policy": {
+                                "Id": "default",
+                                "Statement": [],
+                                "Version": "2012-10-17"
+                            },
+                            "architectures": [
+                                "x86_64"
+                            ],
+                            "arn": "arn:aws:lambda:us-east-1:123456789012:function:Test3",
+                            "async_failures_captured": true,
+                            "code_sha256": "a5b6c7d8e9f0112233445566778899aabbccddeeff00112233445566778899aa",
+                            "code_signing_allowed_publishers": [],
+                            "code_signing_config_arn": null,
+                            "code_signing_enabled": false,
+                            "code_signing_enforced": false,
+                            "code_signing_untrusted_artifact_policy": null,
+                            "code_size": 0,
+                            "date_runtime_deprecated": "None",
+                            "dead_letter_target_arn": "arn:aws:sqs:us-east-1:123456789012:Test3-dlq",
+                            "description": "Container image function",
+                            "env_variable_names": [
+                                "API_ENDPOINT",
+                                "API_TOKEN"
+                            ],
+                            "env_variable_values": [
+                                "https://internal.example.com",
+                                "placeholder"
+                            ],
+                            "env_variables": {
+                                "API_ENDPOINT": "https://internal.example.com",
+                                "API_TOKEN": "placeholder"
+                            },
+                            "environment_encrypted_with_cmk": false,
+                            "ephemeral_storage": 512,
+                            "event_invoke_configs": {},
+                            "execution_role": null,
+                            "external_layers": [],
+                            "handler": null,
+                            "has_env_variables": true,
+                            "in_vpc": true,
+                            "kms_key_arn": null,
+                            "last_modified": "2023-09-14T08:22:10.000+0000",
+                            "layers": [],
+                            "log_group": "/aws/lambda/Test3",
+                            "memory_size": 1024,
+                            "name": "Test3",
+                            "on_failure_destinations": [],
+                            "package_type": "Image",
+                            "provisioned_concurrency_configs": [],
+                            "region": "us-east-1",
+                            "reserved_concurrency": null,
+                            "reserved_concurrency_configured": false,
+                            "revision_id": "5b6f37c2-1f1a-4c93-8a4e-0d2f6a1b7c33",
+                            "role_arn": "arn:aws:iam::123456789012:role/Test3-role",
+                            "runtime": null,
+                            "runtime_deprecated": false,
+                            "runtime_update_mode": null,
+                            "runtime_updates_automatic": true,
+                            "runtime_version_arn": null,
+                            "signing_job_arn": null,
+                            "signing_profile_version_arn": null,
+                            "snap_start": null,
+                            "state": "Active",
+                            "timeout": 60,
+                            "tracing_config": {
+                                "Mode": "Active"
+                            },
+                            "tracing_enabled": true,
+                            "tracing_mode": "Active",
+                            "url_configs": {},
+                            "url_configured": false,
+                            "url_cors_allows_all_origins": false,
+                            "url_unauthenticated": false,
+                            "uses_external_layer": false,
+                            "version": "$LATEST",
+                            "vpc_config": {
+                                "ipv6_allowed_for_dual_stack": false,
+                                "security_group_ids": [
+                                    "sg-0a1b2c3d4e5f60718"
+                                ],
+                                "subnet_ids": [
+                                    "subnet-0d1b6f4a9c1e3a7b2",
+                                    "subnet-05c2e9a7b3f1d8e64"
+                                ],
+                                "vpc_id": "vpc-0f4a0e18a3b4e7cf1"
+                            }
+                        },
                         "scoutid-640ab2bae07bedc4c163f679a746f7ab7fb5d1fa": {
                             "access_policy": {
                                 "Id": "default",
                                 "Statement": [],
                                 "Version": "2012-10-17"
                             },
+                            "architectures": [
+                                "arm64"
+                            ],
                             "arn": "arn:aws:lambda:us-east-1:123456789012:function:Test1",
+                            "async_failures_captured": true,
                             "code_sha256": "ozqmTyk2fnrKvm6fOjTpTgCCWSzYe3fyTMHO8rh6Iis=",
+                            "code_signing_allowed_publishers": [
+                                "arn:aws:signer:us-east-1:123456789012:/signing-profiles/ReleasePipeline/9vT5NcJmAa"
+                            ],
+                            "code_signing_config_arn": "arn:aws:lambda:us-east-1:123456789012:code-signing-config:csc-0a1b2c3d4e5f60718",
+                            "code_signing_enabled": true,
+                            "code_signing_enforced": true,
+                            "code_signing_untrusted_artifact_policy": "Enforce",
                             "code_size": 287,
                             "date_runtime_deprecated": "None",
+                            "dead_letter_target_arn": "arn:aws:sqs:us-east-1:123456789012:Test1-dlq",
                             "description": "",
                             "env_variable_names": [],
                             "env_variable_values": [],
                             "env_variables": [],
+                            "environment_encrypted_with_cmk": false,
+                            "ephemeral_storage": 512,
+                            "event_invoke_configs": {},
                             "execution_role": {
                                 "Arn": "arn:aws:iam::123456789012:role/service-role/Test1-role",
                                 "AssumeRolePolicyDocument": {
@@ -124,19 +341,67 @@
                                     }
                                 ]
                             },
+                            "external_layers": [],
                             "handler": "lambda_function.lambda_handler",
+                            "has_env_variables": false,
+                            "in_vpc": true,
+                            "kms_key_arn": null,
                             "last_modified": "2024-05-22T20:43:52.000+0000",
+                            "layers": [
+                                {
+                                    "account_id": "123456789012",
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:2",
+                                    "code_size": 12903,
+                                    "signing_job_arn": null,
+                                    "signing_profile_version_arn": null
+                                }
+                            ],
+                            "log_group": "/aws/lambda/Test1",
                             "memory_size": 128,
                             "name": "Test1",
+                            "on_failure_destinations": [],
+                            "package_type": "Zip",
+                            "provisioned_concurrency_configs": [],
+                            "region": "us-east-1",
+                            "reserved_concurrency": 10,
+                            "reserved_concurrency_configured": true,
                             "revision_id": "c9906c99-df60-4a13-94cc-b90ca69b970d",
                             "role_arn": "arn:aws:iam::123456789012:role/service-role/Test1-role-gs4r4cl9",
                             "runtime": "python3.12",
                             "runtime_deprecated": false,
+                            "runtime_update_mode": "Auto",
+                            "runtime_updates_automatic": true,
+                            "runtime_version_arn": "arn:aws:lambda:us-east-1::runtime:0b2b2b8b1a3c4d5e6f708192a3b4c5d6",
+                            "signing_job_arn": "arn:aws:signer:us-east-1:123456789012:/signing-jobs/9f9b3e2a-1d47-4f27-9a56-1b2c3d4e5f60",
+                            "signing_profile_version_arn": "arn:aws:signer:us-east-1:123456789012:/signing-profiles/ReleasePipeline/9vT5NcJmAa",
+                            "snap_start": {
+                                "ApplyOn": "None",
+                                "OptimizationStatus": "Off"
+                            },
+                            "state": "Active",
                             "timeout": 3,
                             "tracing_config": {
-                                "Mode": "PassThrough"
+                                "Mode": "Active"
                             },
-                            "version": "$LATEST"
+                            "tracing_enabled": true,
+                            "tracing_mode": "Active",
+                            "url_configs": {},
+                            "url_configured": false,
+                            "url_cors_allows_all_origins": false,
+                            "url_unauthenticated": false,
+                            "uses_external_layer": false,
+                            "version": "$LATEST",
+                            "vpc_config": {
+                                "ipv6_allowed_for_dual_stack": false,
+                                "security_group_ids": [
+                                    "sg-0a1b2c3d4e5f60718"
+                                ],
+                                "subnet_ids": [
+                                    "subnet-0d1b6f4a9c1e3a7b2",
+                                    "subnet-05c2e9a7b3f1d8e64"
+                                ],
+                                "vpc_id": "vpc-0f4a0e18a3b4e7cf1"
+                            }
                         },
                         "scoutid-b47af3e35341b60759c8e3c3e426b5b0216a1e35": {
                             "access_policy": {
@@ -154,14 +419,31 @@
                                             "Service": "events.amazonaws.com"
                                         },
                                         "Resource": "arn:aws:lambda:us-east-1:123456789012:function:Test2"
+                                    },
+                                    {
+                                        "Action": "lambda:InvokeFunction",
+                                        "Effect": "Allow",
+                                        "Principal": "*",
+                                        "Resource": "arn:aws:lambda:us-east-1:123456789012:function:Test2",
+                                        "Sid": "FunctionURLAllowPublicAccess"
                                     }
                                 ],
                                 "Version": "2012-10-17"
                             },
+                            "architectures": [
+                                "x86_64"
+                            ],
                             "arn": "arn:aws:lambda:us-east-1:123456789012:function:Test2",
+                            "async_failures_captured": false,
                             "code_sha256": "m2FX3CW1rbebsw7RjAuG7YeRu/Ej7SVvExLbgAYUt4M=",
+                            "code_signing_allowed_publishers": [],
+                            "code_signing_config_arn": null,
+                            "code_signing_enabled": false,
+                            "code_signing_enforced": false,
+                            "code_signing_untrusted_artifact_policy": null,
                             "code_size": 2379,
                             "date_runtime_deprecated": "2022-07-18",
+                            "dead_letter_target_arn": null,
                             "description": "Test 2",
                             "env_variable_names": [
                                 "GROUP",
@@ -174,10 +456,13 @@
                                 "arn:aws:iam::123456789012:instance-profile/TestProfile"
                             ],
                             "env_variables": {
-                                "INSTANCE_PROFILE_ARN": "arn:aws:iam::123456789012:instance-profile/TestProfile",
                                 "GROUP": "DEV",
+                                "INSTANCE_PROFILE_ARN": "arn:aws:iam::123456789012:instance-profile/TestProfile",
                                 "POLICY_ARN": "arn:aws:iam::123456789012:policy/TestPolicy"
                             },
+                            "environment_encrypted_with_cmk": false,
+                            "ephemeral_storage": 512,
+                            "event_invoke_configs": {},
                             "execution_role": {
                                 "Arn": "arn:aws:iam::123456789012:role/Test2-role",
                                 "AssumeRolePolicyDocument": {
@@ -316,23 +601,170 @@
                                     }
                                 ]
                             },
+                            "external_layers": [
+                                "arn:aws:lambda:us-east-1:999988887777:layer:third-party-agent:14"
+                            ],
                             "handler": "handler.event_handler",
+                            "has_env_variables": true,
+                            "in_vpc": false,
+                            "kms_key_arn": null,
                             "last_modified": "2021-03-23T21:55:59.377+0000",
+                            "layers": [
+                                {
+                                    "account_id": "999988887777",
+                                    "arn": "arn:aws:lambda:us-east-1:999988887777:layer:third-party-agent:14",
+                                    "code_size": 4718592,
+                                    "signing_job_arn": null,
+                                    "signing_profile_version_arn": null
+                                }
+                            ],
+                            "log_group": "/aws/lambda/Test2",
                             "memory_size": 128,
                             "name": "Test2",
+                            "on_failure_destinations": [],
+                            "package_type": "Zip",
+                            "provisioned_concurrency_configs": [],
+                            "region": "us-east-1",
+                            "reserved_concurrency": null,
+                            "reserved_concurrency_configured": false,
                             "revision_id": "8733e9d3-7ece-4974-8d99-3c5afc7f948e",
                             "role_arn": "arn:aws:iam::123456789012:role/Test2-role",
                             "runtime": "python3.6",
                             "runtime_deprecated": true,
+                            "runtime_update_mode": "Manual",
+                            "runtime_updates_automatic": false,
+                            "runtime_version_arn": "arn:aws:lambda:us-east-1::runtime:7b620fc2e66107a1046b140b9d320295d1e46531",
+                            "signing_job_arn": null,
+                            "signing_profile_version_arn": null,
+                            "snap_start": {
+                                "ApplyOn": "None",
+                                "OptimizationStatus": "Off"
+                            },
+                            "state": "Active",
                             "timeout": 300,
                             "tracing_config": {
                                 "Mode": "PassThrough"
                             },
-                            "version": "$LATEST"
+                            "tracing_enabled": false,
+                            "tracing_mode": "PassThrough",
+                            "url_configs": {
+                                "$LATEST": {
+                                    "auth_type": "NONE",
+                                    "cors_allow_credentials": true,
+                                    "cors_allow_headers": [
+                                        "content-type"
+                                    ],
+                                    "cors_allow_methods": [
+                                        "POST"
+                                    ],
+                                    "cors_allow_origins": [
+                                        "*"
+                                    ],
+                                    "creation_time": "2023-11-02T09:12:41.000+0000",
+                                    "invoke_mode": "BUFFERED",
+                                    "qualifier": "$LATEST",
+                                    "url": "https://abcdefghijklmnopqrstuvwxyz0123.lambda-url.us-east-1.on.aws/"
+                                }
+                            },
+                            "url_configured": true,
+                            "url_cors_allows_all_origins": true,
+                            "url_unauthenticated": true,
+                            "uses_external_layer": true,
+                            "version": "$LATEST",
+                            "vpc_config": {
+                                "ipv6_allowed_for_dual_stack": false,
+                                "security_group_ids": [],
+                                "subnet_ids": [],
+                                "vpc_id": null
+                            }
                         }
                     },
-                    "functions_count": 2,
+                    "functions_count": 4,
                     "id": "us-east-1",
+                    "layers": {
+                        "scoutid-80dcf959a2667d5db2540c9d325142d2b5ea4242": {
+                            "arn": "arn:aws:lambda:us-east-1:123456789012:layer:shared-tooling",
+                            "latest_version": 3,
+                            "name": "shared-tooling",
+                            "region": "us-east-1",
+                            "versions": {
+                                "3": {
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:layer:shared-tooling:3",
+                                    "compatible_architectures": [],
+                                    "compatible_runtimes": [
+                                        "nodejs22.x"
+                                    ],
+                                    "created_date": "2023-06-01T14:27:03.905+0000",
+                                    "description": "Not shared with anyone",
+                                    "license_info": "MIT",
+                                    "version": 3
+                                }
+                            },
+                            "versions_count": 1
+                        },
+                        "scoutid-dcaad3cb1a33854f51f963e0216947767d62baad": {
+                            "arn": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils",
+                            "latest_version": 2,
+                            "name": "internal-utils",
+                            "region": "us-east-1",
+                            "versions": {
+                                "1": {
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:1",
+                                    "compatible_architectures": [],
+                                    "compatible_runtimes": [
+                                        "python3.9"
+                                    ],
+                                    "created_date": "2022-04-08T11:03:27.482+0000",
+                                    "description": "First release",
+                                    "license_info": null,
+                                    "policy": {
+                                        "Id": "default",
+                                        "Statement": [
+                                            {
+                                                "Action": "lambda:GetLayerVersion",
+                                                "Effect": "Allow",
+                                                "Principal": "*",
+                                                "Resource": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:1",
+                                                "Sid": "ShareWithEveryone"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    },
+                                    "version": 1
+                                },
+                                "2": {
+                                    "arn": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:2",
+                                    "compatible_architectures": [
+                                        "arm64"
+                                    ],
+                                    "compatible_runtimes": [
+                                        "python3.12"
+                                    ],
+                                    "created_date": "2023-10-19T07:41:56.118+0000",
+                                    "description": "Current release",
+                                    "license_info": null,
+                                    "policy": {
+                                        "Id": "default",
+                                        "Statement": [
+                                            {
+                                                "Action": "lambda:GetLayerVersion",
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "AWS": "arn:aws:iam::210987654321:root"
+                                                },
+                                                "Resource": "arn:aws:lambda:us-east-1:123456789012:layer:internal-utils:2",
+                                                "Sid": "ShareWithSiblingAccount"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    },
+                                    "version": 2
+                                }
+                            },
+                            "versions_count": 2
+                        }
+                    },
+                    "layers_count": 2,
                     "name": "us-east-1",
                     "region": "us-east-1"
                 }

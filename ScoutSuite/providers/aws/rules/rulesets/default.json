@@ -64,6 +64,90 @@
                 "level": "danger"
             }
         ],
+        "awslambda-function-async-failures-not-captured.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-code-signing-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-code-signing-not-enforced.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-env-variables-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-no-reserved-concurrency.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-not-in-vpc.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-runtime-updates-not-automatic.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-tracing-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-url-cors-allow-all-origins.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-url-unauthenticated.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "awslambda-function-uses-external-layer.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "awslambda-function-world-policy.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "awslambda-layer-version-world-policy.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "awslambda-runtime-deprecated.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "cloudformation-stack-with-role.json": [
             {
                 "enabled": true,

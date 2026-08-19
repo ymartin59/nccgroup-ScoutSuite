@@ -1,0 +1,25 @@
+{
+    "description": "Function Code Signing Not Enforced",
+    "rationale": "The code signing configuration attached to the function has UntrustedArtifactOnDeployment set to Warn, which means Lambda records a deployment of an unsigned package, or one signed by a profile the configuration does not trust, and then deploys it anyway. The signature is verified but the verdict changes nothing, so the control only reports on the deployments an attacker would make rather than stopping them, and it does so in a log that has to be watched for the warning to matter at all.",
+    "remediation": "Set UntrustedArtifactOnDeployment to Enforce on the code signing configuration so Lambda rejects a deployment package that no trusted signing profile signed",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html",
+        "https://docs.aws.amazon.com/lambda/latest/api/API_CodeSigningPolicies.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.code_signing_enabled",
+            "true",
+            ""
+        ],
+        [
+            "awslambda.regions.id.functions.id.code_signing_enforced",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "code_signing_untrusted_artifact_policy"
+}

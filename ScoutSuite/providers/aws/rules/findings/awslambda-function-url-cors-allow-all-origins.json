@@ -1,0 +1,25 @@
+{
+    "description": "Function URL Allowing Any Origin",
+    "rationale": "The CORS configuration of a function URL lists the web origins whose pages a browser will let read the response. Setting it to \"*\" hands that permission to every site on the internet, so a page under someone else's control can call the endpoint from a visitor's browser and read what comes back. On a URL that requires IAM authentication the caller still needs credentials, but any page holding them - a single-page application, an extension - can now be the one making the call; on a URL open to anyone, the allowlist was the only thing keeping third-party pages from using the endpoint as their own backend, whether to reach data it returns or to spend the concurrency of the account.",
+    "remediation": "List the origins that legitimately call the function in the CORS AllowOrigins of the URL configuration instead of \"*\", and keep AllowCredentials off unless the browser genuinely has to send cookies",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/urls-configuration.html#urls-cors",
+        "https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.url_configured",
+            "true",
+            ""
+        ],
+        [
+            "awslambda.regions.id.functions.id.url_cors_allows_all_origins",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "url_cors_allows_all_origins"
+}

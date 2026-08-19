@@ -1,0 +1,21 @@
+{
+    "description": "Function Not Attached to a VPC",
+    "rationale": "A function with no VPC configuration runs on a network Lambda manages, with unrestricted outbound access to the internet and no security group, route table or network ACL of the account applying to it. Nothing the account controls can then limit where the function's code, its dependencies or a layer it loads may connect to, which is the path data takes out of a function that has been made to run something it should not. Attaching the function to private subnets puts its network interfaces back under the security groups, the routes and the VPC endpoints of the account, and its flow logs record what it talked to.",
+    "remediation": "Attach the function to private subnets of a VPC with a security group restricting its egress, and reach AWS APIs through VPC endpoints or a NAT gateway with the destinations the function needs. Functions that only call AWS APIs and are deliberately kept off the VPC can be excluded through the ruleset",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/foundation-networking.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.in_vpc",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "in_vpc"
+}

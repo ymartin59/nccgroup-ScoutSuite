@@ -1,0 +1,44 @@
+{
+    "description": "Layer Version Authorized to All Principals",
+    "rationale": "A layer version permission granted to all principals lets any AWS account add the layer to its own functions and read its contents. The archive was built to run inside this account's functions, so it routinely carries the pieces of an application that are not meant to circulate: private packages, client libraries wired to internal endpoints, and occasionally a certificate or a token that was easier to ship with the code than to fetch at run time. Permissions are granted per version and each published version keeps its own, so a version shared once stays readable long after the layer moved on.",
+    "remediation": "Remove the statement granting lambda:GetLayerVersion to \"*\" with remove-layer-version-permission, or restrict it to the accounts and the organization that consume the layer through the Principal or the aws:PrincipalOrgID condition",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html",
+        "https://docs.aws.amazon.com/lambda/latest/api/API_AddLayerVersionPermission.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Statements",
+    "display_path": "awslambda.regions.id.layers.id",
+    "path": "awslambda.regions.id.layers.id.versions.id.policy.Statement.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.layers.id.versions.id.",
+            "withKey",
+            "policy"
+        ],
+        [
+            "awslambda.regions.id.layers.id.versions.id.policy.Statement.id.Effect",
+            "equal",
+            "Allow"
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-any-principal.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "awslambda.regions.id.layers.id.versions.id.policy.Statement.id"
+            ]
+        ],
+        [
+            "_INCLUDE_(conditions/policy-statement-poor-condition.json)",
+            [
+                "_STATEMENT_"
+            ],
+            [
+                "awslambda.regions.id.layers.id.versions.id.policy.Statement.id"
+            ]
+        ]
+    ]
+}

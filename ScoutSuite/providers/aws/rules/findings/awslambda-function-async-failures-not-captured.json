@@ -1,0 +1,21 @@
+{
+    "description": "Function Discarding Failed Asynchronous Invocations",
+    "rationale": "An asynchronous invocation that keeps failing is retried twice by Lambda and then dropped, unless the function has an on-failure destination or a dead letter queue to send it to. The event is gone at that point: whatever S3 notification, EventBridge rule or SNS message triggered the work leaves no record that the work never happened, so a function that is failing for everything it receives looks the same from the outside as one with nothing to do. That matters for any function on a security path - a remediation, a log shipper, a quarantine action - where the missing invocation is the incident.",
+    "remediation": "Configure an on-failure destination on the function's asynchronous invocation configuration, pointing at an SQS queue, an SNS topic or an EventBridge bus, or set a dead letter queue on the function",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-dlq.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.async_failures_captured",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "async_failures_captured"
+}

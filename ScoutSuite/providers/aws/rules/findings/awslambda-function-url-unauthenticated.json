@@ -1,0 +1,21 @@
+{
+    "description": "Function URL Open to Anyone",
+    "rationale": "A function URL whose auth type is NONE is an HTTPS endpoint Lambda serves to the whole internet with no signature and no identity: any request that reaches the hostname runs the function under its execution role. The hostname is not a secret and follows a fixed pattern, so it is discovered by certificate transparency logs and by scanning rather than by being told, and there is nothing in front of it - no API Gateway authorizer, no WAF, no VPC - to inspect the request first. Everything that decides whether the caller may proceed therefore lives in the handler code, and the request body has already been passed to it by the time that code runs.",
+    "remediation": "Set the function URL auth type to AWS_IAM so Lambda checks a SigV4 signature and an IAM policy before invoking the function, or delete the function URL and expose the function through API Gateway or an Application Load Balancer with an authorizer. Where the endpoint has to stay public, put it behind CloudFront with WAF and an origin access control so the URL itself cannot be called directly",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/urls-configuration.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.url_unauthenticated",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "url_unauthenticated"
+}

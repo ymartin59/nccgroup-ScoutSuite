@@ -1,0 +1,26 @@
+{
+    "description": "Function Without Code Signing",
+    "rationale": "Without a code signing configuration, Lambda accepts any deployment package presented by a principal holding lambda:UpdateFunctionCode, and the new code runs on the next invocation with the function's execution role. Nothing ties the archive that runs to the pipeline that was supposed to produce it, so a stolen deployment credential, a compromised build step or an object written directly into the S3 bucket the function is deployed from all reach production the same way a legitimate release does. Code signing makes Lambda check, at deployment time, that the archive was signed by a signing profile the account trusts, and that it was not modified since.",
+    "remediation": "Create a Signer signing profile for the function, publish deployment packages through it, and attach a code signing configuration to the function with UntrustedArtifactOnDeployment set to Enforce",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html",
+        "https://docs.aws.amazon.com/signer/latest/developerguide/Welcome.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.package_type",
+            "equal",
+            "Zip"
+        ],
+        [
+            "awslambda.regions.id.functions.id.code_signing_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "code_signing_enabled"
+}

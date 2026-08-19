@@ -1,0 +1,26 @@
+{
+    "description": "Function Runtime Updates Not Automatic",
+    "rationale": "Runtime management decides whether AWS may move the function onto a patched runtime version by itself. Under Auto it does so within days of a runtime update, which is how a vulnerability in the language runtime, in the AWS SDK bundled with it or in the underlying operating system libraries gets fixed in a function nobody redeploys. FunctionUpdate defers that to the next deployment of the function, and Manual pins the function to one runtime version until someone changes the pin, so a function that is not being worked on keeps running unpatched code indefinitely.",
+    "remediation": "Set the runtime management configuration of the function to Auto, or keep the pin and add a process that moves it forward as soon as a new runtime version is published",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.package_type",
+            "equal",
+            "Zip"
+        ],
+        [
+            "awslambda.regions.id.functions.id.runtime_updates_automatic",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "runtime_update_mode"
+}

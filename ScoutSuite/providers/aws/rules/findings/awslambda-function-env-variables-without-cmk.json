@@ -1,0 +1,26 @@
+{
+    "description": "Function Environment Variables Not Encrypted with KMS",
+    "rationale": "Environment variables are encrypted at rest, but with the AWS managed key Lambda uses when the function names none of its own. That key grants no separate permission and leaves no usable audit trail of its own, so the values are readable in plaintext by anyone allowed to call lambda:GetFunctionConfiguration, and they are returned by the console and by every listing of the function's configuration. Since environment variables are where connection strings, API keys and tokens end up, naming a customer managed key adds a second decision point - the key policy - and records each decryption in CloudTrail under an identifiable principal.",
+    "remediation": "Give the function a customer managed KMS key for its environment variables and grant kms:Decrypt only to its execution role and to the principals that maintain it, or move the values into Secrets Manager or SSM Parameter Store and read them at run time",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-dataprotection.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.has_env_variables",
+            "true",
+            ""
+        ],
+        [
+            "awslambda.regions.id.functions.id.environment_encrypted_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "environment_encrypted_with_cmk"
+}

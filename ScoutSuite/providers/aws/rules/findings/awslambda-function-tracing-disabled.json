@@ -1,0 +1,21 @@
+{
+    "description": "Function Without Active Tracing",
+    "rationale": "With tracing set to PassThrough, the function only takes part in a trace when its caller already started one, and it contributes no segment of its own. CloudTrail records that the function was invoked and CloudWatch records what it logged, but neither says which downstream services one invocation reached, in what order and with what latency, which is the information an investigation needs to follow a single suspicious request through the services a function talks to. Active tracing makes Lambda open a trace for every invocation and record those calls.",
+    "remediation": "Set the tracing mode of the function to Active and grant its execution role the AWSXRayDaemonWriteAccess permissions so the segments are delivered",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html",
+        "https://docs.aws.amazon.com/xray/latest/devguide/xray-services-lambda.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-monitoring.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.tracing_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "tracing_mode"
+}

@@ -1,0 +1,21 @@
+{
+    "description": "Function Without Reserved Concurrency",
+    "rationale": "Concurrency is a regional quota shared by every function in the account, and a function with no reservation draws from that pool without limit. One function that starts running away - a burst of events, a retry loop, an endpoint someone found and is calling repeatedly - can consume the whole quota, and Lambda then throttles the other functions of the region, including the ones handling authentication, alerting or remediation. A reservation caps what a single function can take and, by the same mechanism, guarantees the rest of the account the concurrency it was not going to get otherwise.",
+    "remediation": "Set reserved concurrency on the function to the level it needs at peak, so it cannot exhaust the concurrency of the region, and keep enough unreserved capacity for the functions that have no reservation",
+    "references": [
+        "https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html",
+        "https://docs.aws.amazon.com/lambda/latest/dg/security-best-practices.html"
+    ],
+    "dashboard_name": "Functions",
+    "path": "awslambda.regions.id.functions.id",
+    "conditions": [
+        "and",
+        [
+            "awslambda.regions.id.functions.id.reserved_concurrency_configured",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "reserved_concurrency"
+}
