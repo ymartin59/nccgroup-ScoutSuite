@@ -1,0 +1,71 @@
+<!-- EC2 launch templates partial -->
+<script id="services.ec2.regions.id.launch_templates.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ID: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.id"><samp>{{value_or_none id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.create_time"><samp>{{value_or_none create_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created by: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.created_by"><samp>{{value_or_none created_by}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Default version: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.default_version_number"><samp>{{value_or_none default_version_number}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Latest version: <span id="ec2.regions.{{region}}.launch_templates.{{@key}}.latest_version_number"><samp>{{value_or_none latest_version_number}}</samp></span></div>
+    </div>
+    {{#each versions}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Version {{version_number}}{{#if is_default}} (default){{/if}}</h4>
+      <div class="list-group-item-text item-margin">Description: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.create_time"><samp>{{value_or_none create_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">AMI: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.image_id"><samp>{{value_or_none image_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance type: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.instance_type"><samp>{{value_or_none instance_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Key pair: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.key_name"><samp>{{value_or_none key_name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IAM role: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.iam_role"><samp>{{value_or_none iam_role}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Public IP address: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.associate_public_ip_address"><samp>{{value_or_none associate_public_ip_address}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Detailed monitoring: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.monitoring_enabled"><samp>{{value_or_none monitoring_enabled}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDS tokens: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.http_tokens"><samp>{{value_or_none http_tokens}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDS endpoint: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.metadata_http_endpoint"><samp>{{value_or_none metadata_http_endpoint}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDS hop limit: <span id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.http_put_response_hop_limit"><samp>{{value_or_none http_put_response_hop_limit}}</samp></span></div>
+      {{#if block_devices}}
+      <div class="list-group-item-text item-margin">Block devices:
+        <ul id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.unencrypted_block_devices">
+          {{#each block_devices}}
+          <li class="list-group-item-text"><samp>{{device_name}}</samp> — {{value_or_none volume_type}} {{value_or_none volume_size}} GiB, encrypted: <samp>{{value_or_none encrypted}}</samp>{{#if kms_key_id}}, KMS key: <samp>{{kms_key_id}}</samp>{{/if}}</li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      {{#if user_data}}
+      <div class="list-group-item-text item-margin">User data:
+        <div><code>{{#each (split_lines user_data)}}   {{this}}<br>{{/each}}</code></div>
+        {{#if user_data_secrets}}
+        <h5 id="ec2.regions.{{../region}}.launch_templates.{{@../key}}.versions.{{@key}}.potential_secrets">Potential Secrets</h5>
+        <ul>
+          {{#each user_data_secrets}}
+          <li>
+            {{@key}}
+            <ul>
+              {{#each this}}
+              <li><code>{{this}}</code></li>
+              {{/each}}
+            </ul>
+          </li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.ec2.regions.id.launch_templates", $("#services\\.ec2\\.regions\\.id\\.launch_templates\\.partial").html());
+  </script>
+  <!-- Single EC2 launch template instance template -->
+  <script id="single_ec2_launch_template-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.ec2.regions.id.launch_templates' }}
+  </script>
+  <script>
+    var single_ec2_launch_template_template = Handlebars.compile($("#single_ec2_launch_template-template").html());
+  </script>

@@ -13,6 +13,7 @@ formatted_provider_name = {
 formatted_service_name = {
     # AWS
     'acm': 'ACM',
+    'autoscaling': 'Auto Scaling',
     'cloudformation': 'CloudFormation',
     'cloudtrail': 'CloudTrail',
     'cloudwatch': 'CloudWatch',

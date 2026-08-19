@@ -1,0 +1,25 @@
+{
+    "description": "Auto Scaling Group behind a Load Balancer without ELB Health Checks",
+    "rationale": "The group is attached to a load balancer or a target group but decides on the health of its instances with the EC2 check alone, which only observes whether the instance is running. An instance whose application has stopped answering, has been left in a broken state by a failed deployment or is busy serving something other than the application therefore stays in service and keeps receiving traffic, and the group never replaces it. Health checks coming from the load balancer are what turn the group into the mechanism that removes an instance that no longer behaves, which is also what limits how long a compromised or degraded instance stays in the rotation.",
+    "remediation": "Set the health check type of the Auto Scaling group to ELB, with a grace period long enough for the instances to finish booting",
+    "references": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-add-elb-healthcheck.html"
+    ],
+    "dashboard_name": "Auto Scaling groups",
+    "path": "autoscaling.regions.id.groups.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.groups.id.attached_to_load_balancer",
+            "true",
+            ""
+        ],
+        [
+            "autoscaling.regions.id.groups.id.elb_health_check_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "health_check_type"
+}

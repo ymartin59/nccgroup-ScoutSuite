@@ -1,0 +1,21 @@
+{
+    "description": "Launch Template Version Creating Unencrypted EBS Volumes",
+    "rationale": "A block device mapping that sets Encrypted to false asks for an unencrypted volume explicitly, and every instance launched from the version gets one. The data written there, and the snapshots later taken of it, sit unprotected on storage the account does not control, and nothing in the lifecycle of an auto scaled instance brings the volume back for review. Encryption at rest is a per-volume decision taken at creation, so a volume created unencrypted stays that way until it is copied through an encrypted snapshot.",
+    "remediation": "Set Encrypted to true on the EBS block device mappings of the launch template version, naming a KMS key where one is expected, and enable EBS encryption by default in the region",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html"
+    ],
+    "dashboard_name": "Launch template versions",
+    "display_path": "ec2.regions.id.launch_templates.id",
+    "path": "ec2.regions.id.launch_templates.id.versions.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.launch_templates.id.versions.id.unencrypted_block_devices",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "unencrypted_block_devices"
+}

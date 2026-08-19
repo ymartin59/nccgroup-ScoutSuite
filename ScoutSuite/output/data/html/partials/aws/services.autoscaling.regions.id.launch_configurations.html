@@ -1,0 +1,65 @@
+<!-- Auto Scaling launch configurations partial -->
+<script id="services.autoscaling.regions.id.launch_configurations.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.created_time"><samp>{{value_or_none created_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">AMI: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.image_id"><samp>{{value_or_none image_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance type: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.instance_type"><samp>{{value_or_none instance_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Key pair: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.key_name"><samp>{{value_or_none key_name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IAM instance profile: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.iam_instance_profile"><samp>{{value_or_none iam_instance_profile}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Public IP address: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.associate_public_ip_address"><samp>{{value_or_none associate_public_ip_address}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Detailed monitoring: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.monitoring_enabled"><samp>{{value_or_none monitoring_enabled}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Instance metadata service</h4>
+      <div class="list-group-item-text item-margin">IMDS tokens: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.http_tokens"><samp>{{value_or_none http_tokens}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDS endpoint: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.metadata_http_endpoint"><samp>{{value_or_none metadata_http_endpoint}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDS hop limit: <span id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.http_put_response_hop_limit"><samp>{{value_or_none http_put_response_hop_limit}}</samp></span></div>
+    </div>
+    {{#if block_devices}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Block devices</h4>
+      <ul id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.unencrypted_block_devices">
+        {{#each block_devices}}
+        <li class="list-group-item-text"><samp>{{device_name}}</samp> — {{value_or_none volume_type}} {{value_or_none volume_size}} GiB, encrypted: <samp>{{value_or_none encrypted}}</samp></li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+    {{#if user_data}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">User data</h4>
+      <div><code>{{#each (split_lines user_data)}}   {{this}}<br>{{/each}}</code></div>
+      {{#if user_data_secrets}}
+      <h5 id="autoscaling.regions.{{region}}.launch_configurations.{{@key}}.potential_secrets">Potential Secrets</h5>
+      <ul>
+        {{#each user_data_secrets}}
+        <li>
+          {{@key}}
+          <ul>
+            {{#each this}}
+            <li><code>{{this}}</code></li>
+            {{/each}}
+          </ul>
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.autoscaling.regions.id.launch_configurations", $("#services\\.autoscaling\\.regions\\.id\\.launch_configurations\\.partial").html());
+  </script>
+  <!-- Single Auto Scaling launch configuration instance template -->
+  <script id="single_autoscaling_launch_configuration-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.autoscaling.regions.id.launch_configurations' }}
+  </script>
+  <script>
+    var single_autoscaling_launch_configuration_template = Handlebars.compile($("#single_autoscaling_launch_configuration-template").html());
+  </script>

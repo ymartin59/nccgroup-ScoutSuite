@@ -8,6 +8,8 @@
         <ul>
             <li class="list-group-item-text">Encryption enabled for EBS Volumes by default: <span id="ec2.regions.{{region}}.regional_settings.{{@key}}.NoDefaultEBSEncryption"><samp>{{ebs_encryption_default}}</samp></span></li>
             <li class="list-group-item-text">Default encryption key: <span id="ec2.regions.{{region}}.regional_settings.{{@key}}.ebs_default_encryption_key"><samp>{{ebs_default_encryption_key_id}}</samp></span></li>
+            <li class="list-group-item-text">Instance metadata default tokens: <span id="ec2.regions.{{region}}.regional_settings.{{@key}}.instance_metadata_default_http_tokens"><samp>{{value_or_none instance_metadata_default_http_tokens}}</samp></span></li>
+            <li class="list-group-item-text">Instance metadata default hop limit: <span id="ec2.regions.{{region}}.regional_settings.{{@key}}.instance_metadata_default_hop_limit"><samp>{{value_or_none instance_metadata_default_hop_limit}}</samp></span></li>
         </ul>
     </div>
 </script>

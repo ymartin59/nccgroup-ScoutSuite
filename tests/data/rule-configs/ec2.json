@@ -267,7 +267,216 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "launch_templates": {
+                        "lt-0a1b2c3d4e5f60001": {
+                            "id": "lt-0a1b2c3d4e5f60001",
+                            "name": "web-hardened",
+                            "arn": "arn:aws:ec2:eu-west-1:123456789012:launch-template/lt-0a1b2c3d4e5f60001",
+                            "region": "eu-west-1",
+                            "create_time": "2025-03-04 09:15:00",
+                            "created_by": "arn:aws:iam::123456789012:role/platform",
+                            "default_version_number": 2,
+                            "latest_version_number": 2,
+                            "default_version_is_latest": true,
+                            "tags": [
+                                {
+                                    "Key": "Name",
+                                    "Value": "web-hardened"
+                                }
+                            ],
+                            "versions": {
+                                "2": {
+                                    "id": "2",
+                                    "version_number": 2,
+                                    "name": "Version 2",
+                                    "description": "IMDSv2 and encrypted root volume",
+                                    "is_default": true,
+                                    "create_time": "2025-03-04 09:15:00",
+                                    "created_by": "arn:aws:iam::123456789012:role/platform",
+                                    "image_id": "ami-0aaaaaaaaaaaaaaa1",
+                                    "instance_type": "m6i.large",
+                                    "key_name": null,
+                                    "ebs_optimized": null,
+                                    "monitoring_enabled": true,
+                                    "tenancy": null,
+                                    "disable_api_termination": null,
+                                    "disable_api_stop": null,
+                                    "iam_instance_profile_arn": null,
+                                    "iam_instance_profile_name": "web-instance-profile",
+                                    "iam_role": "web-instance-profile",
+                                    "user_data": null,
+                                    "user_data_secrets": {},
+                                    "network_interfaces": [
+                                        {
+                                            "device_index": 0,
+                                            "subnet_id": "subnet-0aaa1",
+                                            "associate_public_ip_address": false,
+                                            "security_groups": [
+                                                "sg-0aaa1"
+                                            ]
+                                        }
+                                    ],
+                                    "security_groups": [
+                                        "sg-0aaa1"
+                                    ],
+                                    "security_group_names": [],
+                                    "associate_public_ip_address": false,
+                                    "metadata_options": {
+                                        "HttpEndpoint": "enabled",
+                                        "HttpTokens": "required",
+                                        "HttpPutResponseHopLimit": 1
+                                    },
+                                    "http_tokens": "required",
+                                    "metadata_http_endpoint": "enabled",
+                                    "metadata_tags_enabled": false,
+                                    "http_put_response_hop_limit": 1,
+                                    "imdsv2_required": true,
+                                    "imds_hop_limit_excessive": false,
+                                    "block_devices": [
+                                        {
+                                            "device_name": "/dev/xvda",
+                                            "encrypted": true,
+                                            "kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/1234",
+                                            "volume_type": "gp3",
+                                            "volume_size": 30,
+                                            "delete_on_termination": true
+                                        }
+                                    ],
+                                    "unencrypted_block_devices": []
+                                }
+                            }
+                        },
+                        "lt-0a1b2c3d4e5f60002": {
+                            "id": "lt-0a1b2c3d4e5f60002",
+                            "name": "legacy-app",
+                            "arn": "arn:aws:ec2:eu-west-1:123456789012:launch-template/lt-0a1b2c3d4e5f60002",
+                            "region": "eu-west-1",
+                            "create_time": "2021-06-01 11:00:00",
+                            "created_by": "arn:aws:iam::123456789012:user/deploy",
+                            "default_version_number": 1,
+                            "latest_version_number": 3,
+                            "default_version_is_latest": false,
+                            "tags": [],
+                            "versions": {
+                                "1": {
+                                    "id": "1",
+                                    "version_number": 1,
+                                    "name": "Version 1",
+                                    "description": "initial",
+                                    "is_default": true,
+                                    "create_time": "2021-06-01 11:00:00",
+                                    "created_by": "arn:aws:iam::123456789012:user/deploy",
+                                    "image_id": "ami-0bbbbbbbbbbbbbbb2",
+                                    "instance_type": "t3.medium",
+                                    "key_name": "legacy-key",
+                                    "ebs_optimized": null,
+                                    "monitoring_enabled": null,
+                                    "tenancy": null,
+                                    "disable_api_termination": null,
+                                    "disable_api_stop": null,
+                                    "iam_instance_profile_arn": "arn:aws:iam::123456789012:instance-profile/legacy-app",
+                                    "iam_instance_profile_name": null,
+                                    "iam_role": "legacy-app",
+                                    "user_data": "#!/bin/bash\nexport AWS_ACCESS_KEY_ID=AKIA0123456789ABCDEF\necho done\n",
+                                    "user_data_secrets": {
+                                        "AWS Access Key IDs": [
+                                            "AKIA0123456789ABCDEF"
+                                        ],
+                                        "Flagged Words": [
+                                            "aws_access_key_id"
+                                        ]
+                                    },
+                                    "network_interfaces": [
+                                        {
+                                            "device_index": 0,
+                                            "subnet_id": "subnet-0bbb1",
+                                            "associate_public_ip_address": true,
+                                            "security_groups": [
+                                                "sg-0bbb1"
+                                            ]
+                                        }
+                                    ],
+                                    "security_groups": [
+                                        "sg-0bbb1"
+                                    ],
+                                    "security_group_names": [],
+                                    "associate_public_ip_address": true,
+                                    "metadata_options": {},
+                                    "http_tokens": null,
+                                    "metadata_http_endpoint": null,
+                                    "metadata_tags_enabled": false,
+                                    "http_put_response_hop_limit": null,
+                                    "imdsv2_required": false,
+                                    "imds_hop_limit_excessive": false,
+                                    "block_devices": [
+                                        {
+                                            "device_name": "/dev/xvda",
+                                            "encrypted": false,
+                                            "kms_key_id": null,
+                                            "volume_type": "gp2",
+                                            "volume_size": 8,
+                                            "delete_on_termination": true
+                                        }
+                                    ],
+                                    "unencrypted_block_devices": [
+                                        "/dev/xvda"
+                                    ]
+                                },
+                                "3": {
+                                    "id": "3",
+                                    "version_number": 3,
+                                    "name": "Version 3",
+                                    "description": "bigger instances",
+                                    "is_default": false,
+                                    "create_time": "2024-09-12 16:45:00",
+                                    "created_by": "arn:aws:iam::123456789012:user/deploy",
+                                    "image_id": "ami-0bbbbbbbbbbbbbbb2",
+                                    "instance_type": "t3.large",
+                                    "key_name": null,
+                                    "ebs_optimized": null,
+                                    "monitoring_enabled": null,
+                                    "tenancy": null,
+                                    "disable_api_termination": null,
+                                    "disable_api_stop": null,
+                                    "iam_instance_profile_arn": null,
+                                    "iam_instance_profile_name": null,
+                                    "iam_role": null,
+                                    "user_data": null,
+                                    "user_data_secrets": {},
+                                    "network_interfaces": [],
+                                    "security_groups": [
+                                        "sg-0bbb1"
+                                    ],
+                                    "security_group_names": [],
+                                    "associate_public_ip_address": null,
+                                    "metadata_options": {
+                                        "HttpEndpoint": "enabled",
+                                        "HttpTokens": "optional",
+                                        "HttpPutResponseHopLimit": 3
+                                    },
+                                    "http_tokens": "optional",
+                                    "metadata_http_endpoint": "enabled",
+                                    "metadata_tags_enabled": false,
+                                    "http_put_response_hop_limit": 3,
+                                    "imdsv2_required": false,
+                                    "imds_hop_limit_excessive": true,
+                                    "block_devices": [
+                                        {
+                                            "device_name": "/dev/xvda",
+                                            "encrypted": null,
+                                            "kms_key_id": null,
+                                            "volume_type": "gp3",
+                                            "volume_size": 16,
+                                            "delete_on_termination": null
+                                        }
+                                    ],
+                                    "unencrypted_block_devices": []
+                                }
+                            }
+                        }
+                    },
+                    "launch_templates_count": 2
                 },
                 "sa-east-1": {
                     "instances_count": 0,
@@ -391,7 +600,8 @@
                         }
                     }
                 }
-            }
+            },
+            "launch_templates_count": 2
         }
     }
 }

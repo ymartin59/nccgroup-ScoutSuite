@@ -1,6 +1,7 @@
 from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.account.base import Account
 from ScoutSuite.providers.aws.resources.acm.base import Certificates
+from ScoutSuite.providers.aws.resources.autoscaling.base import AutoScaling
 from ScoutSuite.providers.aws.resources.awslambda.base import Lambdas
 from ScoutSuite.providers.aws.resources.cloudformation.base import CloudFormation
 from ScoutSuite.providers.aws.resources.cloudtrail.base import CloudTrail
@@ -69,6 +70,7 @@ class AWSServicesConfig(BaseServicesConfig):
     Object that holds the necessary AWS configuration for all services in scope.
 
     :ivar account                       Account configuration
+    :ivar autoscaling:                  Auto Scaling configuration
     :ivar cloudtrail:                   CloudTrail configuration
     :ivar cloudwatch:                   CloudWatch configuration:
     :ivar cloudfront:                   CloudFront configuration
@@ -98,6 +100,7 @@ class AWSServicesConfig(BaseServicesConfig):
 
         self.account = Account(facade)
         self.acm = Certificates(facade)
+        self.autoscaling = AutoScaling(facade)
         self.awslambda = Lambdas(facade)
         self.cloudformation = CloudFormation(facade)
         self.cloudtrail = CloudTrail(facade)

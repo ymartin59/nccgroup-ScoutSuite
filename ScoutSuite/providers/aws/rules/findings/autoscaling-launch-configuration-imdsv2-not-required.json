@@ -1,0 +1,21 @@
+{
+    "description": "Launch Configuration not Requiring IMDSv2",
+    "rationale": "The launch configuration does not set HttpTokens to required, so the instances it launches answer the metadata service over an unauthenticated GET, which a server-side request forgery in an application running on the instance is enough to reach. What comes back includes the temporary credentials of the instance profile. IMDSv2 requires a session token obtained through a PUT beforehand, which a forged request cannot perform. A launch configuration cannot be edited, so this will not be fixed in place: the group has to be moved to a launch template that requires IMDSv2.",
+    "remediation": "Replace the launch configuration with a launch template whose metadata options require IMDSv2, point the Auto Scaling group at it and replace the running instances with an instance refresh",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-config.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/migrate-launch-configurations-with-instance-refresh.html"
+    ],
+    "dashboard_name": "Launch configurations",
+    "path": "autoscaling.regions.id.launch_configurations.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.launch_configurations.id.imdsv2_required",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "http_tokens"
+}

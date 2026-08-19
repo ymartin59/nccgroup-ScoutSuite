@@ -1,0 +1,22 @@
+{
+    "description": "Launch Template Version not Requiring IMDSv2",
+    "rationale": "The version does not set HttpTokens to required, so the instances it launches answer the metadata service over an unauthenticated GET. That request needs nothing more than the ability to make the instance issue it, which is what a server-side request forgery in an application running on the instance provides, and what the metadata service returns includes the temporary credentials of the instance profile. IMDSv2 closes that path by requiring a PUT to obtain a session token first, something a forged request cannot perform. A version that says nothing about metadata options leaves the decision to the AMI and to the instance metadata defaults of the region, which is reported under the regional settings of EC2, and instances launched into an account that never set them keep accepting IMDSv1.",
+    "remediation": "Set the metadata options of the launch template version to require IMDSv2 (HttpTokens set to required), and make that version the default one so that everything launching from the template gets it",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-transition-to-version-2.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html"
+    ],
+    "dashboard_name": "Launch template versions",
+    "display_path": "ec2.regions.id.launch_templates.id",
+    "path": "ec2.regions.id.launch_templates.id.versions.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.launch_templates.id.versions.id.imdsv2_required",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "http_tokens"
+}

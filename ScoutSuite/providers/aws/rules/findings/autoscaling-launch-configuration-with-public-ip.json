@@ -1,0 +1,20 @@
+{
+    "description": "Launch Configuration Assigning a Public IP Address",
+    "rationale": "The launch configuration asks for a public address, so every instance the Auto Scaling group creates from it is published on the Internet whatever the subnet it lands in was meant for, and the security groups become the only boundary left. The exposure is recreated on each scale-out, on instances nobody creates by hand and nobody reviews one by one. Instances that have to be reached from outside are served by a load balancer, which keeps them off the public path.",
+    "remediation": "Replace the launch configuration with a launch template that does not associate a public address, place the instances in private subnets and expose them through a load balancer when they have to be reachable",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-config.html"
+    ],
+    "dashboard_name": "Launch configurations",
+    "path": "autoscaling.regions.id.launch_configurations.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.launch_configurations.id.associate_public_ip_address",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "associate_public_ip_address"
+}

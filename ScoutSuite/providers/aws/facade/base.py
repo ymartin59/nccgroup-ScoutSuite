@@ -2,6 +2,7 @@ from boto3.session import Session
 
 from ScoutSuite.providers.aws.facade.account import AccountFacade
 from ScoutSuite.providers.aws.facade.acm import AcmFacade
+from ScoutSuite.providers.aws.facade.autoscaling import AutoScalingFacade
 from ScoutSuite.providers.aws.facade.awslambda import LambdaFacade
 from ScoutSuite.providers.aws.facade.basefacade import AWSBaseFacade
 from ScoutSuite.providers.aws.facade.cloudformation import CloudFormation
@@ -254,6 +255,7 @@ class AWSFacade(AWSBaseFacade):
         self.ec2 = EC2Facade(self.session, self.owner_id)
         self.account = AccountFacade(self.session)
         self.acm = AcmFacade(self.session)
+        self.autoscaling = AutoScalingFacade(self.session)
         self.awslambda = LambdaFacade(self.session)
         self.cloudformation = CloudFormation(self.session)
         self.cloudtrail = CloudTrailFacade(self.session)

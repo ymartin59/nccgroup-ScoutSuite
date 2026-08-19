@@ -1,0 +1,21 @@
+{
+    "description": "Launch Template Version with an Excessive IMDS Hop Limit",
+    "rationale": "The metadata service refuses to answer a request that has already travelled more hops than the limit allows, which is what keeps its answers, and the instance profile credentials among them, on the instance itself. Raising the limit above one lets the request come from somewhere else and be forwarded: a container on the host network, a process behind a proxy, or an application tricked into relaying it. The default of one is enough for anything running directly on the instance, and containers that genuinely need credentials are served by a task or pod role rather than by the credentials of the host.",
+    "remediation": "Set HttpPutResponseHopLimit to 1 in the metadata options of the launch template version, unless containers on the instance require otherwise, in which case give the workloads their own role",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-transition-to-version-2.html"
+    ],
+    "dashboard_name": "Launch template versions",
+    "display_path": "ec2.regions.id.launch_templates.id",
+    "path": "ec2.regions.id.launch_templates.id.versions.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.launch_templates.id.versions.id.imds_hop_limit_excessive",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "http_put_response_hop_limit"
+}

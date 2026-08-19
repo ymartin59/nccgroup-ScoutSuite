@@ -28,6 +28,48 @@
                 "level": "warning"
             }
         ],
+        "autoscaling-group-elb-health-check-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "autoscaling-group-single-availability-zone.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "autoscaling-group-using-launch-configuration.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "autoscaling-group-with-suspended-processes.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "autoscaling-launch-configuration-imdsv2-not-required.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "autoscaling-launch-configuration-with-public-ip.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "autoscaling-launch-configuration-with-user-data-secrets.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
         "awslambda-runtime-deprecated.json": [
             {
                 "enabled": true,
@@ -255,6 +297,36 @@
             }
         ],
         "ec2-instance-with-user-data-secrets.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "ec2-launch-template-imds-hop-limit-excessive.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "ec2-launch-template-imdsv2-not-required.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "ec2-launch-template-unencrypted-ebs-volume.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "ec2-launch-template-with-public-ip.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "ec2-launch-template-with-user-data-secrets.json": [
             {
                 "enabled": true,
                 "level": "danger"

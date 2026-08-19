@@ -1,8 +1,6 @@
 from ScoutSuite.providers.aws.resources.base import AWSResources
 from ScoutSuite.providers.aws.facade.base import AWSFacade
-from ScoutSuite.providers.aws.utils import get_name, get_keys, format_arn
-
-import re
+from ScoutSuite.providers.aws.utils import get_name, get_keys, format_arn, identify_user_data_secrets
 
 
 class EC2Instances(AWSResources):
@@ -59,28 +57,4 @@ class EC2Instances(AWSResources):
         """
         Parses EC2 user data in order to identify secrets and credentials..
         """
-        secrets = {}
-
-        if user_data:
-            aws_access_key_regex = re.compile(r'(?:^|[^0-9A-Z])(AKIA[0-9A-Z]{16})(?:[^0-9A-Z]|$)')
-            aws_secret_access_key_regex = re.compile(r'(?:^|[^0-9a-zA-Z/+])([0-9a-zA-Z/+]{40})(?:[^0-9a-zA-Z/+]|$)')
-            rsa_private_key_regex = re.compile('(?s)(-----BEGIN RSA PRIVATE KEY-----.+?-----END .+?-----)')
-            keywords = ['password', 'secret', 'aws_access_key_id', 'aws_secret_access_key', 'aws_session_token']
-
-            aws_access_key_list = aws_access_key_regex.findall(user_data)
-            if aws_access_key_list:
-                secrets['AWS Access Key IDs'] = aws_access_key_list
-            aws_secret_access_key_list = aws_secret_access_key_regex.findall(user_data)
-            if aws_secret_access_key_list:
-                secrets['AWS Secret Access Keys'] = aws_secret_access_key_list
-            rsa_private_key_list = rsa_private_key_regex.findall(user_data)
-            if rsa_private_key_list:
-                secrets['Private Keys'] = rsa_private_key_list
-            word_list = []
-            for word in keywords:
-                if word in user_data.lower():
-                    word_list.append(word)
-            if word_list:
-                secrets['Flagged Words'] = word_list
-
-        return secrets
+        return identify_user_data_secrets(user_data)

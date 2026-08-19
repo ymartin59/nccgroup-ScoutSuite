@@ -154,17 +154,26 @@ or of whether AWS's own detection services are switched on.
 
 ## P3 — Compute, data and CI/CD services not collected
 
-- [ ] **Auto Scaling groups + launch templates + launch configurations** — new service, high value.
-      ScoutSuite scans user data of *existing* instances
-      (`resources/ec2/instances.py:31`, `_identify_user_data_secrets`) but nothing of the template
-      that creates the next ones. Every EC2 hardening rule is silently bypassable through a
-      launch template.
-      - [ ] launch templates (all versions, or at least default + latest): **user data** (run the same
-            secret scan), `MetadataOptions` (IMDSv2), AMI id, instance profile, security groups,
-            `AssociatePublicIpAddress`, EBS encryption, IMDS hop limit
-      - [ ] launch configurations (legacy, same fields)
-      - [ ] ASGs: subnets (and therefore public/private via route tables), health checks,
-            suspended processes, instance refresh, mixed-instances policy, tag propagation
+- [x] **Auto Scaling groups + launch templates + launch configurations** — done. Launch templates
+      are collected as an EC2 resource (`ec2.regions.id.launch_templates`), Auto Scaling groups and
+      launch configurations as the new `autoscaling` service. What creates the next instances is now
+      read the same way as the existing ones.
+      - [x] launch templates, default and latest version of each: **user data** (same secret scan as
+            instances), `MetadataOptions` (IMDSv2 and hop limit), AMI id, instance profile, security
+            groups, `AssociatePublicIpAddress`, per-device EBS encryption and KMS key, key pair,
+            monitoring, tenancy, API termination and stop protection, and whether the default version
+            is still the latest one. The region's instance metadata defaults are collected alongside,
+            under the EC2 regional settings, as they decide what a template that says nothing gets.
+      - [x] launch configurations (legacy): same fields, minus what launch configurations never
+            supported.
+      - [x] ASGs: subnets and availability zones, launch template (including inside a mixed instances
+            policy) or launch configuration and the pinned version, health check type and grace
+            period, load balancers, target groups and traffic sources, suspended processes, enabled
+            metrics, termination policies, maximum instance lifetime, maintenance policy, scale-in
+            protection and tag propagation.
+      - [ ] left out: intermediate launch template versions (a template can hold thousands and none
+            of them is in force), instance refresh history, and resolving the subnets of a group
+            against the route tables to tell public from private.
 - [ ] **SSM / Systems Manager** — `private_ssm` only; port an open-source collector.
       - [ ] **Parameter Store**: parameters, type (`String` vs `SecureString`), KMS key, tier,
             policies — a secret in a plain `String` parameter is a classic finding

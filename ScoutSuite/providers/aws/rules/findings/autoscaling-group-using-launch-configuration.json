@@ -1,0 +1,21 @@
+{
+    "description": "Auto Scaling Group Using a Launch Configuration",
+    "rationale": "Launch configurations are the mechanism that preceded launch templates. AWS stopped adding EC2 features to them and no longer allows new ones to be created, so a group still using one is confined to the instance settings that existed when they were frozen and cannot reach anything introduced since. A launch configuration is also immutable: correcting anything in it, the metadata options and the public addressing among them, means creating another one and pointing the group at it, which is enough friction that groups keep launching instances from a configuration nobody can fix. Launch templates are versioned, so the same change is a new version and a default that moves.",
+    "remediation": "Copy the launch configuration into a launch template, harden the resulting version, and update the Auto Scaling group to launch from the template",
+    "references": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-configurations.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/migrate-launch-configurations-with-instance-refresh.html"
+    ],
+    "dashboard_name": "Auto Scaling groups",
+    "path": "autoscaling.regions.id.groups.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.groups.id.uses_launch_configuration",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "launch_configuration_name"
+}

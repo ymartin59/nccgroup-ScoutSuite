@@ -199,6 +199,18 @@
                 ]
             }
         },
+        "autoscaling": {
+            "resources": {
+                "groups": {
+                    "cols": 2,
+                    "path": "services.autoscaling.regions.id.groups"
+                },
+                "launch_configurations": {
+                    "cols": 2,
+                    "path": "services.autoscaling.regions.id.launch_configurations"
+                }
+            }
+        },
         "ec2": {
             "resources": {
                 "instances": {
@@ -217,6 +229,10 @@
                 "snapshots": {
                     "cols": 2,
                     "path": "services.ec2.regions.id.snapshots"
+                },
+                "launch_templates": {
+                    "cols": 2,
+                    "path": "services.ec2.regions.id.launch_templates"
                 },
                 "network_interfaces": {
                     "path": "services.ec2.regions.id.vpcs.id.network_interfaces",

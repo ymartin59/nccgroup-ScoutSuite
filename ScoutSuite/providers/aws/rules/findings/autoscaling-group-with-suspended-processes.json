@@ -1,0 +1,20 @@
+{
+    "description": "Auto Scaling Group with Suspended Processes",
+    "rationale": "Suspending a process stops the group from doing part of what it was created for, and it stays suspended until somebody resumes it, which is easily forgotten once the incident that justified it is over. Suspending HealthCheck or ReplaceUnhealthy leaves failing instances in service indefinitely; suspending Terminate or Launch stops the group from cycling instances, so an instance that has been tampered with is never replaced and the fleet drifts away from what the launch template describes; suspending AddToLoadBalancer puts new instances into the group without ever placing them behind the load balancer. In each case the group keeps reporting a healthy desired capacity while no longer enforcing it.",
+    "remediation": "Resume the suspended processes of the Auto Scaling group once the operation that required suspending them is over",
+    "references": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-suspend-resume-processes.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html"
+    ],
+    "dashboard_name": "Auto Scaling groups",
+    "path": "autoscaling.regions.id.groups.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.groups.id.suspended_processes",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "suspended_processes"
+}

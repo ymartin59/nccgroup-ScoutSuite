@@ -1238,6 +1238,7 @@ function makeTitle(title) {
     ]
 
     const formattedTitles = {
+        'autoscaling': 'Auto Scaling',
         'cloudtrail': 'CloudTrail',
         'cloudwatch': 'CloudWatch',
         'cloudformation': 'CloudFormation',

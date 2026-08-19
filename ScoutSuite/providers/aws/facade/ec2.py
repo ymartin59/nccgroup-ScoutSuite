@@ -1,11 +1,10 @@
 import asyncio
-import base64
 import boto3
-import zlib
 
 from ScoutSuite.core.console import print_exception, print_warning
 from ScoutSuite.providers.aws.facade.basefacade import AWSBaseFacade
 from ScoutSuite.providers.aws.facade.utils import AWSFacadeUtils
+from ScoutSuite.providers.aws.utils import decode_user_data
 from ScoutSuite.providers.utils import get_and_set_concurrently
 from ScoutSuite.providers.utils import run_concurrently
 
@@ -38,23 +37,7 @@ class EC2Facade(AWSBaseFacade):
                     print_exception(f'Unable to decode EC2 instance user data: {e}')
 
     async def _decode_user_data(self, user_data):
-        try:
-            value = base64.b64decode(user_data)
-        except base64.binascii.Error as e:
-            value = base64.b64decode(f'{user_data}===')
-        if value[0:2] == b'\x1f\x8b':  # GZIP magic number
-            return zlib.decompress(value, zlib.MAX_WBITS | 32).decode('utf-8')
-        else:
-            # Try another run of b64 decoding
-            try:
-                value = base64.b64decode(value)
-            except Exception as e:
-                value = value
-            # Return a string, not a byte string
-            try:
-                return value.decode('utf-8')
-            except UnicodeDecodeError:
-                return value.decode('latin-1')
+        return decode_user_data(user_data)
 
     async def get_instances(self, region: str, vpc: str):
         filters = [{'Name': 'vpc-id', 'Values': [vpc]}]
@@ -228,6 +211,46 @@ class EC2Facade(AWSBaseFacade):
             print_exception('Failed to get route tables: {}'.format(e))
             return []
 
+    async def get_launch_templates(self, region: str):
+        try:
+            launch_templates = await AWSFacadeUtils.get_all_pages(
+                'ec2', region, self.session, 'describe_launch_templates', 'LaunchTemplates')
+        except Exception as e:
+            print_exception(f'Failed to describe EC2 launch templates: {e}')
+            return []
+
+        await get_and_set_concurrently(
+            [self._get_and_set_launch_template_versions], launch_templates, region=region)
+
+        return launch_templates
+
+    async def _get_and_set_launch_template_versions(self, launch_template: {}, region: str):
+        """Read the two versions of a template that decide what actually gets launched: the default
+        one, which is what a request naming no version gets, and the latest one, which is what
+        anything following $Latest gets. The intermediate versions are left alone, a template can
+        hold thousands of them and none of them is in force."""
+
+        try:
+            versions = await AWSFacadeUtils.get_all_pages(
+                'ec2', region, self.session, 'describe_launch_template_versions', 'LaunchTemplateVersions',
+                LaunchTemplateId=launch_template['LaunchTemplateId'], Versions=['$Default', '$Latest'])
+        except Exception as e:
+            print_exception(f'Failed to describe EC2 launch template versions: {e}')
+            return
+
+        # A template whose default version is also its latest one is returned twice
+        launch_template['Versions'] = list(
+            {version['VersionNumber']: version for version in versions}.values())
+
+        for version in launch_template['Versions']:
+            user_data = (version.get('LaunchTemplateData') or {}).get('UserData')
+            if not user_data:
+                continue
+            try:
+                version['user_data'] = decode_user_data(user_data)
+            except Exception as e:
+                print_exception(f'Unable to decode EC2 launch template user data: {e}')
+
     async def get_ebs_encryption(self, region):
         ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)
         try:
@@ -235,6 +258,18 @@ class EC2Facade(AWSBaseFacade):
             return encryption_settings
         except Exception as e:
             print_exception(f'Failed to retrieve EBS encryption settings: {e}')
+
+    async def get_instance_metadata_defaults(self, region):
+        """The IMDS settings the region applies to instances launched without any of their own.
+        Without them, a launch template that leaves MetadataOptions out cannot be read either way."""
+
+        ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)
+        try:
+            response = await run_concurrently(lambda: ec2_client.get_instance_metadata_defaults())
+            return response.get('AccountLevel') or {}
+        except Exception as e:
+            print_exception(f'Failed to retrieve EC2 instance metadata defaults: {e}')
+            return {}
 
     async def get_ebs_default_encryption_key(self, region):
         ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)

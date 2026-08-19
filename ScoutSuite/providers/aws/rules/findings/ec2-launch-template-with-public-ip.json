@@ -1,0 +1,21 @@
+{
+    "description": "Launch Template Version Assigning a Public IP Address",
+    "rationale": "A network interface configured to associate a public address publishes every instance the template launches on the Internet, whatever the subnet it lands in was meant for. The security groups then become the only boundary left, and they are applied to instances nobody creates by hand and nobody reviews one by one: the exposure is created again on each scale-out, silently. Instances that have to be reached from outside are served by a load balancer or a NAT arrangement, which keeps the instances themselves off the public path.",
+    "remediation": "Set AssociatePublicIpAddress to false on the network interfaces of the launch template version and place the instances in private subnets, exposing them through a load balancer when they have to be reachable",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html"
+    ],
+    "dashboard_name": "Launch template versions",
+    "display_path": "ec2.regions.id.launch_templates.id",
+    "path": "ec2.regions.id.launch_templates.id.versions.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.launch_templates.id.versions.id.associate_public_ip_address",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "associate_public_ip_address"
+}

@@ -1,4 +1,5 @@
 from ScoutSuite.providers.aws.resources.ec2.ami import AmazonMachineImages
+from ScoutSuite.providers.aws.resources.ec2.launchtemplates import LaunchTemplates
 from ScoutSuite.providers.aws.resources.ec2.snapshots import Snapshots
 from ScoutSuite.providers.aws.resources.ec2.volumes import Volumes
 from ScoutSuite.providers.aws.resources.ec2.vpcs import Ec2Vpcs
@@ -10,6 +11,7 @@ class EC2(Regions):
     _children = [
         (Ec2Vpcs, 'vpcs'),
         (AmazonMachineImages, 'images'),
+        (LaunchTemplates, 'launch_templates'),
         (Snapshots, 'snapshots'),
         (Volumes, 'volumes'),
         (RegionalSettings, 'regional_settings')

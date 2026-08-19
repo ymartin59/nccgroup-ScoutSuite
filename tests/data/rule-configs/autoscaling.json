@@ -1,0 +1,302 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "autoscaling": {
+            "groups_count": 3,
+            "launch_configurations_count": 2,
+            "regions": {
+                "eu-west-1": {
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "region": "eu-west-1",
+                    "groups": {
+                        "scoutid-e0f9b157a5f9f92bfc90b643b682970b12042480": {
+                            "id": "web-asg",
+                            "name": "web-asg",
+                            "arn": "arn:aws:autoscaling:eu-west-1:123456789012:autoScalingGroup:1111:autoScalingGroupName/web-asg",
+                            "region": "eu-west-1",
+                            "created_time": "2025-03-04 09:20:00",
+                            "status": null,
+                            "service_linked_role_arn": "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling",
+                            "min_size": 2,
+                            "max_size": 6,
+                            "desired_capacity": 3,
+                            "instances_count": 3,
+                            "default_cooldown": 300,
+                            "default_instance_warmup": 60,
+                            "max_instance_lifetime": 2592000,
+                            "termination_policies": [
+                                "Default"
+                            ],
+                            "new_instances_protected_from_scale_in": false,
+                            "capacity_rebalance": true,
+                            "instance_maintenance_policy": {},
+                            "availability_zones": [
+                                "eu-west-1a",
+                                "eu-west-1b"
+                            ],
+                            "availability_zones_count": 2,
+                            "subnets": [
+                                "subnet-0aaa1",
+                                "subnet-0aaa2"
+                            ],
+                            "single_availability_zone": false,
+                            "launch_template_id": "lt-0a1b2c3d4e5f60001",
+                            "launch_template_name": "web-hardened",
+                            "launch_template_version": "$Default",
+                            "launch_configuration_name": null,
+                            "uses_launch_template": true,
+                            "uses_launch_configuration": false,
+                            "uses_mixed_instances_policy": false,
+                            "instance_types": [],
+                            "on_demand_base_capacity": null,
+                            "spot_allocation_strategy": null,
+                            "load_balancer_names": [],
+                            "target_group_arns": [
+                                "arn:aws:elasticloadbalancing:eu-west-1:123456789012:targetgroup/web/1111"
+                            ],
+                            "traffic_sources": [],
+                            "attached_to_load_balancer": true,
+                            "health_check_type": "ELB",
+                            "health_check_grace_period": 300,
+                            "elb_health_check_enabled": true,
+                            "suspended_processes": [],
+                            "suspended_processes_count": 0,
+                            "security_relevant_processes_suspended": [],
+                            "enabled_metrics": [
+                                "GroupInServiceInstances"
+                            ],
+                            "metrics_collection_enabled": true,
+                            "tags": [
+                                {
+                                    "key": "Name",
+                                    "value": "web",
+                                    "propagate_at_launch": true
+                                }
+                            ],
+                            "tags_not_propagated": []
+                        },
+                        "scoutid-9a98d4d857c73392ddfdaca8776cfdd3884872c2": {
+                            "id": "legacy-asg",
+                            "name": "legacy-asg",
+                            "arn": "arn:aws:autoscaling:eu-west-1:123456789012:autoScalingGroup:2222:autoScalingGroupName/legacy-asg",
+                            "region": "eu-west-1",
+                            "created_time": "2019-02-08 14:05:00",
+                            "status": null,
+                            "service_linked_role_arn": null,
+                            "min_size": 1,
+                            "max_size": 2,
+                            "desired_capacity": 1,
+                            "instances_count": 1,
+                            "default_cooldown": 300,
+                            "default_instance_warmup": null,
+                            "max_instance_lifetime": null,
+                            "termination_policies": [
+                                "Default"
+                            ],
+                            "new_instances_protected_from_scale_in": false,
+                            "capacity_rebalance": null,
+                            "instance_maintenance_policy": {},
+                            "availability_zones": [
+                                "eu-west-1a"
+                            ],
+                            "availability_zones_count": 1,
+                            "subnets": [
+                                "subnet-0bbb1"
+                            ],
+                            "single_availability_zone": true,
+                            "launch_template_id": null,
+                            "launch_template_name": null,
+                            "launch_template_version": null,
+                            "launch_configuration_name": "legacy-lc",
+                            "uses_launch_template": false,
+                            "uses_launch_configuration": true,
+                            "uses_mixed_instances_policy": false,
+                            "instance_types": [],
+                            "on_demand_base_capacity": null,
+                            "spot_allocation_strategy": null,
+                            "load_balancer_names": [
+                                "legacy-elb"
+                            ],
+                            "target_group_arns": [],
+                            "traffic_sources": [],
+                            "attached_to_load_balancer": true,
+                            "health_check_type": "EC2",
+                            "health_check_grace_period": 300,
+                            "elb_health_check_enabled": false,
+                            "suspended_processes": [
+                                "ReplaceUnhealthy",
+                                "AZRebalance"
+                            ],
+                            "suspended_processes_count": 2,
+                            "security_relevant_processes_suspended": [
+                                "ReplaceUnhealthy"
+                            ],
+                            "enabled_metrics": [],
+                            "metrics_collection_enabled": false,
+                            "tags": [
+                                {
+                                    "key": "Name",
+                                    "value": "legacy",
+                                    "propagate_at_launch": false
+                                }
+                            ],
+                            "tags_not_propagated": [
+                                "Name"
+                            ]
+                        },
+                        "scoutid-31b97ab0fd4fe27c2d3b6ad59ef8166b7ccf0e98": {
+                            "id": "batch-asg",
+                            "name": "batch-asg",
+                            "arn": "arn:aws:autoscaling:eu-west-1:123456789012:autoScalingGroup:3333:autoScalingGroupName/batch-asg",
+                            "region": "eu-west-1",
+                            "created_time": "2024-11-20 08:00:00",
+                            "status": null,
+                            "service_linked_role_arn": null,
+                            "min_size": 0,
+                            "max_size": 20,
+                            "desired_capacity": 0,
+                            "instances_count": 0,
+                            "default_cooldown": 300,
+                            "default_instance_warmup": null,
+                            "max_instance_lifetime": null,
+                            "termination_policies": [
+                                "Default"
+                            ],
+                            "new_instances_protected_from_scale_in": null,
+                            "capacity_rebalance": null,
+                            "instance_maintenance_policy": {},
+                            "availability_zones": [
+                                "eu-west-1a",
+                                "eu-west-1b",
+                                "eu-west-1c"
+                            ],
+                            "availability_zones_count": 3,
+                            "subnets": [
+                                "subnet-0aaa1",
+                                "subnet-0aaa2",
+                                "subnet-0aaa3"
+                            ],
+                            "single_availability_zone": false,
+                            "launch_template_id": "lt-0a1b2c3d4e5f60001",
+                            "launch_template_name": "web-hardened",
+                            "launch_template_version": "$Latest",
+                            "launch_configuration_name": null,
+                            "uses_launch_template": true,
+                            "uses_launch_configuration": false,
+                            "uses_mixed_instances_policy": true,
+                            "instance_types": [
+                                "m6i.large",
+                                "m6a.large"
+                            ],
+                            "on_demand_base_capacity": 0,
+                            "spot_allocation_strategy": "price-capacity-optimized",
+                            "load_balancer_names": [],
+                            "target_group_arns": [],
+                            "traffic_sources": [],
+                            "attached_to_load_balancer": false,
+                            "health_check_type": "EC2",
+                            "health_check_grace_period": 0,
+                            "elb_health_check_enabled": false,
+                            "suspended_processes": [],
+                            "suspended_processes_count": 0,
+                            "security_relevant_processes_suspended": [],
+                            "enabled_metrics": [],
+                            "metrics_collection_enabled": false,
+                            "tags": [],
+                            "tags_not_propagated": []
+                        }
+                    },
+                    "groups_count": 3,
+                    "launch_configurations": {
+                        "scoutid-45d2195f8d8f4d24ef1cc8139fc2ce99e292a631": {
+                            "id": "legacy-lc",
+                            "name": "legacy-lc",
+                            "arn": "arn:aws:autoscaling:eu-west-1:123456789012:launchConfiguration:4444:launchConfigurationName/legacy-lc",
+                            "region": "eu-west-1",
+                            "created_time": "2019-02-08 14:00:00",
+                            "image_id": "ami-0bbbbbbbbbbbbbbb2",
+                            "instance_type": "t2.medium",
+                            "key_name": "legacy-key",
+                            "iam_instance_profile": "legacy-app",
+                            "security_groups": [
+                                "sg-0bbb1"
+                            ],
+                            "ebs_optimized": false,
+                            "monitoring_enabled": false,
+                            "placement_tenancy": null,
+                            "spot_price": null,
+                            "associate_public_ip_address": true,
+                            "user_data": "#!/bin/bash\nDB_PASSWORD=hunter2\n/opt/app/start.sh\n",
+                            "user_data_secrets": {
+                                "Flagged Words": [
+                                    "password"
+                                ]
+                            },
+                            "metadata_options": {},
+                            "http_tokens": null,
+                            "metadata_http_endpoint": null,
+                            "http_put_response_hop_limit": null,
+                            "imdsv2_required": false,
+                            "imds_hop_limit_excessive": false,
+                            "block_devices": [
+                                {
+                                    "device_name": "/dev/xvda",
+                                    "encrypted": false,
+                                    "volume_type": "gp2",
+                                    "volume_size": 8,
+                                    "delete_on_termination": true
+                                }
+                            ],
+                            "unencrypted_block_devices": [
+                                "/dev/xvda"
+                            ]
+                        },
+                        "scoutid-657b646baf8072884b0033f5d201cc5640b79cd1": {
+                            "id": "hardened-lc",
+                            "name": "hardened-lc",
+                            "arn": "arn:aws:autoscaling:eu-west-1:123456789012:launchConfiguration:5555:launchConfigurationName/hardened-lc",
+                            "region": "eu-west-1",
+                            "created_time": "2023-05-17 10:30:00",
+                            "image_id": "ami-0aaaaaaaaaaaaaaa1",
+                            "instance_type": "m5.large",
+                            "key_name": null,
+                            "iam_instance_profile": null,
+                            "security_groups": [
+                                "sg-0aaa1"
+                            ],
+                            "ebs_optimized": true,
+                            "monitoring_enabled": true,
+                            "placement_tenancy": null,
+                            "spot_price": null,
+                            "associate_public_ip_address": false,
+                            "user_data": null,
+                            "user_data_secrets": {},
+                            "metadata_options": {
+                                "HttpEndpoint": "enabled",
+                                "HttpTokens": "required",
+                                "HttpPutResponseHopLimit": 1
+                            },
+                            "http_tokens": "required",
+                            "metadata_http_endpoint": "enabled",
+                            "http_put_response_hop_limit": 1,
+                            "imdsv2_required": true,
+                            "imds_hop_limit_excessive": false,
+                            "block_devices": [
+                                {
+                                    "device_name": "/dev/xvda",
+                                    "encrypted": true,
+                                    "volume_type": "gp3",
+                                    "volume_size": 20,
+                                    "delete_on_termination": true
+                                }
+                            ],
+                            "unencrypted_block_devices": []
+                        }
+                    },
+                    "launch_configurations_count": 2
+                }
+            }
+        }
+    }
+}

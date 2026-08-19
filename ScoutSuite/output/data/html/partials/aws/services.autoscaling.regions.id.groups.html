@@ -1,0 +1,58 @@
+<!-- Auto Scaling groups partial -->
+<script id="services.autoscaling.regions.id.groups.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.created_time"><samp>{{value_or_none created_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Capacity (min/desired/max): <span id="autoscaling.regions.{{region}}.groups.{{@key}}.desired_capacity"><samp>{{value_or_none min_size}} / {{value_or_none desired_capacity}} / {{value_or_none max_size}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instances: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.instances_count"><samp>{{value_or_none instances_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Maximum instance lifetime: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.max_instance_lifetime"><samp>{{value_or_none max_instance_lifetime}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Service linked role: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.service_linked_role_arn"><samp>{{value_or_none service_linked_role_arn}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Launch source</h4>
+      <div class="list-group-item-text item-margin">Launch template: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.launch_template_name"><samp>{{value_or_none launch_template_name}}</samp> <samp>{{value_or_none launch_template_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Launch template version: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.launch_template_version"><samp>{{value_or_none launch_template_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Launch configuration: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.launch_configuration_name"><samp>{{value_or_none launch_configuration_name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Mixed instances policy: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.uses_mixed_instances_policy"><samp>{{value_or_none uses_mixed_instances_policy}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance types: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.instance_types">{{#each instance_types}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Placement</h4>
+      <div class="list-group-item-text item-margin">Availability zones: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.availability_zones">{{#each availability_zones}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Subnets: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.subnets">{{#each subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Health and processes</h4>
+      <div class="list-group-item-text item-margin">Health check type: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.health_check_type"><samp>{{value_or_none health_check_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Health check grace period: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.health_check_grace_period"><samp>{{value_or_none health_check_grace_period}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Load balancers: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.load_balancer_names">{{#each load_balancer_names}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Target groups: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.target_group_arns">{{#each target_group_arns}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Suspended processes: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.suspended_processes">{{#each suspended_processes}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Group metrics: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.metrics_collection_enabled">{{convert_bool_to_enabled metrics_collection_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Termination policies: <span id="autoscaling.regions.{{region}}.groups.{{@key}}.termination_policies">{{#each termination_policies}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    {{#if tags}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Tags</h4>
+      <ul id="autoscaling.regions.{{region}}.groups.{{@key}}.tags">
+        {{#each tags}}
+        <li class="list-group-item-text"><samp>{{key}}</samp> = <samp>{{value}}</samp> (propagated at launch: <samp>{{value_or_none propagate_at_launch}}</samp>)</li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.autoscaling.regions.id.groups", $("#services\\.autoscaling\\.regions\\.id\\.groups\\.partial").html());
+  </script>
+  <!-- Single Auto Scaling group instance template -->
+  <script id="single_autoscaling_group-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.autoscaling.regions.id.groups' }}
+  </script>
+  <script>
+    var single_autoscaling_group_template = Handlebars.compile($("#single_autoscaling_group-template").html());
+  </script>

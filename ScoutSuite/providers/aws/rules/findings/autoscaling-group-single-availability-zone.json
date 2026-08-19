@@ -1,0 +1,20 @@
+{
+    "description": "Auto Scaling Group Confined to a Single Availability Zone",
+    "rationale": "A group whose instances all live in one Availability Zone goes down entirely when that zone does, and the capacity it exists to keep available goes with it. Scaling out does not help, as the group has nowhere else to place instances, and the recovery then depends on someone changing the configuration under pressure. Spreading a group over several zones is what makes the loss of one of them a reduction in capacity rather than an outage, and it costs nothing beyond adding subnets to the group.",
+    "remediation": "Add subnets from at least two Availability Zones to the Auto Scaling group, and size the group so that the remaining zones can absorb the loss of one",
+    "references": [
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-benefits.html",
+        "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-add-availability-zone.html"
+    ],
+    "dashboard_name": "Auto Scaling groups",
+    "path": "autoscaling.regions.id.groups.id",
+    "conditions": [
+        "and",
+        [
+            "autoscaling.regions.id.groups.id.single_availability_zone",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "availability_zones"
+}
