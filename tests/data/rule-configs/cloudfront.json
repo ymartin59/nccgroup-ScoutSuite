@@ -1,0 +1,40 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "cloudfront": {
+            "distributions": {
+                "E1UNPROTECTED000": {
+                    "arn": "arn:aws:cloudfront::123456789012:distribution/E1UNPROTECTED000",
+                    "domain_name": "e1unprotected000.cloudfront.net",
+                    "enabled": true,
+                    "id": "E1UNPROTECTED000",
+                    "name": "E1UNPROTECTED000",
+                    "status": "Deployed",
+                    "web_acl_id": "",
+                    "web_acl_name": null
+                },
+                "E2PROTECTED00000": {
+                    "arn": "arn:aws:cloudfront::123456789012:distribution/E2PROTECTED00000",
+                    "domain_name": "e2protected00000.cloudfront.net",
+                    "enabled": true,
+                    "id": "E2PROTECTED00000",
+                    "name": "E2PROTECTED00000",
+                    "status": "Deployed",
+                    "web_acl_id": "arn:aws:wafv2:us-east-1:123456789012:global/webacl/cdn-edge/4d1f6a77-4",
+                    "web_acl_name": "cdn-edge"
+                },
+                "E3DISABLED000000": {
+                    "arn": "arn:aws:cloudfront::123456789012:distribution/E3DISABLED000000",
+                    "domain_name": "e3disabled000000.cloudfront.net",
+                    "enabled": false,
+                    "id": "E3DISABLED000000",
+                    "name": "E3DISABLED000000",
+                    "status": "Deployed",
+                    "web_acl_id": "",
+                    "web_acl_name": null
+                }
+            },
+            "distributions_count": 3
+        }
+    }
+}

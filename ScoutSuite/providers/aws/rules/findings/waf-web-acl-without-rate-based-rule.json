@@ -1,0 +1,26 @@
+{
+    "description": "Web ACL without Any Rate Based Rule",
+    "rationale": "Every other kind of rule decides on one request at a time, so a client sending requests that are individually valid is never refused however many it sends. That is what a credential stuffing run, a scraping job and an application layer flood all look like: well formed requests, in volume, from a small number of sources. A rate based rule is the only statement in a web ACL that reacts to the volume a source sends rather than to the contents of a single request.",
+    "remediation": "Add a rate based rule to the web ACL, scoped down to the paths that are expensive or that authenticate, with a limit set above the volume the legitimate traffic reaches",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based-high-level-settings.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.rules_count",
+            "moreThan",
+            "0"
+        ],
+        [
+            "waf.regions.id.web_acls.id.rate_based_rules",
+            "empty",
+            ""
+        ]
+    ],
+    "id_suffix": "rate_based_rules"
+}

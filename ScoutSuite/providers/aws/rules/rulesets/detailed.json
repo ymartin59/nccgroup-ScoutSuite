@@ -100,6 +100,12 @@
                 "level": "warning"
             }
         ],
+        "cloudfront-distribution-without-web-acl.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "cloudtrail-duplicated-global-services-logging.json": [
             {
                 "enabled": true,
@@ -701,6 +707,12 @@
             {
                 "enabled": true,
                 "level": "danger"
+            }
+        ],
+        "elbv2-application-lb-without-web-acl.json": [
+            {
+                "enabled": true,
+                "level": "warning"
             }
         ],
         "elbv2-http-request-smuggling.json": [
@@ -1805,6 +1817,90 @@
             {
                 "enabled": true,
                 "level": "warning"
+            }
+        ],
+        "waf-rule-group-without-rules.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-cloudwatch-metrics-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-logging-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-logging-without-redaction.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-managed-rules-overridden.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-not-associated.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-not-blocking.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "waf-web-acl-rule-group-overridden-to-count.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-rules-in-count-mode.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-sampled-requests-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-without-baseline-managed-rule-groups.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-without-managed-rule-groups.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-without-rate-based-rule.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "waf-web-acl-without-rules.json": [
+            {
+                "enabled": true,
+                "level": "danger"
             }
         ]
     }

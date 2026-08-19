@@ -31,6 +31,7 @@ from ScoutSuite.providers.aws.resources.ses.base import SES
 from ScoutSuite.providers.aws.resources.sns.base import SNS
 from ScoutSuite.providers.aws.resources.sqs.base import SQS
 from ScoutSuite.providers.aws.resources.vpc.base import VPC
+from ScoutSuite.providers.aws.resources.waf.base import WAF
 from ScoutSuite.providers.aws.resources.secretsmanager.base import SecretsManager
 from ScoutSuite.providers.base.services import BaseServicesConfig
 
@@ -90,6 +91,7 @@ class AWSServicesConfig(BaseServicesConfig):
     :ivar ses:                          SES configuration:
     :ivar sns:                          SNS configuration
     :ivar sqs:                          SQS configuration
+    :ivar waf:                          WAF configuration
     """
 
     def __init__(self, credentials=None, **kwargs):
@@ -130,6 +132,7 @@ class AWSServicesConfig(BaseServicesConfig):
         self.sns = SNS(facade)
         self.sqs = SQS(facade)
         self.vpc = VPC(facade)
+        self.waf = WAF(facade)
         self.secretsmanager = SecretsManager(facade)
 
         # Instantiate proprietary services (only if not already initialized)

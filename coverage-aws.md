@@ -116,13 +116,21 @@ or of whether AWS's own detection services are switched on.
       - [ ] APIs, protocol type, auto-deploy, CORS configuration (`*` origins)
       - [ ] JWT / Lambda authorizers, routes with `AuthorizationType: NONE`
       - [ ] stage access logging, custom domains + TLS policy, mutual TLS
-- [ ] **WAF / WAFv2** — new service. Without it there is no way to tell whether the exposed
-      resources ScoutSuite *does* see are protected.
-      - [ ] Web ACLs (REGIONAL and CLOUDFRONT scopes), default action, rule groups, managed rule sets
-      - [ ] **associated resources** (ALB, API GW stage, CloudFront, AppSync, Cognito UP) — and, by
-            difference, exposed resources with **no** ACL
-      - [ ] logging configuration + redacted fields, sampled-requests setting
-      - [ ] classic WAF / WAF Regional if still in use (legacy accounts)
+- [x] **WAF / WAFv2** — done, as the `waf` service (boto3 `wafv2`).
+      - [x] Web ACLs of both scopes, the CLOUDFRONT ones reported under `us-east-1` which is the
+            endpoint serving them, with default action, rules, managed and referenced rule groups,
+            rate-based statements, count-mode rules and rule action overrides, and the account's own
+            rule groups as a separate resource
+      - [x] **associated resources** of every type `ListResourcesForWebACL` answers for, CloudFront
+            distributions resolved through `ListDistributionsByWebACLId` — and, by difference, the
+            web ACL reported on each ELBv2 load balancer and CloudFront distribution, so an exposed
+            resource with **no** ACL is a finding of its own
+      - [x] logging configuration, log destinations, redacted fields and data protections, logging
+            filter, sampled-requests and CloudWatch metrics settings of the ACL and of each rule
+      - [ ] IP sets, regex pattern sets and the permission policies sharing a rule group across
+            accounts
+      - [ ] classic WAF / WAF Regional — not collected, the service reached end of support and the
+            accounts still holding one cannot create another
 - [ ] **Shield Advanced** — subscription state, protected resources, proactive engagement,
       emergency contacts.
 - [ ] **Internet gateways / NAT gateways / egress-only IGWs** — needed to close the route-table

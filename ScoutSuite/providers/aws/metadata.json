@@ -498,6 +498,18 @@
                     "path": "services.secretsmanager.regions.id.secrets"
                 }
             }
+        },
+        "waf": {
+            "resources": {
+                "web_acls": {
+                    "cols": 2,
+                    "path": "services.waf.regions.id.web_acls"
+                },
+                "rule_groups": {
+                    "cols": 2,
+                    "path": "services.waf.regions.id.rule_groups"
+                }
+            }
         }
     },
     "database": {

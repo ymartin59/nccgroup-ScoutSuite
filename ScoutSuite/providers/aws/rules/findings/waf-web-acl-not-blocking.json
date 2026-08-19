@@ -1,0 +1,32 @@
+{
+    "description": "Web ACL Not Refusing Any Request",
+    "rationale": "The default action decides what happens to the requests no rule matched, and each rule decides what happens to the ones it did. When the default action is Allow and not a single rule can stop a request, every request is served whatever the ACL observes. The rules still count matches and still emit metrics, which is what the configuration looks like at the end of a tuning period that was never concluded, so the ACL keeps producing the signals of a working control while enforcing nothing.",
+    "remediation": "Set the rules that should refuse traffic to Block, or remove the Count override from the rule groups that are meant to enforce their own actions",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-default-action.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-rule-action.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-testing.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.rules_count",
+            "moreThan",
+            "0"
+        ],
+        [
+            "waf.regions.id.web_acls.id.default_action",
+            "equal",
+            "Allow"
+        ],
+        [
+            "waf.regions.id.web_acls.id.blocking_rules_count",
+            "equal",
+            "0"
+        ]
+    ],
+    "id_suffix": "blocking_rules_count"
+}

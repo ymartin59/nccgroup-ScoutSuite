@@ -20,6 +20,7 @@
         "cloudtrail:GetTrailStatus",
         "cloudwatch:DescribeAlarms",
         "cloudfront:ListDistributions",
+        "cloudfront:ListDistributionsByWebACLId",
         "codebuild:BatchGetProjects",
         "codebuild:ListProjects",
         "cognito-identity:DescribeIdentityPool",
@@ -187,7 +188,13 @@
         "sns:ListSubscriptionsByTopic",
         "sns:ListTopics",
         "sqs:GetQueueAttributes",
-        "sqs:ListQueues"
+        "sqs:ListQueues",
+        "wafv2:GetLoggingConfiguration",
+        "wafv2:GetRuleGroup",
+        "wafv2:GetWebACL",
+        "wafv2:ListResourcesForWebACL",
+        "wafv2:ListRuleGroups",
+        "wafv2:ListWebACLs"
       ],
       "Resource": "*"
     }

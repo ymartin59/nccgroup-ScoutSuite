@@ -1,0 +1,5 @@
+[
+    "waf.regions.eu-west-1.web_acls.2b7d4e55-2222-4a22-9c22-bbbbbbbbbbbb.rate_based_rules",
+    "waf.regions.us-east-1.web_acls.4d1f6a77-4444-4a44-9c44-dddddddddddd.rate_based_rules",
+    "waf.regions.us-east-1.web_acls.5e2a7b88-5555-4a55-9c55-eeeeeeeeeeee.rate_based_rules"
+]

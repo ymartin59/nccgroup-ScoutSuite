@@ -38,6 +38,7 @@ formatted_service_name = {
     'secretsmanager': 'Secrets Manager',
     'docdb': 'DocumentDB',
     'ssm': 'Systems Manager',
+    'waf': 'WAF',
     # Azure
     'aad': 'Azure Active Directory',
     'storageaccounts': 'Storage Accounts',

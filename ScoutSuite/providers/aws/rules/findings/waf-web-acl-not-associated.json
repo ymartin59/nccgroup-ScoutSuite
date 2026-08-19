@@ -1,0 +1,21 @@
+{
+    "description": "Web ACL Not Associated with Any Resource",
+    "rationale": "A web ACL only inspects traffic through the resources it is associated with. One associated with nothing costs its capacity every month and protects nothing, and it is the state a web ACL is left in when the resource it fronted was replaced: the new load balancer or the new distribution comes up unprotected while the ACL, still present and still holding its rules, keeps the account looking as though the protection were in place.",
+    "remediation": "Associate the web ACL with the resources it is meant to protect, or delete it",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-associating-aws-resource.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.associated_resources_count",
+            "equal",
+            "0"
+        ]
+    ],
+    "id_suffix": "associated_resources_count"
+}

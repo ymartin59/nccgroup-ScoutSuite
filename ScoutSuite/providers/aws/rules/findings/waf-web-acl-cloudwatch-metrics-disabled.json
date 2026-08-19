@@ -1,0 +1,21 @@
+{
+    "description": "Web ACL without CloudWatch Metrics on Every Rule",
+    "rationale": "The CloudWatch metrics of a web ACL are what makes a rule observable without reading the logs: how many requests it allowed, blocked or counted, per rule and per minute. They are also what an alarm can be built on, and the only cheap way to notice that a rule started matching far more, or far less, than it used to. A rule with metrics disabled contributes nothing to that picture, and its share of the traffic simply disappears from the account's monitoring.",
+    "remediation": "Enable CloudWatch metrics in the visibility configuration of the web ACL and of each of its rules",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/monitoring-cloudwatch.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-visibility.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.cloudwatch_metrics_fully_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "cloudwatch_metrics_fully_enabled"
+}

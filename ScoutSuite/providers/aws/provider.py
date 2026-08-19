@@ -102,6 +102,9 @@ class AWSProvider(BaseProvider):
         if 'emr' in self.service_list and 'ec2' in self.service_list and 'vpc' in self.service_list:
             self._set_emr_vpc_ids()
 
+        if 'waf' in self.service_list:
+            self._match_web_acls_and_protected_resources()
+
         self._add_cidr_display_name(ip_ranges, ip_ranges_name_key)
 
         super().preprocessing()
@@ -867,6 +870,38 @@ class AWSProvider(BaseProvider):
                 policy['protocols'] = protocols
                 policy['options'] = options
                 policy['ciphers'] = ciphers
+
+    def _match_web_acls_and_protected_resources(self):
+        """Report, on each resource a web ACL may sit in front of, the ACL that actually does. WAF
+        knows which resources it protects, the resources themselves do not, so the answer to "is this
+        load balancer behind a WAF" only exists once the two are put together."""
+
+        try:
+            web_acls_by_resource = {}
+            for region in self.services['waf']['regions'].values():
+                for web_acl in region['web_acls'].values():
+                    for arn in web_acl['associated_resources']:
+                        web_acls_by_resource[arn] = {'web_acl_arn': web_acl['arn'],
+                                                     'web_acl_name': web_acl['name']}
+
+            if 'elbv2' in self.service_list:
+                for region in self.services['elbv2']['regions'].values():
+                    for vpc in region['vpcs'].values():
+                        for load_balancer in vpc['lbs'].values():
+                            load_balancer.update(
+                                web_acls_by_resource.get(load_balancer['arn'],
+                                                         {'web_acl_arn': None, 'web_acl_name': None}))
+
+            if 'cloudfront' in self.service_list:
+                for distribution in self.services['cloudfront']['distributions'].values():
+                    # A distribution already reports the ACL it was created with, as an ARN for WAF
+                    # and as a bare id for the retired first version of it
+                    association = web_acls_by_resource.get(distribution['arn'], {})
+                    distribution['web_acl_arn'] = association.get('web_acl_arn') or \
+                        (distribution['web_acl_id'] or None)
+                    distribution['web_acl_name'] = association.get('web_acl_name')
+        except Exception as e:
+            print_exception(f'Failed to match web ACLs and the resources they protect: {e}')
 
     def _update_sg_usage_codebuild(self):
         try:

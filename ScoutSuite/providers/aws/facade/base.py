@@ -32,6 +32,7 @@ from ScoutSuite.providers.aws.facade.s3 import S3Facade
 from ScoutSuite.providers.aws.facade.ses import SESFacade
 from ScoutSuite.providers.aws.facade.sns import SNSFacade
 from ScoutSuite.providers.aws.facade.sqs import SQSFacade
+from ScoutSuite.providers.aws.facade.waf import WAFFacade
 from ScoutSuite.providers.aws.facade.secretsmanager import SecretsManagerFacade
 from ScoutSuite.providers.aws.utils import get_aws_account_id, get_partition_name
 from ScoutSuite.providers.utils import run_concurrently
@@ -280,6 +281,7 @@ class AWSFacade(AWSBaseFacade):
         self.sns = SNSFacade(self.session)
         self.sqs = SQSFacade(self.session)
         self.secretsmanager = SecretsManagerFacade(self.session)
+        self.waf = WAFFacade(self.session)
         self.emr = EMRFacade(self.session)
         # Container services (now part of open-source)
         self.ecr = ECRFacade(self.session)

@@ -12,6 +12,7 @@
                 <li class="list-group-item-text">DNS: {{DNSName}}</li>
                 <li class="list-group-item-text"><span id="elbv2.regions.{{region}}.vpcs.{{vpc}}.lbs.{{@key}}.load_balancer_scheme">Scheme: {{Scheme}}</span></li>
                 <li class="list-group-item-text">Type: {{Type}}</li>
+                <li class="list-group-item-text"><span id="elbv2.regions.{{region}}.vpcs.{{vpc}}.lbs.{{@key}}.web_acl_arn">Web ACL: {{value_or_none web_acl_name}}</span></li>
                 <li class="list-group-item-text">Availability zones:</li>
                 <ul>
                     {{#each AvailabilityZones}}

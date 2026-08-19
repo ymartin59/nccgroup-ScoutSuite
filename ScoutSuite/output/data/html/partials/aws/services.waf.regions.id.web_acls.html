@@ -1,0 +1,70 @@
+<!-- WAF Web ACLs partial -->
+<script id="services.waf.regions.id.web_acls.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="waf.regions.{{region}}.web_acls.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Scope: <span id="waf.regions.{{region}}.web_acls.{{@key}}.scope"><samp>{{value_or_none scope}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="waf.regions.{{region}}.web_acls.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Capacity (WCU): <span id="waf.regions.{{region}}.web_acls.{{@key}}.capacity"><samp>{{value_or_none capacity}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Managed by Firewall Manager: <span id="waf.regions.{{region}}.web_acls.{{@key}}.managed_by_firewall_manager"><samp>{{value_or_none managed_by_firewall_manager}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Token domains: <span id="waf.regions.{{region}}.web_acls.{{@key}}.token_domains">{{#each token_domains}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Protected resources</h4>
+      <div class="list-group-item-text item-margin">Associated resources: <span id="waf.regions.{{region}}.web_acls.{{@key}}.associated_resources_count"><samp>{{value_or_none associated_resources_count}}</samp></span></div>
+      {{#if associated_resources}}
+      <div class="list-group-item-text item-margin">
+        <ul>
+          {{#each associated_resources}}
+          <li class="list-group-item-text"><samp>{{@key}}</samp> ({{this}})</li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Rules</h4>
+      <div class="list-group-item-text item-margin">Default action: <span id="waf.regions.{{region}}.web_acls.{{@key}}.default_action"><samp>{{value_or_none default_action}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Rules: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rules_count"><samp>{{value_or_none rules_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Rules able to stop a request: <span id="waf.regions.{{region}}.web_acls.{{@key}}.blocking_rules_count"><samp>{{value_or_none blocking_rules_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Managed rule groups: <span id="waf.regions.{{region}}.web_acls.{{@key}}.managed_rule_groups">{{#each managed_rule_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Rate based rules: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rate_based_rules">{{#each rate_based_rules}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Rules in count mode: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rules_in_count_mode">{{#each rules_in_count_mode}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Rule groups overridden to count: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rule_groups_overridden_to_count">{{#each rule_groups_overridden_to_count}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Rules with overridden actions: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rules_with_overridden_actions">{{#each rules_with_overridden_actions}}<samp>{{this}}</samp> {{/each}}</span></div>
+      {{#if rules}}
+      <div class="list-group-item-text item-margin">
+        <ul>
+          {{#each rules}}
+          <li class="list-group-item-text"><samp>{{priority}}</samp> — <samp>{{name}}</samp> — <samp>{{statement_type}}</samp>{{#if managed_rule_group}} (<samp>{{managed_rule_group}}</samp>{{#if managed_rule_group_version}} <samp>{{managed_rule_group_version}}</samp>{{/if}}){{/if}} — <samp>{{#if override_action}}override {{override_action}}{{else}}{{value_or_none action}}{{/if}}</samp></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Logging and visibility</h4>
+      <div class="list-group-item-text item-margin">Logging: <span id="waf.regions.{{region}}.web_acls.{{@key}}.logging_enabled">{{convert_bool_to_enabled logging_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Log destinations: <span id="waf.regions.{{region}}.web_acls.{{@key}}.log_destinations">{{#each log_destinations}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Redacted fields: <span id="waf.regions.{{region}}.web_acls.{{@key}}.redacted_fields">{{#each redacted_fields}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Data protections: <span id="waf.regions.{{region}}.web_acls.{{@key}}.data_protections">{{#each data_protections}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Log filter default behaviour: <span id="waf.regions.{{region}}.web_acls.{{@key}}.logging_filter_default_behavior"><samp>{{value_or_none logging_filter_default_behavior}}</samp></span></div>
+      <div class="list-group-item-text item-margin">CloudWatch metrics: <span id="waf.regions.{{region}}.web_acls.{{@key}}.cloudwatch_metrics_enabled">{{convert_bool_to_enabled cloudwatch_metrics_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Rules without CloudWatch metrics: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rules_without_cloudwatch_metrics">{{#each rules_without_cloudwatch_metrics}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Sampled requests: <span id="waf.regions.{{region}}.web_acls.{{@key}}.sampled_requests_enabled">{{convert_bool_to_enabled sampled_requests_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Rules without sampled requests: <span id="waf.regions.{{region}}.web_acls.{{@key}}.rules_without_sampled_requests">{{#each rules_without_sampled_requests}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.waf.regions.id.web_acls", $("#services\\.waf\\.regions\\.id\\.web_acls\\.partial").html());
+  </script>
+  <!-- Single WAF web ACL instance template -->
+  <script id="single_waf_web_acl-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.waf.regions.id.web_acls' }}
+  </script>
+  <script>
+    var single_waf_web_acl_template = Handlebars.compile($("#single_waf_web_acl-template").html());
+  </script>

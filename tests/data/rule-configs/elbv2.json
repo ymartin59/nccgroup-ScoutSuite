@@ -1,0 +1,99 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "elbv2": {
+            "lbs_count": 5,
+            "regions": {
+                "eu-west-1": {
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "region": "eu-west-1",
+                    "vpcs": {
+                        "vpc-0a1b2c3d4e5f60718": {
+                            "id": "vpc-0a1b2c3d4e5f60718",
+                            "lbs": {
+                                "checkout-public": {
+                                    "DNSName": "checkout-public-1234567890.eu-west-1.elb.amazonaws.com",
+                                    "Scheme": "internet-facing",
+                                    "Type": "application",
+                                    "VpcId": "vpc-0a1b2c3d4e5f60718",
+                                    "arn": "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/checkout-public/1a2b3c4d5e6f",
+                                    "id": "checkout-public",
+                                    "listener_protocols": [
+                                        "HTTPS"
+                                    ],
+                                    "name": "checkout-public",
+                                    "security_groups": [],
+                                    "web_acl_arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/webacl/frontend-prod/0f8a1c22-1",
+                                    "web_acl_name": "frontend-prod"
+                                },
+                                "frontend-public": {
+                                    "DNSName": "frontend-public-1234567890.eu-west-1.elb.amazonaws.com",
+                                    "Scheme": "internet-facing",
+                                    "Type": "application",
+                                    "VpcId": "vpc-0a1b2c3d4e5f60718",
+                                    "arn": "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/frontend-public/1a2b3c4d5e6f",
+                                    "id": "frontend-public",
+                                    "listener_protocols": [
+                                        "HTTPS"
+                                    ],
+                                    "name": "frontend-public",
+                                    "security_groups": [],
+                                    "web_acl_arn": null,
+                                    "web_acl_name": null
+                                },
+                                "ingest-public": {
+                                    "DNSName": "ingest-public-1234567890.eu-west-1.elb.amazonaws.com",
+                                    "Scheme": "internet-facing",
+                                    "Type": "network",
+                                    "VpcId": "vpc-0a1b2c3d4e5f60718",
+                                    "arn": "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/net/ingest-public/1a2b3c4d5e6f",
+                                    "id": "ingest-public",
+                                    "listener_protocols": [
+                                        "HTTPS"
+                                    ],
+                                    "name": "ingest-public",
+                                    "security_groups": [],
+                                    "web_acl_arn": null,
+                                    "web_acl_name": null
+                                },
+                                "services-internal": {
+                                    "DNSName": "services-internal-1234567890.eu-west-1.elb.amazonaws.com",
+                                    "Scheme": "internal",
+                                    "Type": "application",
+                                    "VpcId": "vpc-0a1b2c3d4e5f60718",
+                                    "arn": "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/services-internal/1a2b3c4d5e6f",
+                                    "id": "services-internal",
+                                    "listener_protocols": [
+                                        "HTTPS"
+                                    ],
+                                    "name": "services-internal",
+                                    "security_groups": [],
+                                    "web_acl_arn": null,
+                                    "web_acl_name": null
+                                },
+                                "unknown-public": {
+                                    "DNSName": "unknown-public-1234567890.eu-west-1.elb.amazonaws.com",
+                                    "Scheme": "internet-facing",
+                                    "Type": "application",
+                                    "VpcId": "vpc-0a1b2c3d4e5f60718",
+                                    "arn": "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/unknown-public/1a2b3c4d5e6f",
+                                    "id": "unknown-public",
+                                    "listener_protocols": [
+                                        "HTTPS"
+                                    ],
+                                    "name": "unknown-public",
+                                    "security_groups": []
+                                }
+                            },
+                            "lbs_count": 5,
+                            "name": "production"
+                        }
+                    },
+                    "vpcs_count": 1
+                }
+            },
+            "regions_count": 1
+        }
+    }
+}

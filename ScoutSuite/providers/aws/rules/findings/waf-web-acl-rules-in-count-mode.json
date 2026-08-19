@@ -1,0 +1,21 @@
+{
+    "description": "Web ACL with Rules Left in Count Mode",
+    "rationale": "A rule whose action is Count is fully evaluated and labels the request, but never stops it. That is the intended state while a rule is being tuned, and the intended state for a rule that only exists to feed a later rule through its labels, so the finding is not a defect on its own. It matters because a rule left in Count after tuning is indistinguishable from one that was always meant to count, and the only evidence that the protection is not in force is the configuration itself.",
+    "remediation": "Review the rules left in Count mode and set to Block those that are meant to refuse traffic",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-rule-action.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-action-count.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.rules_in_count_mode",
+            "notEmpty",
+            ""
+        ]
+    ],
+    "id_suffix": "rules_in_count_mode"
+}

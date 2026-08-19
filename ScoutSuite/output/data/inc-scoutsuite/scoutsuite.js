@@ -1234,7 +1234,7 @@ function makeTitle(title) {
 
     const uppercaseTitles = [
         'acm', 'aks', 'ec2', 'ecr', 'ecs', 'efs', 'eks', 'gke', 'iam', 'kms', 'msk', 'rbac',
-        'rds', 'sns', 'ses', 'sqs', 'vpc', 'elb', 'elbv2', 'emr', 'dns', 'oss', 'ram',
+        'rds', 'sns', 'ses', 'sqs', 'vpc', 'waf', 'elb', 'elbv2', 'emr', 'dns', 'oss', 'ram',
     ]
 
     const formattedTitles = {

@@ -1,0 +1,46 @@
+<!-- WAF Rule Groups partial -->
+<script id="services.waf.regions.id.rule_groups.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">ARN: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Scope: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.scope"><samp>{{value_or_none scope}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Capacity (WCU): <span id="waf.regions.{{region}}.rule_groups.{{@key}}.capacity"><samp>{{value_or_none capacity}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Label namespace: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.label_namespace"><samp>{{value_or_none label_namespace}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Rules</h4>
+      <div class="list-group-item-text item-margin">Rules: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.rules_count"><samp>{{value_or_none rules_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Rules able to stop a request: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.blocking_rules_count"><samp>{{value_or_none blocking_rules_count}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Rules in count mode: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.rules_in_count_mode">{{#each rules_in_count_mode}}<samp>{{this}}</samp> {{/each}}</span></div>
+      {{#if rules}}
+      <div class="list-group-item-text item-margin">
+        <ul>
+          {{#each rules}}
+          <li class="list-group-item-text"><samp>{{priority}}</samp> — <samp>{{name}}</samp> — <samp>{{statement_type}}</samp> — <samp>{{value_or_none action}}</samp></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Visibility</h4>
+      <div class="list-group-item-text item-margin">CloudWatch metrics: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.cloudwatch_metrics_enabled">{{convert_bool_to_enabled cloudwatch_metrics_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Rules without CloudWatch metrics: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.rules_without_cloudwatch_metrics">{{#each rules_without_cloudwatch_metrics}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Sampled requests: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.sampled_requests_enabled">{{convert_bool_to_enabled sampled_requests_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Rules without sampled requests: <span id="waf.regions.{{region}}.rule_groups.{{@key}}.rules_without_sampled_requests">{{#each rules_without_sampled_requests}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.waf.regions.id.rule_groups", $("#services\\.waf\\.regions\\.id\\.rule_groups\\.partial").html());
+  </script>
+  <!-- Single WAF rule group instance template -->
+  <script id="single_waf_rule_group-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.waf.regions.id.rule_groups' }}
+  </script>
+  <script>
+    var single_waf_rule_group_template = Handlebars.compile($("#single_waf_rule_group-template").html());
+  </script>

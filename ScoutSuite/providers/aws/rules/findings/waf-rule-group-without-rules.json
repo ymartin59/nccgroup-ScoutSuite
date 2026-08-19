@@ -1,0 +1,21 @@
+{
+    "description": "Rule Group without Any Rule",
+    "rationale": "A rule group holding no rule matches nothing, and a web ACL referencing it is no more protected for having done so. It still consumes the capacity reserved for it in every web ACL that references it, and it still appears in those ACLs as a line of defence.",
+    "remediation": "Add rules to the rule group, or delete it and remove the references to it from the web ACLs",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-groups.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-group-managing.html"
+    ],
+    "dashboard_name": "Rule Groups",
+    "display_path": "waf.regions.id.rule_groups.id",
+    "path": "waf.regions.id.rule_groups.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.rule_groups.id.rules_count",
+            "equal",
+            "0"
+        ]
+    ],
+    "id_suffix": "rules_count"
+}

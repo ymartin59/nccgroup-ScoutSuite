@@ -1,0 +1,34 @@
+{
+    "description": "Content Distribution without a Web ACL",
+    "rationale": "A CloudFront distribution is reachable from anywhere by design, and it forwards to its origin whatever it does not serve from cache. Without a web ACL nothing inspects those requests before the origin receives them, so the distribution acts as an anonymising layer in front of the application: the origin sees CloudFront addresses, and the account has no record of what was sent. A web ACL in the CLOUDFRONT scope is also where the requests can be refused at the edge, before they cost anything at the origin.",
+    "remediation": "Associate a WAF web ACL of the CLOUDFRONT scope with the distribution, holding at least the AWS managed baseline rule groups",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html",
+        "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-awswaf.html"
+    ],
+    "dashboard_name": "Distributions",
+    "display_path": "cloudfront.distributions.id",
+    "path": "cloudfront.distributions.id",
+    "conditions": [
+        "and",
+        [
+            "cloudfront.distributions.id.enabled",
+            "true",
+            ""
+        ],
+        [
+            "or",
+            [
+                "cloudfront.distributions.id.web_acl_id",
+                "empty",
+                ""
+            ],
+            [
+                "cloudfront.distributions.id.web_acl_id",
+                "null",
+                ""
+            ]
+        ]
+    ],
+    "id_suffix": "web_acl_id"
+}

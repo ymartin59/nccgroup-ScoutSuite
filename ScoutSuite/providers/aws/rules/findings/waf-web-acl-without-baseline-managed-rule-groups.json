@@ -1,0 +1,26 @@
+{
+    "description": "Web ACL without the Baseline Managed Rule Groups",
+    "rationale": "AWS separates its managed rule groups into baseline groups, meant for every application, and use-case specific ones covering a technology or a threat. A web ACL that references only the specific groups, a bot control or a SQL database group for instance, is protected against what those groups target and against nothing else. The core rule set and the known bad inputs group are the two that cover the request patterns every internet facing application receives.",
+    "remediation": "Add AWSManagedRulesCommonRuleSet and AWSManagedRulesKnownBadInputsRuleSet to the web ACL, in count mode first if the traffic has to be observed before enforcing",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-list.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.managed_rule_groups",
+            "notEmpty",
+            ""
+        ],
+        [
+            "waf.regions.id.web_acls.id.has_baseline_managed_rule_groups",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "managed_rule_groups"
+}

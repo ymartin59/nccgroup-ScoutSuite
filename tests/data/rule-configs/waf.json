@@ -1,0 +1,521 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "waf": {
+            "regions": {
+                "eu-west-1": {
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "region": "eu-west-1",
+                    "rule_groups": {
+                        "a1b2c3d4-6666-4a66-9c66-ffffffffffff": {
+                            "arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/rulegroup/own-blocklist/a1b2c3d4-1",
+                            "blocking_rules_count": 2,
+                            "capacity": 100,
+                            "cloudwatch_metric_name": "own-blocklist",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "description": "Blocklist maintained by the platform team",
+                            "id": "a1b2c3d4-6666-4a66-9c66-ffffffffffff",
+                            "label_namespace": "namespace:123456789012:rulegroup:own-blocklist:",
+                            "name": "own-blocklist",
+                            "region": "eu-west-1",
+                            "rules": [
+                                {
+                                    "action": "Block",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "block-scanner-agents",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 0,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ByteMatchStatement",
+                                    "vendor": null
+                                },
+                                {
+                                    "action": "Block",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "block-known-source",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 1,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ByteMatchStatement",
+                                    "vendor": null
+                                }
+                            ],
+                            "rules_count": 2,
+                            "rules_in_count_mode": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "REGIONAL"
+                        }
+                    },
+                    "rule_groups_count": 1,
+                    "web_acls": {
+                        "0f8a1c22-1111-4a11-9c11-aaaaaaaaaaaa": {
+                            "arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/webacl/frontend-prod/0f8a1c22-1",
+                            "associated_resource_types": [
+                                "APPLICATION_LOAD_BALANCER"
+                            ],
+                            "associated_resources": {
+                                "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/frontend-prod/1a2b3c4d": "APPLICATION_LOAD_BALANCER"
+                            },
+                            "associated_resources_count": 1,
+                            "blocking_rules_count": 4,
+                            "blocks_requests": true,
+                            "capacity": 1500,
+                            "cloudwatch_metric_name": "frontend-prod",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "data_protections": [],
+                            "default_action": "Allow",
+                            "description": "Web ACL of the public front end",
+                            "has_baseline_managed_rule_groups": true,
+                            "id": "0f8a1c22-1111-4a11-9c11-aaaaaaaaaaaa",
+                            "label_namespace": null,
+                            "log_destinations": [
+                                "arn:aws:logs:eu-west-1:123456789012:log-group:aws-waf-logs-frontend"
+                            ],
+                            "logging_enabled": true,
+                            "logging_filter": {
+                                "DefaultBehavior": "KEEP",
+                                "Filters": []
+                            },
+                            "logging_filter_default_behavior": "KEEP",
+                            "logging_redaction_configured": true,
+                            "logging_scope": null,
+                            "managed_by_firewall_manager": false,
+                            "managed_rule_groups": [
+                                "AWS/AWSManagedRulesCommonRuleSet",
+                                "AWS/AWSManagedRulesKnownBadInputsRuleSet"
+                            ],
+                            "name": "frontend-prod",
+                            "rate_based_rules": [
+                                "rate-limit"
+                            ],
+                            "redacted_fields": [
+                                "SingleHeader:authorization",
+                                "SingleHeader:cookie"
+                            ],
+                            "referenced_rule_groups": [],
+                            "region": "eu-west-1",
+                            "request_body_inspection": {},
+                            "rule_groups_overridden_to_count": [],
+                            "rules": [
+                                {
+                                    "action": "Block",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "rate-limit",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 0,
+                                    "rate_limit": 2000,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "RateBasedStatement",
+                                    "vendor": null
+                                },
+                                {
+                                    "action": null,
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": "AWS/AWSManagedRulesCommonRuleSet",
+                                    "managed_rule_group_version": null,
+                                    "name": "AWSManagedRulesCommonRuleSet",
+                                    "overridden_rules": [],
+                                    "override_action": "None",
+                                    "priority": 1,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ManagedRuleGroupStatement",
+                                    "vendor": "AWS"
+                                },
+                                {
+                                    "action": null,
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": "AWS/AWSManagedRulesKnownBadInputsRuleSet",
+                                    "managed_rule_group_version": null,
+                                    "name": "AWSManagedRulesKnownBadInputsRuleSet",
+                                    "overridden_rules": [],
+                                    "override_action": "None",
+                                    "priority": 2,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ManagedRuleGroupStatement",
+                                    "vendor": "AWS"
+                                },
+                                {
+                                    "action": "Block",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "block-admin-path",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 3,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ByteMatchStatement",
+                                    "vendor": null
+                                }
+                            ],
+                            "rules_count": 4,
+                            "rules_in_count_mode": [],
+                            "rules_with_overridden_actions": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "REGIONAL",
+                            "token_domains": []
+                        },
+                        "2b7d4e55-2222-4a22-9c22-bbbbbbbbbbbb": {
+                            "arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/webacl/legacy-tuning/2b7d4e55-2",
+                            "associated_resource_types": [
+                                "APPLICATION_LOAD_BALANCER"
+                            ],
+                            "associated_resources": {
+                                "arn:aws:elasticloadbalancing:eu-west-1:123456789012:loadbalancer/app/frontend-prod/1a2b3c4d": "APPLICATION_LOAD_BALANCER"
+                            },
+                            "associated_resources_count": 1,
+                            "blocking_rules_count": 0,
+                            "blocks_requests": false,
+                            "capacity": 700,
+                            "cloudwatch_metric_name": "legacy-tuning",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "data_protections": [],
+                            "default_action": "Allow",
+                            "description": null,
+                            "has_baseline_managed_rule_groups": true,
+                            "id": "2b7d4e55-2222-4a22-9c22-bbbbbbbbbbbb",
+                            "label_namespace": null,
+                            "log_destinations": [],
+                            "logging_enabled": false,
+                            "logging_filter": null,
+                            "logging_filter_default_behavior": null,
+                            "logging_redaction_configured": false,
+                            "logging_scope": null,
+                            "managed_by_firewall_manager": false,
+                            "managed_rule_groups": [
+                                "AWS/AWSManagedRulesCommonRuleSet"
+                            ],
+                            "name": "legacy-tuning",
+                            "rate_based_rules": [],
+                            "redacted_fields": [],
+                            "referenced_rule_groups": [],
+                            "region": "eu-west-1",
+                            "request_body_inspection": {},
+                            "rule_groups_overridden_to_count": [
+                                "AWSManagedRulesCommonRuleSet"
+                            ],
+                            "rules": [
+                                {
+                                    "action": null,
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": false,
+                                    "managed_rule_group": "AWS/AWSManagedRulesCommonRuleSet",
+                                    "managed_rule_group_version": null,
+                                    "name": "AWSManagedRulesCommonRuleSet",
+                                    "overridden_rules": [],
+                                    "override_action": "Count",
+                                    "priority": 0,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ManagedRuleGroupStatement",
+                                    "vendor": "AWS"
+                                }
+                            ],
+                            "rules_count": 1,
+                            "rules_in_count_mode": [],
+                            "rules_with_overridden_actions": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "REGIONAL",
+                            "token_domains": []
+                        },
+                        "3c9e5f66-3333-4a33-9c33-cccccccccccc": {
+                            "arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/webacl/empty-acl/3c9e5f66-3",
+                            "associated_resource_types": [],
+                            "associated_resources": {},
+                            "associated_resources_count": 0,
+                            "blocking_rules_count": 0,
+                            "blocks_requests": false,
+                            "capacity": 0,
+                            "cloudwatch_metric_name": "empty-acl",
+                            "cloudwatch_metrics_enabled": false,
+                            "cloudwatch_metrics_fully_enabled": false,
+                            "data_protections": [],
+                            "default_action": "Allow",
+                            "description": null,
+                            "has_baseline_managed_rule_groups": false,
+                            "id": "3c9e5f66-3333-4a33-9c33-cccccccccccc",
+                            "label_namespace": null,
+                            "log_destinations": [],
+                            "logging_enabled": false,
+                            "logging_filter": null,
+                            "logging_filter_default_behavior": null,
+                            "logging_redaction_configured": false,
+                            "logging_scope": null,
+                            "managed_by_firewall_manager": false,
+                            "managed_rule_groups": [],
+                            "name": "empty-acl",
+                            "rate_based_rules": [],
+                            "redacted_fields": [],
+                            "referenced_rule_groups": [],
+                            "region": "eu-west-1",
+                            "request_body_inspection": {},
+                            "rule_groups_overridden_to_count": [],
+                            "rules": [],
+                            "rules_count": 0,
+                            "rules_in_count_mode": [],
+                            "rules_with_overridden_actions": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": false,
+                            "sampled_requests_fully_enabled": false,
+                            "scope": "REGIONAL",
+                            "token_domains": []
+                        }
+                    },
+                    "web_acls_count": 3
+                },
+                "us-east-1": {
+                    "id": "us-east-1",
+                    "name": "us-east-1",
+                    "region": "us-east-1",
+                    "rule_groups": {
+                        "b2c3d4e5-7777-4a77-9c77-000000000000": {
+                            "arn": "arn:aws:wafv2:us-east-1:123456789012:regional/rulegroup/empty-group/b2c3d4e5-7",
+                            "blocking_rules_count": 0,
+                            "capacity": 0,
+                            "cloudwatch_metric_name": "empty-group",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "description": null,
+                            "id": "b2c3d4e5-7777-4a77-9c77-000000000000",
+                            "label_namespace": null,
+                            "name": "empty-group",
+                            "region": "us-east-1",
+                            "rules": [],
+                            "rules_count": 0,
+                            "rules_in_count_mode": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "REGIONAL"
+                        }
+                    },
+                    "rule_groups_count": 1,
+                    "web_acls": {
+                        "4d1f6a77-4444-4a44-9c44-dddddddddddd": {
+                            "arn": "arn:aws:wafv2:us-east-1:123456789012:global/webacl/cdn-edge/4d1f6a77-4",
+                            "associated_resource_types": [
+                                "CLOUDFRONT_DISTRIBUTION"
+                            ],
+                            "associated_resources": {
+                                "arn:aws:cloudfront::123456789012:distribution/E1SHAPESHIFTER": "CLOUDFRONT_DISTRIBUTION"
+                            },
+                            "associated_resources_count": 1,
+                            "blocking_rules_count": 1,
+                            "blocks_requests": true,
+                            "capacity": 900,
+                            "cloudwatch_metric_name": "cdn-edge",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "data_protections": [],
+                            "default_action": "Allow",
+                            "description": null,
+                            "has_baseline_managed_rule_groups": false,
+                            "id": "4d1f6a77-4444-4a44-9c44-dddddddddddd",
+                            "label_namespace": null,
+                            "log_destinations": [
+                                "arn:aws:s3:::aws-waf-logs-cdn-edge"
+                            ],
+                            "logging_enabled": true,
+                            "logging_filter": null,
+                            "logging_filter_default_behavior": null,
+                            "logging_redaction_configured": false,
+                            "logging_scope": null,
+                            "managed_by_firewall_manager": false,
+                            "managed_rule_groups": [
+                                "AWS/AWSManagedRulesBotControlRuleSet"
+                            ],
+                            "name": "cdn-edge",
+                            "rate_based_rules": [],
+                            "redacted_fields": [],
+                            "referenced_rule_groups": [],
+                            "region": "us-east-1",
+                            "request_body_inspection": {},
+                            "rule_groups_overridden_to_count": [],
+                            "rules": [
+                                {
+                                    "action": null,
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": "AWS/AWSManagedRulesBotControlRuleSet",
+                                    "managed_rule_group_version": null,
+                                    "name": "AWSManagedRulesBotControlRuleSet",
+                                    "overridden_rules": [
+                                        "CategoryHttpLibrary"
+                                    ],
+                                    "override_action": "None",
+                                    "priority": 0,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ManagedRuleGroupStatement",
+                                    "vendor": "AWS"
+                                },
+                                {
+                                    "action": "Count",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": false,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "geo-observation",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 1,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ByteMatchStatement",
+                                    "vendor": null
+                                }
+                            ],
+                            "rules_count": 2,
+                            "rules_in_count_mode": [
+                                "geo-observation"
+                            ],
+                            "rules_with_overridden_actions": [
+                                "AWSManagedRulesBotControlRuleSet"
+                            ],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "CLOUDFRONT",
+                            "token_domains": []
+                        },
+                        "5e2a7b88-5555-4a55-9c55-eeeeeeeeeeee": {
+                            "arn": "arn:aws:wafv2:us-east-1:123456789012:regional/webacl/api-internal/5e2a7b88-5",
+                            "associated_resource_types": [
+                                "API_GATEWAY"
+                            ],
+                            "associated_resources": {
+                                "arn:aws:apigateway:us-east-1::/restapis/ab12cd34ef/stages/prod": "API_GATEWAY"
+                            },
+                            "associated_resources_count": 1,
+                            "blocking_rules_count": 1,
+                            "blocks_requests": true,
+                            "capacity": 300,
+                            "cloudwatch_metric_name": "api-internal",
+                            "cloudwatch_metrics_enabled": true,
+                            "cloudwatch_metrics_fully_enabled": true,
+                            "data_protections": [],
+                            "default_action": "Block",
+                            "description": null,
+                            "has_baseline_managed_rule_groups": false,
+                            "id": "5e2a7b88-5555-4a55-9c55-eeeeeeeeeeee",
+                            "label_namespace": null,
+                            "log_destinations": [
+                                "arn:aws:logs:us-east-1:123456789012:log-group:aws-waf-logs-api"
+                            ],
+                            "logging_enabled": true,
+                            "logging_filter": null,
+                            "logging_filter_default_behavior": null,
+                            "logging_redaction_configured": true,
+                            "logging_scope": null,
+                            "managed_by_firewall_manager": false,
+                            "managed_rule_groups": [],
+                            "name": "api-internal",
+                            "rate_based_rules": [],
+                            "redacted_fields": [
+                                "SingleHeader:authorization"
+                            ],
+                            "referenced_rule_groups": [
+                                "arn:aws:wafv2:eu-west-1:123456789012:regional/rulegroup/own-blocklist/a1b2c3d4-1"
+                            ],
+                            "region": "us-east-1",
+                            "request_body_inspection": {},
+                            "rule_groups_overridden_to_count": [],
+                            "rules": [
+                                {
+                                    "action": null,
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": true,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "own-blocklist",
+                                    "overridden_rules": [],
+                                    "override_action": "None",
+                                    "priority": 0,
+                                    "rate_limit": null,
+                                    "rule_group_arn": "arn:aws:wafv2:eu-west-1:123456789012:regional/rulegroup/own-blocklist/a1b2c3d4-1",
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "RuleGroupReferenceStatement",
+                                    "vendor": null
+                                },
+                                {
+                                    "action": "Allow",
+                                    "cloudwatch_metrics_enabled": true,
+                                    "enforcing": false,
+                                    "managed_rule_group": null,
+                                    "managed_rule_group_version": null,
+                                    "name": "allow-partners",
+                                    "overridden_rules": [],
+                                    "override_action": null,
+                                    "priority": 1,
+                                    "rate_limit": null,
+                                    "rule_group_arn": null,
+                                    "sampled_requests_enabled": true,
+                                    "statement_type": "ByteMatchStatement",
+                                    "vendor": null
+                                }
+                            ],
+                            "rules_count": 2,
+                            "rules_in_count_mode": [],
+                            "rules_with_overridden_actions": [],
+                            "rules_without_cloudwatch_metrics": [],
+                            "rules_without_sampled_requests": [],
+                            "sampled_requests_enabled": true,
+                            "sampled_requests_fully_enabled": true,
+                            "scope": "REGIONAL",
+                            "token_domains": []
+                        }
+                    },
+                    "web_acls_count": 2
+                }
+            },
+            "regions_count": 2,
+            "rule_groups_count": 2,
+            "web_acls_count": 5
+        }
+    }
+}

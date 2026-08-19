@@ -1,0 +1,27 @@
+{
+    "description": "Web ACL Logging without Redaction",
+    "rationale": "A web ACL log record carries the request as it arrived, including its headers, its query string and its URI. On an authenticated application that means the Authorization header, the session cookies and any token passed as a query argument are written, in the clear, to a log destination whose readers are a much wider set than the people entitled to those credentials. WAF only leaves a field out when it is named in the redaction list or covered by a data protection.",
+    "remediation": "Add the fields carrying credentials to the redacted fields of the logging configuration, or configure a data protection to hash or substitute them, at least for the authorization header and the cookies",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/logging-management.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/data-protection-logs.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.logging_enabled",
+            "true",
+            ""
+        ],
+        [
+            "waf.regions.id.web_acls.id.logging_redaction_configured",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "redacted_fields"
+}

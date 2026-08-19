@@ -1,0 +1,21 @@
+{
+    "description": "Web ACL Not Logging Requests",
+    "rationale": "CloudTrail records the calls made to the WAF API, not the traffic WAF inspects, so it never shows which request was blocked, which rule matched it or where it came from. Those records only exist in the web ACL logs, and WAF discards them unless a logging configuration sends them to CloudWatch Logs, Firehose or S3. Without them a rule cannot be tuned, a block cannot be explained to whoever reports it, and the reconnaissance that precedes an attack leaves no trace at all.",
+    "remediation": "Enable logging on the web ACL to CloudWatch Logs, Firehose or an S3 bucket, and retain the logs long enough to cover an investigation",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/logging.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/logging-management.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.logging_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "logging_enabled"
+}

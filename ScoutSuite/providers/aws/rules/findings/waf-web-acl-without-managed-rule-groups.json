@@ -1,0 +1,26 @@
+{
+    "description": "Web ACL without Any Managed Rule Group",
+    "rationale": "AWS and its marketplace vendors publish rule groups that are kept current against the request patterns of common exploits, and they are updated without the account having to act. A web ACL built only from rules written in the account carries none of that: it covers the cases whoever wrote it thought of, on the day they wrote them, and nothing has updated it since. The baseline groups are also what the account gets for free in terms of coverage of the OWASP style attack classes.",
+    "remediation": "Add the AWS managed baseline rule groups to the web ACL, starting with AWSManagedRulesCommonRuleSet and AWSManagedRulesKnownBadInputsRuleSet",
+    "references": [
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-list.html",
+        "https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html"
+    ],
+    "dashboard_name": "Web ACLs",
+    "display_path": "waf.regions.id.web_acls.id",
+    "path": "waf.regions.id.web_acls.id",
+    "conditions": [
+        "and",
+        [
+            "waf.regions.id.web_acls.id.rules_count",
+            "moreThan",
+            "0"
+        ],
+        [
+            "waf.regions.id.web_acls.id.managed_rule_groups",
+            "empty",
+            ""
+        ]
+    ],
+    "id_suffix": "managed_rule_groups"
+}
