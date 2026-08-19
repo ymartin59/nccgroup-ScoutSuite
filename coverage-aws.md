@@ -55,8 +55,11 @@ exist only as `private_*` modules and are therefore **not available** in this tr
       the association (instance, network interface and its owner, private address, subnet). The
       public IP → ENI → instance mapping is applied back onto instances and network interfaces in
       preprocessing, as `elastic_ips`. A rule flags the addresses attached to nothing.
-- [ ] **EC2 key pairs** (`DescribeKeyPairs`) — creation date, type (RSA/ED25519), key fingerprints;
-      supports key-rotation and unused-key findings.
+- [x] **EC2 key pairs** (`DescribeKeyPairs`) — done, as `ec2.regions.id.key_pairs`: creation date,
+      type (RSA/ED25519), fingerprint and tags. Usage is resolved in preprocessing against the
+      instances, the launch template versions and the launch configurations, none of which is
+      visible from the key pair. Two rules: a key pair nothing refers to, and one older than a
+      configurable number of days (365 by default), a key pair having no rotation in place.
 
 ## P1 — Account governance and detection
 

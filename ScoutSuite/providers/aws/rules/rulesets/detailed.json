@@ -332,6 +332,21 @@
                 "level": "danger"
             }
         ],
+        "ec2-key-pair-not-rotated.json": [
+            {
+                "args": [
+                    "365"
+                ],
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "ec2-key-pair-not-used.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ec2-launch-template-imds-hop-limit-excessive.json": [
             {
                 "enabled": true,

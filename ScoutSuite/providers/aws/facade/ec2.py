@@ -154,6 +154,14 @@ class EC2Facade(AWSBaseFacade):
             print_exception(f'Failed to describe EC2 elastic IP addresses: {e}')
             return []
 
+    async def get_key_pairs(self, region: str):
+        ec2_client = AWSFacadeUtils.get_client('ec2', self.session, region)
+        try:
+            return await run_concurrently(lambda: ec2_client.describe_key_pairs()['KeyPairs'])
+        except Exception as e:
+            print_exception(f'Failed to describe EC2 key pairs: {e}')
+            return []
+
     async def get_network_acls(self, region: str, vpc: str):
         filters = [{'Name': 'vpc-id', 'Values': [vpc]}]
         try:

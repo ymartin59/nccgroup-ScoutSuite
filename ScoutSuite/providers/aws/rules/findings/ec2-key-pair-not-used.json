@@ -1,0 +1,22 @@
+{
+    "description": "Unused EC2 Key Pair",
+    "rationale": "A key pair that no instance, launch template version or launch configuration refers to still grants shell access to anything it is later attached to, and the private key that goes with it is somewhere outside AWS: on the laptop of whoever created it, in a shared password store, in a CI configuration. Nothing about the key changes when the instances it was made for are terminated, and AWS keeps no record of who holds a copy, so an unused key pair is a credential in circulation with no owner and no purpose. Removing it is the only way to end that, the key material never having been AWS's to revoke.",
+    "remediation": "Delete the key pairs no instance or launch definition refers to, and prefer AWS Systems Manager Session Manager or EC2 Instance Connect over key pairs for the access that remains",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/delete-key-pair.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html"
+    ],
+    "dashboard_name": "Key Pairs",
+    "display_path": "ec2.regions.id.key_pairs.id",
+    "path": "ec2.regions.id.key_pairs.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.key_pairs.id.used",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "used"
+}

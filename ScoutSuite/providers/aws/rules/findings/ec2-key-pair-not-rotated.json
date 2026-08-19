@@ -1,0 +1,33 @@
+{
+    "description": "EC2 Key Pair Older Than _ARG_0_ Days",
+    "rationale": "A key pair cannot be rotated in place: the name stays, the key material cannot be replaced, and changing it means creating a new key pair and relaunching or reconfiguring whatever uses the old one. Its creation date is therefore the age of a private key that has been in circulation ever since, copied to every laptop and every automation that ever needed shell access to those instances, including the ones belonging to people who have since left. Nothing revokes it, AWS holding only the public half, and no log shows who still has a copy.",
+    "remediation": "Create a replacement key pair, move the instances and launch definitions to it, and delete the old one. Prefer AWS Systems Manager Session Manager or EC2 Instance Connect, which issue short-lived credentials and leave no key material to age",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html",
+        "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Connect-using-EC2-Instance-Connect.html"
+    ],
+    "dashboard_name": "Key Pairs",
+    "display_path": "ec2.regions.id.key_pairs.id",
+    "path": "ec2.regions.id.key_pairs.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.key_pairs.id.create_time",
+            "notNull",
+            ""
+        ],
+        [
+            "ec2.regions.id.key_pairs.id.create_time",
+            "olderThan",
+            [
+                "_ARG_0_",
+                "days"
+            ]
+        ]
+    ],
+    "id_suffix": "create_time",
+    "arg_names": [
+        "Rotation period"
+    ]
+}

@@ -1,5 +1,6 @@
 from ScoutSuite.providers.aws.resources.ec2.ami import AmazonMachineImages
 from ScoutSuite.providers.aws.resources.ec2.elastic_ips import ElasticIPs
+from ScoutSuite.providers.aws.resources.ec2.key_pairs import KeyPairs
 from ScoutSuite.providers.aws.resources.ec2.launchtemplates import LaunchTemplates
 from ScoutSuite.providers.aws.resources.ec2.snapshots import Snapshots
 from ScoutSuite.providers.aws.resources.ec2.volumes import Volumes
@@ -13,6 +14,7 @@ class EC2(Regions):
         (Ec2Vpcs, 'vpcs'),
         (AmazonMachineImages, 'images'),
         (ElasticIPs, 'elastic_ips'),
+        (KeyPairs, 'key_pairs'),
         (LaunchTemplates, 'launch_templates'),
         (Snapshots, 'snapshots'),
         (Volumes, 'volumes'),

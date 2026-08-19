@@ -242,6 +242,10 @@
                     "cols": 2,
                     "path": "services.ec2.regions.id.elastic_ips"
                 },
+                "key_pairs": {
+                    "cols": 2,
+                    "path": "services.ec2.regions.id.key_pairs"
+                },
                 "launch_templates": {
                     "cols": 2,
                     "path": "services.ec2.regions.id.launch_templates"

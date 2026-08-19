@@ -76,6 +76,7 @@ class AWSProvider(BaseProvider):
             self._check_ec2_zone_distribution()
             self._add_last_snapshot_date_to_ec2_volumes()
             self._match_elastic_ips_and_resources()
+            self._match_key_pairs_and_resources()
 
         if 'ec2' in self.service_list and 'iam' in self.service_list:
             self._match_instances_and_roles()
@@ -472,6 +473,39 @@ class AWSProvider(BaseProvider):
                     interface['elastic_ips'] = \
                         [elastic_ip['public_ip'] for elastic_ip in elastic_ips.values()
                          if elastic_ip.get('network_interface_id') == interface_id]
+
+    def _match_key_pairs_and_resources(self):
+        """Mark the key pairs something in the region refers to. A key pair is named by whoever
+        launches an instance, so the references are spread over the instances, the launch template
+        versions and the launch configurations, and none of them is visible from the key pair."""
+
+        for region_id, region_config in self.services['ec2']['regions'].items():
+            key_pairs_by_name = {key_pair['name']: key_pair
+                                 for key_pair in region_config.get('key_pairs', {}).values()}
+            if not key_pairs_by_name:
+                continue
+
+            for vpc_config in region_config.get('vpcs', {}).values():
+                for instance_id, instance in vpc_config.get('instances', {}).items():
+                    key_pair = key_pairs_by_name.get(instance.get('KeyName'))
+                    if key_pair is not None:
+                        key_pair['used'] = True
+                        key_pair['instances'].append(instance_id)
+
+            for launch_template in region_config.get('launch_templates', {}).values():
+                for version in launch_template.get('versions', {}).values():
+                    key_pair = key_pairs_by_name.get(version.get('key_name'))
+                    if key_pair is not None:
+                        key_pair['used'] = True
+
+            if 'autoscaling' not in self.service_list:
+                continue
+            launch_configurations = self.services['autoscaling']['regions'] \
+                .get(region_id, {}).get('launch_configurations', {})
+            for launch_configuration in launch_configurations.values():
+                key_pair = key_pairs_by_name.get(launch_configuration.get('key_name'))
+                if key_pair is not None:
+                    key_pair['used'] = True
 
     def _propagate_subnet_exposure(self):
         """Carry onto EC2 instances and network interfaces whether the subnet holding them is public,

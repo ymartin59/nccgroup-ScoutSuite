@@ -3,6 +3,7 @@ import unittest
 from datetime import datetime
 
 from ScoutSuite.providers.aws.resources.ec2.elastic_ips import ElasticIPs
+from ScoutSuite.providers.aws.resources.ec2.key_pairs import KeyPairs
 from ScoutSuite.providers.aws.resources.ec2.launchtemplates import LaunchTemplates
 
 
@@ -234,3 +235,32 @@ class TestAWSElasticIPs(unittest.TestCase):
         # DescribeAddresses reports an empty instance id rather than none for a detached one
         assert elastic_ip['instance_id'] is None
         assert elastic_ip['associated'] is False
+
+
+def parse_key_pair(**attributes):
+    raw_key_pair = {'KeyPairId': 'key-01234567890123456', 'KeyName': 'web', 'KeyType': 'ed25519',
+                    'KeyFingerprint': '8f:2a:1b:7c:4d:9e:0f:3a:5b:6c:7d:8e:9f:a0:b1:c2'}
+    raw_key_pair.update(attributes)
+    return KeyPairs(Facade(), 'eu-west-1')._parse_key_pair(raw_key_pair)
+
+
+class TestAWSKeyPairs(unittest.TestCase):
+
+    def test_key_pair(self):
+        key, key_pair = parse_key_pair(CreateTime=datetime(2023, 11, 4, 10, 12, 33))
+
+        assert key == 'key-01234567890123456'
+        assert key_pair['name'] == 'web'
+        # The ARN of a key pair names the key pair, not its id
+        assert key_pair['arn'] == 'arn:aws:ec2:eu-west-1:123456789012:key-pair/web'
+        assert key_pair['key_type'] == 'ed25519'
+        assert key_pair['create_time'] == '2023-11-04 10:12:33'
+
+    def test_usage_is_left_for_preprocessing(self):
+        # A key pair is named by whoever launches an instance, so nothing about the references to it
+        # can be read from the key pair itself
+        _, key_pair = parse_key_pair()
+
+        assert key_pair['used'] is False
+        assert key_pair['instances'] == []
+        assert key_pair['create_time'] is None
