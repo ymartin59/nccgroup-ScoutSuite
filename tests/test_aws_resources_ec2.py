@@ -2,6 +2,7 @@ import unittest
 
 from datetime import datetime
 
+from ScoutSuite.providers.aws.resources.ec2.elastic_ips import ElasticIPs
 from ScoutSuite.providers.aws.resources.ec2.launchtemplates import LaunchTemplates
 
 
@@ -176,3 +177,60 @@ class TestAWSLaunchTemplate(unittest.TestCase):
         assert launch_template['versions']['7']['is_default'] is False
         # What was hardened in the latest version is not what the instances get
         assert launch_template['default_version_is_latest'] is False
+
+
+def parse_elastic_ip(**attributes):
+    raw_elastic_ip = {'PublicIp': '203.0.113.10', 'Domain': 'vpc'}
+    raw_elastic_ip.update(attributes)
+    return ElasticIPs(Facade(), 'eu-west-1')._parse_elastic_ip(raw_elastic_ip)
+
+
+class TestAWSElasticIPs(unittest.TestCase):
+
+    def test_address_attached_to_an_instance(self):
+        key, elastic_ip = parse_elastic_ip(
+            AllocationId='eipalloc-01234567890123456',
+            AssociationId='eipassoc-01234567890123456',
+            InstanceId='i-01234567890123456',
+            NetworkInterfaceId='eni-01234567890123456',
+            PrivateIpAddress='10.0.1.10',
+            Tags=[{'Key': 'Name', 'Value': 'web-1'}])
+
+        assert key == 'eipalloc-01234567890123456'
+        assert elastic_ip['name'] == 'web-1'
+        assert elastic_ip['arn'] == \
+            'arn:aws:ec2:eu-west-1:123456789012:elastic-ip/eipalloc-01234567890123456'
+        assert elastic_ip['associated'] is True
+        assert elastic_ip['instance_id'] == 'i-01234567890123456'
+        assert elastic_ip['private_ip_address'] == '10.0.1.10'
+
+    def test_address_attached_to_nothing(self):
+        key, elastic_ip = parse_elastic_ip(AllocationId='eipalloc-01234567890123456')
+
+        assert elastic_ip['associated'] is False
+        assert elastic_ip['instance_id'] is None
+        assert elastic_ip['network_interface_id'] is None
+        # With no Name tag the address itself is the name
+        assert elastic_ip['name'] == '203.0.113.10'
+
+    def test_address_attached_to_an_interface_with_no_instance(self):
+        # A NAT gateway or a load balancer address: attached, with nothing in the account owning the
+        # attachment
+        key, elastic_ip = parse_elastic_ip(
+            AllocationId='eipalloc-01234567890123456',
+            AssociationId='eipassoc-01234567890123456',
+            NetworkInterfaceId='eni-01234567890123456',
+            ServiceManaged='nat-gateway')
+
+        assert elastic_ip['associated'] is True
+        assert elastic_ip['instance_id'] is None
+        assert elastic_ip['service_managed'] == 'nat-gateway'
+
+    def test_ec2_classic_address_is_keyed_by_its_public_ip(self):
+        key, elastic_ip = parse_elastic_ip(Domain='standard', InstanceId='')
+
+        assert key == '203.0.113.10'
+        assert elastic_ip['allocation_id'] is None
+        # DescribeAddresses reports an empty instance id rather than none for a detached one
+        assert elastic_ip['instance_id'] is None
+        assert elastic_ip['associated'] is False

@@ -256,6 +256,12 @@
                 "level": "warning"
             }
         ],
+        "ec2-elastic-ip-not-associated.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ec2-instance-in-security-group.json": [
             {
                 "args": [

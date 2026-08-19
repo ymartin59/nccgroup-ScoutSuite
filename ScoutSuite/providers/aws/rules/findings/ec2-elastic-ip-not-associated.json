@@ -1,0 +1,21 @@
+{
+    "description": "Elastic IP Address Not Associated",
+    "rationale": "An elastic IP that is allocated but attached to nothing is a public address the account holds and nothing answers on. It is worth reviewing because of what still points at it: DNS records, partner allowlists, firewall rules and monitoring checks written against the address outlive the instance it used to reach, and re-associating it hands whatever trust those confer to the next resource attached, which is rarely the same workload. Released instead, it returns to the AWS pool and the same stale references then point at somebody else's instance, so the choice is between attaching it, keeping it deliberately, and cleaning up what references it before letting it go. Unassociated addresses are also billed by the hour, which is what usually reveals them.",
+    "remediation": "Attach the address to the resource it is meant to serve, or release it after removing the DNS records and allowlist entries that name it",
+    "references": [
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-releasing"
+    ],
+    "dashboard_name": "Elastic IPs",
+    "display_path": "ec2.regions.id.elastic_ips.id",
+    "path": "ec2.regions.id.elastic_ips.id",
+    "conditions": [
+        "and",
+        [
+            "ec2.regions.id.elastic_ips.id.associated",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "associated"
+}

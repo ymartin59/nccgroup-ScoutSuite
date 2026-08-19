@@ -50,8 +50,11 @@ exist only as `private_*` modules and are therefore **not available** in this tr
       - [x] account-level IMDS defaults (`GetInstanceMetadataDefaults`: IMDSv2 required, hop limit),
             collected with the launch templates and now ruled on
       - [x] `GetSnapshotBlockPublicAccessState` (blocks public snapshot sharing region-wide)
-- [ ] **Elastic IPs** (`DescribeAddresses`) — unassociated EIPs, and the mapping public IP → ENI
-      → instance, which is otherwise reconstructed only partially.
+- [x] **Elastic IPs** (`DescribeAddresses`) — done, as `ec2.regions.id.elastic_ips`: the address,
+      allocation, pool, network border group and whether AWS manages it on behalf of a service, plus
+      the association (instance, network interface and its owner, private address, subnet). The
+      public IP → ENI → instance mapping is applied back onto instances and network interfaces in
+      preprocessing, as `elastic_ips`. A rule flags the addresses attached to nothing.
 - [ ] **EC2 key pairs** (`DescribeKeyPairs`) — creation date, type (RSA/ED25519), key fingerprints;
       supports key-rotation and unused-key findings.
 

@@ -41,6 +41,7 @@
         "dynamodb:ListBackups",
         "dynamodb:ListTables",
         "dynamodb:ListTagsOfResource",
+        "ec2:DescribeAddresses",
         "ec2:DescribeCustomerGateways",
         "ec2:DescribeFlowLogs",
         "ec2:DescribeImages",

@@ -1,0 +1,38 @@
+<!-- EC2 elastic IP addresses partial -->
+<script id="services.ec2.regions.id.elastic_ips.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Information</h4>
+        <div class="list-group-item-text item-margin">Public IP address: <samp>{{value_or_none public_ip}}</samp></div>
+        <div class="list-group-item-text item-margin">Allocation ID: <samp>{{value_or_none allocation_id}}</samp></div>
+        <div class="list-group-item-text item-margin">ARN: <samp>{{value_or_none arn}}</samp></div>
+        <div class="list-group-item-text item-margin">Domain: <samp>{{value_or_none domain}}</samp></div>
+        <div class="list-group-item-text item-margin">Address pool: <samp>{{value_or_none public_ipv4_pool}}</samp></div>
+        <div class="list-group-item-text item-margin">Network border group: <samp>{{value_or_none network_border_group}}</samp></div>
+        <div class="list-group-item-text item-margin">Managed by a service: <samp>{{value_or_none service_managed}}</samp></div>
+    </div>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">Association</h4>
+        <div class="list-group-item-text item-margin">Associated: <span id="ec2.regions.{{region}}.elastic_ips.{{@key}}.associated"><samp>{{value_or_none associated}}</samp></span></div>
+        <div class="list-group-item-text item-margin">Association ID: <samp>{{value_or_none association_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Instance: <samp>{{value_or_none instance_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Network interface: <samp>{{value_or_none network_interface_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Network interface owner: <samp>{{value_or_none network_interface_owner_id}}</samp></div>
+        <div class="list-group-item-text item-margin">Private IP address: <samp>{{value_or_none private_ip_address}}</samp></div>
+        <div class="list-group-item-text item-margin">Subnet: <samp>{{value_or_none subnet_id}}</samp></div>
+    </div>
+</script>
+
+<script>
+    Handlebars.registerPartial("services.ec2.regions.id.elastic_ips", $("#services\\.ec2\\.regions\\.id\\.elastic_ips\\.partial").html());
+</script>
+
+<!-- Single elastic IP template -->
+<script id="single_ec2_elastic_ip-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.ec2.regions.id.elastic_ips'}}
+</script>
+<script>
+    var single_ec2_elastic_ip_template = Handlebars.compile($("#single_ec2_elastic_ip-template").html());
+</script>

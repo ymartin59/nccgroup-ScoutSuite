@@ -75,6 +75,7 @@ class AWSProvider(BaseProvider):
             self._add_security_group_name_to_ec2_grants()
             self._check_ec2_zone_distribution()
             self._add_last_snapshot_date_to_ec2_volumes()
+            self._match_elastic_ips_and_resources()
 
         if 'ec2' in self.service_list and 'iam' in self.service_list:
             self._match_instances_and_roles()
@@ -449,6 +450,28 @@ class AWSProvider(BaseProvider):
                     if detail not in details:
                         ec2_instances[instance_key].pop(detail, None)
         return ec2_instances
+
+    def _match_elastic_ips_and_resources(self):
+        """Attach each elastic IP to the instance and the network interface answering on it. The
+        addresses are allocated to the account, not to the resources, so nothing under an instance
+        says which public address reaches it; the report otherwise shows the two halves of an
+        internet-facing path side by side without joining them."""
+
+        for region_config in self.services['ec2']['regions'].values():
+            elastic_ips = region_config.get('elastic_ips', {})
+            for vpc_config in region_config.get('vpcs', {}).values():
+                for instance_id, instance in vpc_config.get('instances', {}).items():
+                    instance['elastic_ips'] = \
+                        [elastic_ip['public_ip'] for elastic_ip in elastic_ips.values()
+                         if elastic_ip.get('instance_id') == instance_id]
+                    for interface_id, interface in instance.get('network_interfaces', {}).items():
+                        interface['elastic_ips'] = \
+                            [elastic_ip['public_ip'] for elastic_ip in elastic_ips.values()
+                             if elastic_ip.get('network_interface_id') == interface_id]
+                for interface_id, interface in vpc_config.get('network_interfaces', {}).items():
+                    interface['elastic_ips'] = \
+                        [elastic_ip['public_ip'] for elastic_ip in elastic_ips.values()
+                         if elastic_ip.get('network_interface_id') == interface_id]
 
     def _propagate_subnet_exposure(self):
         """Carry onto EC2 instances and network interfaces whether the subnet holding them is public,
