@@ -1,0 +1,385 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "mq": {
+            "brokers_count": 4,
+            "configurations_count": 2,
+            "regions": {
+                "eu-west-1": {
+                    "brokers": {
+                        "b-1111aaaa-11bb-22cc-33dd-444455556666": {
+                            "actions_required": [],
+                            "arn": "arn:aws:mq:eu-west-1:123456789012:broker:orders-prod:b-1111aaaa-11bb-22cc-33dd-444455556666",
+                            "audit_log_group": "/aws/amazonmq/broker/b-1111aaaa-11bb-22cc-33dd-444455556666/audit",
+                            "audit_logs_enabled": true,
+                            "audit_logs_pending": null,
+                            "authentication_strategy": "LDAP",
+                            "authorization_entries": [
+                                {
+                                    "admin": "admins",
+                                    "destination": "orders.>",
+                                    "destination_type": "queue",
+                                    "read": "orders-consumers",
+                                    "write": "orders-producers"
+                                }
+                            ],
+                            "authorization_map_configured": true,
+                            "auto_minor_version_upgrade": true,
+                            "broker_local_credentials": false,
+                            "configuration_id": "c-1111aaaa-11bb-22cc-33dd-444455556666",
+                            "configuration_revision": 7,
+                            "console_urls": [
+                                "https://b-1111aaaa-11bb-22cc-33dd-444455556666-1.mq.eu-west-1.amazonaws.com:8162"
+                            ],
+                            "creation_time": "2023-04-11 08:12:03",
+                            "data_replication_mode": "NONE",
+                            "deployment_mode": "ACTIVE_STANDBY_MULTI_AZ",
+                            "encryption_kms_key": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "encryption_with_aws_owned_key": false,
+                            "encryption_with_cmk": true,
+                            "endpoints": [
+                                "ssl://b-1111aaaa-11bb-22cc-33dd-444455556666-1.mq.eu-west-1.amazonaws.com:61617"
+                            ],
+                            "engine_type": "ACTIVEMQ",
+                            "engine_version": "5.18.4",
+                            "engine_version_deprecated": false,
+                            "engine_version_supported": true,
+                            "general_log_group": "/aws/amazonmq/broker/b-1111aaaa-11bb-22cc-33dd-444455556666/general",
+                            "general_logs_enabled": true,
+                            "general_logs_pending": null,
+                            "host_instance_type": "mq.m5.large",
+                            "id": "b-1111aaaa-11bb-22cc-33dd-444455556666",
+                            "ip_addresses": [
+                                "10.0.1.14"
+                            ],
+                            "ldap_hosts": [
+                                "ldaps.corp.example.com"
+                            ],
+                            "ldap_role_base": "ou=groups,dc=example,dc=com",
+                            "ldap_service_account_username": "cn=amazonmq,ou=services,dc=example,dc=com",
+                            "ldap_user_base": "ou=people,dc=example,dc=com",
+                            "name": "orders-prod",
+                            "pending_authentication_strategy": null,
+                            "pending_configuration_revision": null,
+                            "pending_engine_version": null,
+                            "pending_security_groups": [],
+                            "publicly_accessible": false,
+                            "region": "eu-west-1",
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "state": "RUNNING",
+                            "storage_size": 200,
+                            "storage_type": "EFS",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718",
+                                "subnet-0b2c3d4e5f6071829"
+                            ],
+                            "supported_engine_versions": [
+                                "5.18.4",
+                                "5.17.6"
+                            ],
+                            "tags": {
+                                "env": "prod"
+                            },
+                            "users": {},
+                            "users_count": 0,
+                            "users_with_console_access": []
+                        },
+                        "b-2222bbbb-11bb-22cc-33dd-444455556666": {
+                            "actions_required": [],
+                            "arn": "arn:aws:mq:eu-west-1:123456789012:broker:legacy-integration:b-2222bbbb-11bb-22cc-33dd-444455556666",
+                            "audit_log_group": null,
+                            "audit_logs_enabled": false,
+                            "audit_logs_pending": null,
+                            "authentication_strategy": "SIMPLE",
+                            "authorization_entries": [],
+                            "authorization_map_configured": false,
+                            "auto_minor_version_upgrade": false,
+                            "broker_local_credentials": true,
+                            "configuration_id": "c-2222bbbb-11bb-22cc-33dd-444455556666",
+                            "configuration_revision": 1,
+                            "console_urls": [
+                                "https://b-2222bbbb-11bb-22cc-33dd-444455556666-1.mq.eu-west-1.amazonaws.com:8162"
+                            ],
+                            "creation_time": "2019-09-02 15:44:10",
+                            "data_replication_mode": "NONE",
+                            "deployment_mode": "SINGLE_INSTANCE",
+                            "encryption_kms_key": null,
+                            "encryption_with_aws_owned_key": true,
+                            "encryption_with_cmk": false,
+                            "endpoints": [
+                                "ssl://b-2222bbbb-11bb-22cc-33dd-444455556666-1.mq.eu-west-1.amazonaws.com:61617"
+                            ],
+                            "engine_type": "ACTIVEMQ",
+                            "engine_version": "5.15.16",
+                            "engine_version_deprecated": true,
+                            "engine_version_supported": false,
+                            "general_log_group": null,
+                            "general_logs_enabled": false,
+                            "general_logs_pending": null,
+                            "host_instance_type": "mq.t3.micro",
+                            "id": "b-2222bbbb-11bb-22cc-33dd-444455556666",
+                            "ip_addresses": [
+                                "52.31.0.44"
+                            ],
+                            "ldap_hosts": [],
+                            "ldap_role_base": null,
+                            "ldap_service_account_username": null,
+                            "ldap_user_base": null,
+                            "name": "legacy-integration",
+                            "pending_authentication_strategy": null,
+                            "pending_configuration_revision": null,
+                            "pending_engine_version": null,
+                            "pending_security_groups": [],
+                            "publicly_accessible": true,
+                            "region": "eu-west-1",
+                            "security_groups": [
+                                "sg-0b2c3d4e5f6071829"
+                            ],
+                            "state": "RUNNING",
+                            "storage_size": 20,
+                            "storage_type": "EBS",
+                            "subnets": [
+                                "subnet-0c3d4e5f60718293a"
+                            ],
+                            "supported_engine_versions": [
+                                "5.18.4",
+                                "5.17.6"
+                            ],
+                            "tags": {},
+                            "users": {
+                                "scoutid-260f50093988c7db401baba9b25e59d4eeac9178": {
+                                    "console_access": true,
+                                    "groups": [
+                                        "activemq-webconsole"
+                                    ],
+                                    "id": "scoutid-260f50093988c7db401baba9b25e59d4eeac9178",
+                                    "name": "integration-app",
+                                    "pending_change": null,
+                                    "replication_user": null,
+                                    "username": "integration-app"
+                                },
+                                "scoutid-ccc7703884ffa21293785895bf56a64fef2af435": {
+                                    "console_access": false,
+                                    "groups": [
+                                        "readers"
+                                    ],
+                                    "id": "scoutid-ccc7703884ffa21293785895bf56a64fef2af435",
+                                    "name": "metrics-reader",
+                                    "pending_change": null,
+                                    "replication_user": null,
+                                    "username": "metrics-reader"
+                                }
+                            },
+                            "users_count": 2,
+                            "users_with_console_access": [
+                                "integration-app"
+                            ]
+                        }
+                    },
+                    "brokers_count": 2,
+                    "configurations": {
+                        "c-1111aaaa-11bb-22cc-33dd-444455556666": {
+                            "arn": "arn:aws:mq:eu-west-1:123456789012:configuration:c-1111aaaa-11bb-22cc-33dd-444455556666",
+                            "authentication_strategy": "LDAP",
+                            "creation_time": "2023-04-11 08:05:41",
+                            "description": "Authorization map per application group",
+                            "engine_type": "ACTIVEMQ",
+                            "engine_version": "5.18.4",
+                            "id": "c-1111aaaa-11bb-22cc-33dd-444455556666",
+                            "latest_revision": 7,
+                            "latest_revision_creation_time": "2023-10-02 14:22:09",
+                            "latest_revision_description": "Add the reporting queues",
+                            "name": "orders-hardened",
+                            "region": "eu-west-1",
+                            "tags": {}
+                        }
+                    },
+                    "configurations_count": 1,
+                    "id": "eu-west-1",
+                    "name": "eu-west-1",
+                    "region": "eu-west-1"
+                },
+                "us-east-1": {
+                    "brokers": {
+                        "b-3333cccc-11bb-22cc-33dd-444455556666": {
+                            "actions_required": [],
+                            "arn": "arn:aws:mq:us-east-1:123456789012:broker:events-prod:b-3333cccc-11bb-22cc-33dd-444455556666",
+                            "audit_log_group": null,
+                            "audit_logs_enabled": false,
+                            "audit_logs_pending": null,
+                            "authentication_strategy": "CONFIG_MANAGED",
+                            "authorization_entries": [],
+                            "authorization_map_configured": null,
+                            "auto_minor_version_upgrade": true,
+                            "broker_local_credentials": false,
+                            "configuration_id": "c-3333cccc-11bb-22cc-33dd-444455556666",
+                            "configuration_revision": 4,
+                            "console_urls": [
+                                "https://b-3333cccc-11bb-22cc-33dd-444455556666.mq.us-east-1.amazonaws.com"
+                            ],
+                            "creation_time": "2023-11-20 11:03:57",
+                            "data_replication_mode": "NONE",
+                            "deployment_mode": "CLUSTER_MULTI_AZ",
+                            "encryption_kms_key": "arn:aws:kms:us-east-1:123456789012:key/bcde2345-67fa-89bc-01de-f23456789012",
+                            "encryption_with_aws_owned_key": false,
+                            "encryption_with_cmk": true,
+                            "endpoints": [
+                                "amqps://b-3333cccc-11bb-22cc-33dd-444455556666.mq.us-east-1.amazonaws.com:5671"
+                            ],
+                            "engine_type": "RABBITMQ",
+                            "engine_version": "3.13.7",
+                            "engine_version_deprecated": false,
+                            "engine_version_supported": true,
+                            "general_log_group": "/aws/amazonmq/broker/b-3333cccc-11bb-22cc-33dd-444455556666/general",
+                            "general_logs_enabled": true,
+                            "general_logs_pending": null,
+                            "host_instance_type": "mq.m5.large",
+                            "id": "b-3333cccc-11bb-22cc-33dd-444455556666",
+                            "ip_addresses": [],
+                            "ldap_hosts": [],
+                            "ldap_role_base": null,
+                            "ldap_service_account_username": null,
+                            "ldap_user_base": null,
+                            "name": "events-prod",
+                            "pending_authentication_strategy": null,
+                            "pending_configuration_revision": null,
+                            "pending_engine_version": null,
+                            "pending_security_groups": [],
+                            "publicly_accessible": false,
+                            "region": "us-east-1",
+                            "security_groups": [
+                                "sg-0c3d4e5f60718293a"
+                            ],
+                            "state": "RUNNING",
+                            "storage_size": 200,
+                            "storage_type": "EBS",
+                            "subnets": [
+                                "subnet-0d4e5f60718293a4b",
+                                "subnet-0e5f60718293a4b5c",
+                                "subnet-0f60718293a4b5c6d"
+                            ],
+                            "supported_engine_versions": [
+                                "3.13.7",
+                                "3.12.13"
+                            ],
+                            "tags": {
+                                "env": "prod"
+                            },
+                            "users": {
+                                "scoutid-d033e22ae348aeb5660fc2140aec35850c4da997": {
+                                    "console_access": null,
+                                    "groups": [],
+                                    "id": "scoutid-d033e22ae348aeb5660fc2140aec35850c4da997",
+                                    "name": "admin",
+                                    "pending_change": null,
+                                    "replication_user": null,
+                                    "username": "admin"
+                                }
+                            },
+                            "users_count": 1,
+                            "users_with_console_access": []
+                        },
+                        "b-4444dddd-11bb-22cc-33dd-444455556666": {
+                            "actions_required": [
+                                "RABBITMQ_MEMORY_ALARM"
+                            ],
+                            "arn": "arn:aws:mq:us-east-1:123456789012:broker:reporting-dev:b-4444dddd-11bb-22cc-33dd-444455556666",
+                            "audit_log_group": null,
+                            "audit_logs_enabled": false,
+                            "audit_logs_pending": null,
+                            "authentication_strategy": "SIMPLE",
+                            "authorization_entries": [],
+                            "authorization_map_configured": null,
+                            "auto_minor_version_upgrade": true,
+                            "broker_local_credentials": true,
+                            "configuration_id": null,
+                            "configuration_revision": null,
+                            "console_urls": [
+                                "https://b-4444dddd-11bb-22cc-33dd-444455556666.mq.us-east-1.amazonaws.com"
+                            ],
+                            "creation_time": "2022-06-30 07:25:11",
+                            "data_replication_mode": "NONE",
+                            "deployment_mode": "SINGLE_INSTANCE",
+                            "encryption_kms_key": null,
+                            "encryption_with_aws_owned_key": true,
+                            "encryption_with_cmk": false,
+                            "endpoints": [
+                                "amqps://b-4444dddd-11bb-22cc-33dd-444455556666.mq.us-east-1.amazonaws.com:5671"
+                            ],
+                            "engine_type": "RABBITMQ",
+                            "engine_version": "3.11.20",
+                            "engine_version_deprecated": null,
+                            "engine_version_supported": null,
+                            "general_log_group": null,
+                            "general_logs_enabled": false,
+                            "general_logs_pending": null,
+                            "host_instance_type": "mq.t3.micro",
+                            "id": "b-4444dddd-11bb-22cc-33dd-444455556666",
+                            "ip_addresses": [],
+                            "ldap_hosts": [],
+                            "ldap_role_base": null,
+                            "ldap_service_account_username": null,
+                            "ldap_user_base": null,
+                            "name": "reporting-dev",
+                            "pending_authentication_strategy": null,
+                            "pending_configuration_revision": null,
+                            "pending_engine_version": null,
+                            "pending_security_groups": [],
+                            "publicly_accessible": false,
+                            "region": "us-east-1",
+                            "security_groups": [
+                                "sg-0d4e5f60718293a4b"
+                            ],
+                            "state": "RUNNING",
+                            "storage_size": 20,
+                            "storage_type": "EBS",
+                            "subnets": [
+                                "subnet-0d4e5f60718293a4b"
+                            ],
+                            "supported_engine_versions": [],
+                            "tags": {},
+                            "users": {
+                                "scoutid-d033e22ae348aeb5660fc2140aec35850c4da997": {
+                                    "console_access": null,
+                                    "groups": [],
+                                    "id": "scoutid-d033e22ae348aeb5660fc2140aec35850c4da997",
+                                    "name": "admin",
+                                    "pending_change": null,
+                                    "replication_user": null,
+                                    "username": "admin"
+                                }
+                            },
+                            "users_count": 1,
+                            "users_with_console_access": []
+                        }
+                    },
+                    "brokers_count": 2,
+                    "configurations": {
+                        "c-3333cccc-11bb-22cc-33dd-444455556666": {
+                            "arn": "arn:aws:mq:us-east-1:123456789012:configuration:c-3333cccc-11bb-22cc-33dd-444455556666",
+                            "authentication_strategy": "CONFIG_MANAGED",
+                            "creation_time": "2023-11-20 10:58:12",
+                            "description": "OAuth 2.0 authentication backend",
+                            "engine_type": "RABBITMQ",
+                            "engine_version": "3.13.7",
+                            "id": "c-3333cccc-11bb-22cc-33dd-444455556666",
+                            "latest_revision": 4,
+                            "latest_revision_creation_time": "2024-01-01 00:00:00",
+                            "latest_revision_description": "Raise the consumer timeout",
+                            "name": "events-oauth",
+                            "region": "us-east-1",
+                            "tags": {}
+                        }
+                    },
+                    "configurations_count": 1,
+                    "id": "us-east-1",
+                    "name": "us-east-1",
+                    "region": "us-east-1"
+                }
+            },
+            "regions_count": 2
+        }
+    }
+}

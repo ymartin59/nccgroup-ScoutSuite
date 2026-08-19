@@ -1,0 +1,22 @@
+{
+    "description": "Broker Authenticating Against Its Own User List",
+    "rationale": "Under the SIMPLE strategy the broker keeps its own usernames and passwords, created and changed through the Amazon MQ API. Those passwords travel in plaintext in the calls that set them, so they come to rest in the templates, pipelines and state files making those calls; they are subject to no password policy, no directory expires or disables them when the person or the service they belong to goes away, and revoking one means editing the broker rather than an identity provider. Nothing joins them to the account's own identities either, so who holds a broker password is not a question the account can answer. ActiveMQ brokers can authenticate against LDAP, which also supplies the group membership the authorization map names, and RabbitMQ brokers can delegate authentication to OAuth 2.0, IAM, LDAP, HTTP or client certificates declared in the broker configuration.",
+    "remediation": "Point ActiveMQ brokers at a directory with the LDAP authentication strategy, or move RabbitMQ brokers to authentication backends declared in the broker configuration, then remove the broker-local users left behind",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-access.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-authentication-authorization.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-authentication.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.broker_local_credentials",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "authentication_strategy"
+}

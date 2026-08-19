@@ -1,0 +1,22 @@
+{
+    "description": "Broker Reachable from the Internet",
+    "rationale": "A broker created with public accessibility answers on public addresses, which publishes every wire protocol it speaks - OpenWire, AMQP, STOMP, MQTT, WebSocket and the management console - on the internet and leaves the security groups as the only boundary in front of them. A message broker is not a component built for that edge: it presents the protocol and its login prompt before any per-destination authorization is consulted, the credentials it accepts are long-lived passwords rather than signed requests, and being reachable from anywhere means absorbing untargeted scanning and denial of service traffic on the broker instance itself. Applications that genuinely live outside the VPC are served by VPC peering, Transit Gateway or a VPN without any of this exposure.",
+    "remediation": "Recreate the broker without public accessibility, as the setting cannot be changed after creation, and reach it from within the VPC through peering, Transit Gateway or a VPN; until then, restrict the broker security groups to the addresses and protocol ports actually used",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/using-amazon-mq-securely.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/configuring-private-broker.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/infrastructure-security.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.publicly_accessible",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "publicly_accessible"
+}

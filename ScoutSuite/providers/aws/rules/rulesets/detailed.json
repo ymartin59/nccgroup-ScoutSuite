@@ -1365,6 +1365,66 @@
                 "level": "danger"
             }
         ],
+        "mq-broker-audit-logs-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-authorization-map-missing.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "mq-broker-encryption-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-general-logs-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-minor-version-upgrade-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-publicly-accessible.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "mq-broker-simple-authentication.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-single-instance-deployment.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-unsupported-engine-version.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "mq-broker-user-console-access.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "msk-cluster-acl-default-allow.json": [
             {
                 "enabled": true,

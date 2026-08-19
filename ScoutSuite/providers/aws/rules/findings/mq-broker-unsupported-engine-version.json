@@ -1,0 +1,22 @@
+{
+    "description": "Broker Running an Unsupported Engine Version",
+    "rationale": "Amazon MQ stops offering an engine version line once it retires it, which is also where the patches for that line stop arriving. An existing broker keeps running, so nothing breaks and nothing prompts an upgrade, while the published vulnerabilities of the ActiveMQ or RabbitMQ release accumulate against a version that will not be fixed - on a component that speaks several protocols to whoever can reach it and holds the messages of every application connected to it. The move to a supported line is a version upgrade that has to be planned around client compatibility and gets harder the further behind the broker falls.",
+    "remediation": "Upgrade the broker to an engine version Amazon MQ still offers, after checking the upgrade path and the compatibility of the clients connecting to it",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/upgrading-brokers.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/activemq-version-management.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-version-management.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.engine_version_deprecated",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "engine_version"
+}

@@ -1,0 +1,21 @@
+{
+    "description": "Broker Encrypted at Rest with an AWS Owned Key",
+    "rationale": "Amazon MQ always encrypts the messages a broker holds, but a broker created without encryption options uses a key AWS owns rather than one in the account. An AWS owned key is not in the account's KMS inventory at all: there is no key policy to read or to narrow, no CloudTrail record attributing a decryption to a principal, no rotation the account decides and no way to disable the key to cut access to what it protects. The encryption is therefore real but cannot take part in any access decision or in any evidence, which is exactly what it is relied on for. A customer managed key restores all of it.",
+    "remediation": "Recreate the broker with a customer managed KMS key, as the encryption options cannot be changed after creation, and restrict the key policy to the principals the broker and its operators use",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/data-protection.html",
+        "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_kms_key"
+}

@@ -1,0 +1,22 @@
+{
+    "description": "ActiveMQ Broker User with Web Console Access",
+    "rationale": "The ActiveMQ web console is a management interface the broker serves itself, and a user granted console access reaches it with the same password its applications present on the wire. From there queues can be browsed, individual messages read and deleted, destinations purged and new ones created, so a credential meant to produce or consume becomes an interactive way through all of the broker's traffic. The console answers wherever the broker does, which on a publicly accessible broker is the internet, and what is done through it is recorded only where the broker publishes an audit log.",
+    "remediation": "Turn console access off for the users applications authenticate with, keep it on the few operator accounts that need it, and enable audit logging so the actions taken through the console are recorded",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-listing-managing-users.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/using-amazon-mq-securely.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/configure-logging-monitoring-activemq.html"
+    ],
+    "dashboard_name": "Users",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id.users.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.users.id.console_access",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "console_access"
+}

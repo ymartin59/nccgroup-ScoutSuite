@@ -1,0 +1,91 @@
+<!-- Amazon MQ Brokers partial -->
+<script id="services.mq.regions.id.brokers.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Broker ID: <span id="mq.regions.{{region}}.brokers.{{@key}}.id"><samp>{{value_or_none id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="mq.regions.{{region}}.brokers.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Engine: <span id="mq.regions.{{region}}.brokers.{{@key}}.engine_type"><samp>{{value_or_none engine_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Engine version: <span id="mq.regions.{{region}}.brokers.{{@key}}.engine_version"><samp>{{value_or_none engine_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Pending engine version: <span id="mq.regions.{{region}}.brokers.{{@key}}.pending_engine_version"><samp>{{value_or_none pending_engine_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Automatic minor version upgrade: <span id="mq.regions.{{region}}.brokers.{{@key}}.auto_minor_version_upgrade">{{convert_bool_to_enabled auto_minor_version_upgrade}}</span></div>
+      <div class="list-group-item-text item-margin">State: <span id="mq.regions.{{region}}.brokers.{{@key}}.state"><samp>{{value_or_none state}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="mq.regions.{{region}}.brokers.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Deployment mode: <span id="mq.regions.{{region}}.brokers.{{@key}}.deployment_mode"><samp>{{value_or_none deployment_mode}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance type: <span id="mq.regions.{{region}}.brokers.{{@key}}.host_instance_type"><samp>{{value_or_none host_instance_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Storage: <span id="mq.regions.{{region}}.brokers.{{@key}}.storage_type"><samp>{{value_or_none storage_type}}</samp></span> <span id="mq.regions.{{region}}.brokers.{{@key}}.storage_size"><samp>{{value_or_none storage_size}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Data replication mode: <span id="mq.regions.{{region}}.brokers.{{@key}}.data_replication_mode"><samp>{{value_or_none data_replication_mode}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Actions required: <span id="mq.regions.{{region}}.brokers.{{@key}}.actions_required">{{#each actions_required}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Network</h4>
+      <div class="list-group-item-text item-margin">Publicly accessible: <span id="mq.regions.{{region}}.brokers.{{@key}}.publicly_accessible"><samp>{{value_or_none publicly_accessible}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Subnets: <span id="mq.regions.{{region}}.brokers.{{@key}}.subnets">{{#each subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="mq.regions.{{region}}.brokers.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Pending security groups: <span id="mq.regions.{{region}}.brokers.{{@key}}.pending_security_groups">{{#each pending_security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Endpoints: <span id="mq.regions.{{region}}.brokers.{{@key}}.endpoints">{{#each endpoints}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Consoles: <span id="mq.regions.{{region}}.brokers.{{@key}}.console_urls">{{#each console_urls}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Authentication</h4>
+      <div class="list-group-item-text item-margin">Authentication strategy: <span id="mq.regions.{{region}}.brokers.{{@key}}.authentication_strategy"><samp>{{value_or_none authentication_strategy}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Pending authentication strategy: <span id="mq.regions.{{region}}.brokers.{{@key}}.pending_authentication_strategy"><samp>{{value_or_none pending_authentication_strategy}}</samp></span></div>
+      <div class="list-group-item-text item-margin">LDAP hosts: <span id="mq.regions.{{region}}.brokers.{{@key}}.ldap_hosts">{{#each ldap_hosts}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">LDAP service account: <span id="mq.regions.{{region}}.brokers.{{@key}}.ldap_service_account_username"><samp>{{value_or_none ldap_service_account_username}}</samp></span></div>
+      <div class="list-group-item-text item-margin">LDAP user base: <span id="mq.regions.{{region}}.brokers.{{@key}}.ldap_user_base"><samp>{{value_or_none ldap_user_base}}</samp></span></div>
+      <div class="list-group-item-text item-margin">LDAP role base: <span id="mq.regions.{{region}}.brokers.{{@key}}.ldap_role_base"><samp>{{value_or_none ldap_role_base}}</samp></span></div>
+      {{#if users}}
+      <div class="list-group-item-text item-margin">Users:
+        <ul>
+          {{#each users}}
+          <li class="list-group-item-text" id="mq.regions.{{../region}}.brokers.{{@../key}}.users.{{@key}}">
+            <samp>{{username}}</samp> —
+            web console access <span id="mq.regions.{{../region}}.brokers.{{@../key}}.users.{{@key}}.console_access"><samp>{{value_or_none console_access}}</samp></span>,
+            groups <span id="mq.regions.{{../region}}.brokers.{{@../key}}.users.{{@key}}.groups">{{#each groups}}<samp>{{this}}</samp> {{/each}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Encryption</h4>
+      <div class="list-group-item-text item-margin">KMS key: <span id="mq.regions.{{region}}.brokers.{{@key}}.encryption_kms_key"><samp>{{#if encryption_kms_key}}{{encryption_kms_key}}{{else}}AWS owned{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="mq.regions.{{region}}.brokers.{{@key}}.encryption_with_cmk"><samp>{{value_or_none encryption_with_cmk}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Logging</h4>
+      <div class="list-group-item-text item-margin">General logs: <span id="mq.regions.{{region}}.brokers.{{@key}}.general_logs_enabled">{{convert_bool_to_enabled general_logs_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">General log group: <span id="mq.regions.{{region}}.brokers.{{@key}}.general_log_group"><samp>{{value_or_none general_log_group}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Audit logs: <span id="mq.regions.{{region}}.brokers.{{@key}}.audit_logs_enabled">{{convert_bool_to_enabled audit_logs_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Audit log group: <span id="mq.regions.{{region}}.brokers.{{@key}}.audit_log_group"><samp>{{value_or_none audit_log_group}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Configuration</h4>
+      <div class="list-group-item-text item-margin">Configuration ID: <span id="mq.regions.{{region}}.brokers.{{@key}}.configuration_id"><samp>{{value_or_none configuration_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Configuration revision: <span id="mq.regions.{{region}}.brokers.{{@key}}.configuration_revision"><samp>{{value_or_none configuration_revision}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Pending configuration revision: <span id="mq.regions.{{region}}.brokers.{{@key}}.pending_configuration_revision"><samp>{{value_or_none pending_configuration_revision}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Authorization map: <span id="mq.regions.{{region}}.brokers.{{@key}}.authorization_map_configured"><samp>{{value_or_none authorization_map_configured}}</samp></span></div>
+      {{#if authorization_entries}}
+      <div class="list-group-item-text item-margin">Authorization entries:
+        <ul>
+          {{#each authorization_entries}}
+          <li class="list-group-item-text"><samp>{{destination_type}} {{destination}}</samp> — read <samp>{{value_or_none read}}</samp>, write <samp>{{value_or_none write}}</samp>, admin <samp>{{value_or_none admin}}</samp></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.mq.regions.id.brokers", $("#services\\.mq\\.regions\\.id\\.brokers\\.partial").html());
+  </script>
+  <!-- Single Amazon MQ broker instance template -->
+  <script id="single_mq_broker-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.mq.regions.id.brokers' }}
+  </script>
+  <script>
+    var single_mq_broker_template = Handlebars.compile($("#single_mq_broker-template").html());
+  </script>

@@ -30,6 +30,7 @@ formatted_service_name = {
     'eks': 'EKS',
     'elasticache': 'ElastiCache',
     'guardduty': 'GuardDuty',
+    'mq': 'Amazon MQ',
     'msk': 'MSK',
     'lambda': 'Lambda',
     'awslambda': 'Lambda',

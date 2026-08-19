@@ -1,0 +1,29 @@
+<!-- Amazon MQ Configurations partial -->
+<script id="services.mq.regions.id.configurations.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Configuration ID: <span id="mq.regions.{{region}}.configurations.{{@key}}.id"><samp>{{value_or_none id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="mq.regions.{{region}}.configurations.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="mq.regions.{{region}}.configurations.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Engine: <span id="mq.regions.{{region}}.configurations.{{@key}}.engine_type"><samp>{{value_or_none engine_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Engine version: <span id="mq.regions.{{region}}.configurations.{{@key}}.engine_version"><samp>{{value_or_none engine_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Authentication strategy: <span id="mq.regions.{{region}}.configurations.{{@key}}.authentication_strategy"><samp>{{value_or_none authentication_strategy}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="mq.regions.{{region}}.configurations.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Latest revision: <span id="mq.regions.{{region}}.configurations.{{@key}}.latest_revision"><samp>{{value_or_none latest_revision}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Latest revision description: <span id="mq.regions.{{region}}.configurations.{{@key}}.latest_revision_description"><samp>{{value_or_none latest_revision_description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Latest revision created at: <span id="mq.regions.{{region}}.configurations.{{@key}}.latest_revision_creation_time"><samp>{{value_or_none latest_revision_creation_time}}</samp></span></div>
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.mq.regions.id.configurations", $("#services\\.mq\\.regions\\.id\\.configurations\\.partial").html());
+  </script>
+  <!-- Single Amazon MQ configuration instance template -->
+  <script id="single_mq_configuration-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.mq.regions.id.configurations' }}
+  </script>
+  <script>
+    var single_mq_configuration_template = Handlebars.compile($("#single_mq_configuration-template").html());
+  </script>

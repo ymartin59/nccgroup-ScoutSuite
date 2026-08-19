@@ -1,0 +1,26 @@
+{
+    "description": "ActiveMQ Broker Not Delivering Audit Logs",
+    "rationale": "CloudTrail records the Amazon MQ API calls that shape a broker, not what happens inside it, so it never shows a queue being browsed, a message being consumed or a destination being purged. Those actions are taken over JMX or through the ActiveMQ web console and appear only in the broker audit log, which Amazon MQ discards unless the broker is configured to publish it to CloudWatch Logs. Without it an incident involving the messages themselves cannot be reconstructed, and the administrative use of what was meant to be an application credential leaves no trace anywhere in the account.",
+    "remediation": "Enable audit logging on the broker and retain the CloudWatch Logs group long enough to cover an investigation; the log group is only created if the principal rebooting or creating the broker holds logs:CreateLogGroup and a resource policy lets mq.amazonaws.com write to it",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/configure-logging-monitoring-activemq.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-logging-monitoring.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.engine_type",
+            "equal",
+            "ACTIVEMQ"
+        ],
+        [
+            "mq.regions.id.brokers.id.audit_logs_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "audit_logs_enabled"
+}

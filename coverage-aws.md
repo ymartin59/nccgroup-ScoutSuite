@@ -250,7 +250,23 @@ or of whether AWS's own detection services are switched on.
       - [ ] Glacier vault access policies + vault lock
       - [ ] Transfer Family servers: protocols (FTP without TLS), identity provider type, endpoint
             type (public vs VPC), logging, security policy / TLS version
-- [ ] **Amazon MQ** — brokers: public accessibility, encryption, audit logs, engine version, auth strategy.
+- [x] **Amazon MQ** — done, as the `mq` service: brokers with their public accessibility, subnets,
+      security groups, endpoints and console URLs, deployment mode, engine and whether its version
+      line is still offered by the API, automatic minor version upgrade, at-rest encryption key and
+      whether the account owns it, authentication strategy and LDAP settings, general and audit log
+      delivery, the users of a broker with their web console access and groups, and the authorization
+      map of the ActiveMQ configuration each broker currently runs, plus the region's MQ
+      configurations as a separate resource.
+      - [x] ten rules: public accessibility, missing ActiveMQ authorization map, audit and general
+            logs, AWS owned encryption key, retired engine version, automatic minor version upgrade
+            off, single-instance deployment, broker-local credentials, and a broker user holding web
+            console access
+      - [ ] left out: matching brokers to their security groups, so the "block unnecessary
+            protocols" best practice and the attack surface of a public broker are not evaluated;
+            deriving `in_public_subnet` from the broker subnets; the RabbitMQ configuration, whose
+            cuttlefish properties declare the authentication backends a CONFIG_MANAGED broker uses;
+            the authorization map of configurations no broker runs, since only the revision in force
+            decides anything
 - [ ] **AppSync** — GraphQL APIs: auth types (**API_KEY**), API keys and expiry, logging (field-level),
       WAF association, private API visibility, resolver data sources.
 - [ ] **Amplify / AppFlow / Batch / WorkSpaces / Lightsail** — lower priority, but each hosts

@@ -1,0 +1,21 @@
+{
+    "description": "Broker Not Delivering General Logs",
+    "rationale": "With general logging off, what the broker engine writes stays on the instance Amazon MQ manages and the account never sees it. The authentication failures, connection attempts and refused authorizations recorded there are the only evidence that anything was tried against the broker: repeated failed logins are the ordinary first sign of a password being guessed or of a leaked credential being replayed, and no other source in the account shows them. The same log is what explains, afterwards, which client was connected and what the broker refused.",
+    "remediation": "Enable general logging on the broker so the engine log is published to CloudWatch Logs, and alarm on the authentication failures it records",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-logging-monitoring.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/configure-logging-monitoring-activemq.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.general_logs_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "general_logs_enabled"
+}

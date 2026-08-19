@@ -1,0 +1,27 @@
+{
+    "description": "ActiveMQ Broker Without an Authorization Map",
+    "rationale": "ActiveMQ consults no authorization map by default, so unless the configuration the broker runs declares an authorizationPlugin, any user that authenticates may perform any action on the broker: read from every queue and topic, write to them, purge them and create new ones. Authentication then decides only who is admitted, not what they may touch, which means one application credential - the kind that ends up in several deployments and in a pipeline configuration - carries the reach of an administrator over all traffic of the broker, and a single compromised consumer reads the messages of every other application sharing it.",
+    "remediation": "Add an authorizationPlugin to the configuration the broker runs, with one authorization entry per set of destinations granting read, write and admin to the groups that need them, and keep the activemq-webconsole group authorized if the web console is used",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/using-amazon-mq-securely.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/child-element-details.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/permitted-elements.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.engine_type",
+            "equal",
+            "ACTIVEMQ"
+        ],
+        [
+            "mq.regions.id.brokers.id.authorization_map_configured",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "authorization_map_configured"
+}

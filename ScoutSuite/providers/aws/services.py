@@ -22,6 +22,7 @@ from ScoutSuite.providers.aws.resources.elbv2.base import ELBv2
 from ScoutSuite.providers.aws.resources.emr.base import EMR
 from ScoutSuite.providers.aws.resources.iam.base import IAM
 from ScoutSuite.providers.aws.resources.kms.base import KMS
+from ScoutSuite.providers.aws.resources.mq.base import MQ
 from ScoutSuite.providers.aws.resources.msk.base import MSK
 from ScoutSuite.providers.aws.resources.rds.base import RDS
 from ScoutSuite.providers.aws.resources.redshift.base import Redshift
@@ -84,6 +85,7 @@ class AWSServicesConfig(BaseServicesConfig):
     :ivar guarduty:                     GuardDuty configuration
     :ivar iam:                          IAM configuration
     :ivar kms:                          KMS configuration
+    :ivar mq:                           Amazon MQ configuration
     :ivar msk:                          MSK configuration
     :ivar rds:                          RDS configuration
     :ivar redshift:                     Redshift configuration
@@ -123,6 +125,7 @@ class AWSServicesConfig(BaseServicesConfig):
         self.emr = EMR(facade)
         self.iam = IAM(facade)
         self.kms = KMS(facade)
+        self.mq = MQ(facade)
         self.msk = MSK(facade)
         self.rds = RDS(facade)
         self.redshift = Redshift(facade)

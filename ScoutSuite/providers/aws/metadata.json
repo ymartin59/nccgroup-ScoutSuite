@@ -109,6 +109,18 @@
                 }
             }
         },
+        "mq": {
+            "resources": {
+                "brokers": {
+                    "cols": 2,
+                    "path": "services.mq.regions.id.brokers"
+                },
+                "configurations": {
+                    "cols": 2,
+                    "path": "services.mq.regions.id.configurations"
+                }
+            }
+        },
         "msk": {
             "resources": {
                 "clusters": {

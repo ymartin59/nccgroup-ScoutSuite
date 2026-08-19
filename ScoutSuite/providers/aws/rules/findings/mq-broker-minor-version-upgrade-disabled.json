@@ -1,0 +1,21 @@
+{
+    "description": "Broker Not Receiving Automatic Minor Version Upgrades",
+    "rationale": "With automatic minor version upgrade off, the broker stays on the patch level it was created with until somebody upgrades it by hand. Minor versions of ActiveMQ and RabbitMQ are where the fixes for their published vulnerabilities arrive, and Amazon MQ applies these upgrades during the maintenance window the account itself chose, so refusing them buys no control over when the broker restarts: it only means the restart that would have carried a fix never happens. A broker left this way drifts until its whole version line is retired and what would have been a patch becomes a planned migration.",
+    "remediation": "Enable automatic minor version upgrade on the broker and set the weekly maintenance window to a time the restart is acceptable",
+    "references": [
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/upgrading-brokers.html",
+        "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/maintaining-brokers.html"
+    ],
+    "dashboard_name": "Brokers",
+    "display_path": "mq.regions.id.brokers.id",
+    "path": "mq.regions.id.brokers.id",
+    "conditions": [
+        "and",
+        [
+            "mq.regions.id.brokers.id.auto_minor_version_upgrade",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "auto_minor_version_upgrade"
+}
