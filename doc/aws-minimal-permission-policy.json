@@ -5,6 +5,10 @@
       "Sid": "VisualEditor0",
       "Effect": "Allow",
       "Action": [
+        "access-analyzer:GetFindingV2",
+        "access-analyzer:ListAnalyzers",
+        "access-analyzer:ListArchiveRules",
+        "access-analyzer:ListFindingsV2",
         "account:GetAlternateContact",
         "account:GetContactInformation",
         "account:ListRegions",

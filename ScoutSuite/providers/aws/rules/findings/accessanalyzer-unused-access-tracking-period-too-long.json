@@ -1,0 +1,29 @@
+{
+    "description": "IAM Access Analyzer Unused Access Tracking Period Longer Than _ARG_0_ Days",
+    "rationale": "The tracking period is how long a role, password, access key or permission must sit unused before the analyzer reports it, so it is also how long a credential that nobody uses any more stays available without anything pointing at it. A long period is chosen to keep the findings quiet, and it does: a role belonging to a decommissioned workload or a person who has left is reported only once the whole period has elapsed, and every permission granted for a one-off task keeps its reach in the meantime. The period cannot make a used permission disappear from the findings either way, because the analyzer measures actual access, so a shorter one costs review effort rather than correctness.",
+    "remediation": "Lower the tracking period of the unused access analyzer to the interval within which a legitimately used credential is certain to have been used at least once, and work the resulting findings",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-unused-access.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "dashboard_name": "Analyzers",
+    "display_path": "accessanalyzer.regions.id.analyzers.id",
+    "path": "accessanalyzer.regions.id.analyzers.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.unused_access_age",
+            "notNull",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.unused_access_age",
+            "moreThan",
+            "_ARG_0_"
+        ]
+    ],
+    "id_suffix": "unused_access_age",
+    "arg_names": [
+        "Tracking period"
+    ]
+}

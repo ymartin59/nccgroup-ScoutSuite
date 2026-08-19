@@ -1247,6 +1247,7 @@ function makeTitle(title) {
         'docdb': 'DocumentDB',
         'dynamodb': 'DynamoDB',
         'guardduty': 'GuardDuty',
+        'accessanalyzer': 'IAM Access Analyzer',
         'mq': 'Amazon MQ',
         'secretsmanager': 'Secrets Manager',
         'ssm': 'Systems Manager',

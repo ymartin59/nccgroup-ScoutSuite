@@ -1,0 +1,27 @@
+{
+    "description": "IAM Role Not Used Within the Analyzer Tracking Period",
+    "rationale": "IAM Access Analyzer has compared this role against the account's access history and found that nobody has assumed it for the whole tracking period. An unused role is a live credential with no owner watching it: whatever its trust policy allows still allows it, whatever its permissions grant is still granted, and because nothing depends on the role, no failure would follow from it being assumed by somebody else. Roles left behind by decommissioned workloads, by proofs of concept and by people who have moved on are also the ones whose trust policies were widened during troubleshooting and never narrowed again.",
+    "remediation": "Delete the role, or if it is a break-glass or seasonal role that is genuinely meant to sit idle, document it and exclude it from the analyzer by tag so that the remaining findings stay actionable",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-unused-access.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "dashboard_name": "Findings",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.active",
+            "true",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.finding_type",
+            "equal",
+            "UnusedIAMRole"
+        ]
+    ],
+    "id_suffix": "finding_type"
+}

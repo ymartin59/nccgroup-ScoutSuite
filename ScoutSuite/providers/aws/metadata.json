@@ -448,6 +448,26 @@
         }
     },
     "security": {
+        "accessanalyzer": {
+            "resources": {
+                "regions": {
+                    "cols": 2,
+                    "path": "services.accessanalyzer.regions"
+                },
+                "analyzers": {
+                    "cols": 2,
+                    "path": "services.accessanalyzer.regions.id.analyzers"
+                },
+                "access_findings": {
+                    "cols": 2,
+                    "path": "services.accessanalyzer.regions.id.analyzers.id.access_findings"
+                },
+                "archive_rules": {
+                    "cols": 2,
+                    "path": "services.accessanalyzer.regions.id.analyzers.id.archive_rules"
+                }
+            }
+        },
         "iam": {
             "resources": {
                 "groups": {

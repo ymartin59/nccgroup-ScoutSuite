@@ -1,5 +1,6 @@
 from boto3.session import Session
 
+from ScoutSuite.providers.aws.facade.accessanalyzer import AccessAnalyzerFacade
 from ScoutSuite.providers.aws.facade.account import AccountFacade
 from ScoutSuite.providers.aws.facade.acm import AcmFacade
 from ScoutSuite.providers.aws.facade.autoscaling import AutoScalingFacade
@@ -255,6 +256,7 @@ class AWSFacade(AWSBaseFacade):
 
     def _instantiate_facades(self):
         self.ec2 = EC2Facade(self.session, self.owner_id)
+        self.accessanalyzer = AccessAnalyzerFacade(self.session)
         self.account = AccountFacade(self.session)
         self.acm = AcmFacade(self.session)
         self.autoscaling = AutoScalingFacade(self.session)

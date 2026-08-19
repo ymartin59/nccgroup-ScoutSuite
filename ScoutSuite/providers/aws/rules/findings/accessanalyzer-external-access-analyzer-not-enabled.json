@@ -1,0 +1,22 @@
+{
+    "description": "IAM Access Analyzer External Access Analyzer Not Enabled",
+    "rationale": "Nothing else in an AWS account answers the question \"which of my resources can somebody outside reach\". Resource policies, bucket ACLs, KMS key policies, access points and their conditions combine in ways that cannot be read off any single document, and a policy granting a whole organization, an OU, a service principal or a bare wildcard looks the same in the console whether it is what was meant or not. An external access analyzer resolves those policies with automated reasoning and states, per resource, who outside the zone of trust may take which action, covering resource types nothing else in this report policy-analyses: KMS keys, Secrets Manager secrets, EFS file systems, RDS and EBS snapshots, ECR repositories, Lambda functions and layers, DynamoDB tables and streams. Without an analyzer in a region, a resource shared with an unintended account or with everyone in that region stays unnoticed until somebody uses the access.",
+    "remediation": "Create an external access analyzer in every enabled region, with the account as the zone of trust unless the organization is the intended boundary. Analyzers are free, and one in the organization's management or delegated administrator account covers all member accounts",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-resources.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/iam-controls.html#iam-28"
+    ],
+    "dashboard_name": "Regions",
+    "path": "accessanalyzer.regions.id",
+    "conditions": [
+        "and",
+        [
+            "active_external_access_analyzers_count",
+            "equal",
+            "0"
+        ]
+    ],
+    "id_suffix": "ExternalAccessAnalyzerNotEnabled"
+}

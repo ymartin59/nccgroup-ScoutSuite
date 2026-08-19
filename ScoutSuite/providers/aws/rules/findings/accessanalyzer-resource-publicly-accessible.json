@@ -1,0 +1,32 @@
+{
+    "description": "Resource Reported as Publicly Accessible by IAM Access Analyzer",
+    "rationale": "IAM Access Analyzer has resolved the policies attached to this resource and concluded that the access it grants is not limited to any identity: anyone on the internet, authenticated to any AWS account or to none, may take the reported actions on it. This is the conclusion of automated reasoning over the resource policy, the ACLs and the conditions together, so it accounts for the cases a policy read by eye does not - a wildcard principal narrowed by a condition that does not actually narrow it, an access point that widens what the bucket policy grants, a grant to a service principal that any account may invoke. The finding is still active, which means nobody has reviewed and accepted it, and Access Analyzer would have resolved it by itself had the access been removed.",
+    "remediation": "Remove the wildcard principal, or add a condition that restricts the access to the accounts, organization or VPC endpoints that need it, then confirm that the finding is resolved; if the exposure is intended and understood, archive the finding so the remaining ones stay meaningful",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-findings.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-resources.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-work-with-findings.html"
+    ],
+    "dashboard_name": "Findings",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.active",
+            "true",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.is_public",
+            "true",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.restricted_by_control_policy",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "is_public"
+}

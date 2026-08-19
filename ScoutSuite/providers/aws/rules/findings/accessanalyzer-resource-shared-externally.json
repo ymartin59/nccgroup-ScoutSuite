@@ -1,0 +1,37 @@
+{
+    "description": "Resource Shared Outside the Zone of Trust According to IAM Access Analyzer",
+    "rationale": "IAM Access Analyzer reports that a principal outside the analyzer's zone of trust - another AWS account, an external identity provider or a service principal - can take actions on this resource. Cross-account sharing is often deliberate, but the finding is still active, which means it has not been reviewed and accepted: nobody has recorded that this account is meant to reach this resource. That matters because these grants outlive their reason. The vendor integration is decommissioned and the trust stays, the account on the other side changes hands, and the resource types involved - snapshots, secrets, keys, repositories - are the ones from which data leaves in bulk without touching any network control this report can see.",
+    "remediation": "Confirm for each finding that the external principal is still intended and still narrow enough, remove the grant otherwise, and archive the findings that are understood so that a new share stands out. An archive rule can accept a documented set of accounts without hiding future findings about other principals",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-findings.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-work-with-findings.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-archive-rules.html"
+    ],
+    "dashboard_name": "Findings",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.active",
+            "true",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.category",
+            "equal",
+            "EXTERNAL_ACCESS"
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.is_public",
+            "false",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.restricted_by_control_policy",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "finding_type"
+}

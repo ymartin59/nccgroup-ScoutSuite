@@ -1,0 +1,22 @@
+{
+    "description": "IAM Access Analyzer Archive Rule Archives Findings of Public Access",
+    "rationale": "An archive rule is applied when a finding is created, so a finding it matches is archived before anyone sees it and is not counted among the active findings anybody works through. This rule matches on the finding being public, which means new resources exposed to everyone on the internet are filed away automatically: the analyzer keeps working, the console keeps showing a short list of active findings, and the exposure it was installed to surface is the one thing it no longer reports. Archive rules are ordinarily how intended cross-account sharing is accepted, and a criterion naming specific accounts or resources says as much; a criterion on public access accepts whatever becomes public in the future, including resources that do not exist yet.",
+    "remediation": "Delete the archive rule, or replace the public-access criterion with the specific resources whose exposure is intended, so that any other resource becoming public still raises an active finding. Review the findings the rule has already archived, since they were never read",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-archive-rules.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-work-with-findings.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html"
+    ],
+    "dashboard_name": "Archive Rules",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.archive_rules.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.archive_rules.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.archive_rules.id.archives_public_access",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "archives_public_access"
+}

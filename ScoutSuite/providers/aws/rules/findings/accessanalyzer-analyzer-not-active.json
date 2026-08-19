@@ -1,0 +1,24 @@
+{
+    "description": "IAM Access Analyzer Analyzer Not Active",
+    "rationale": "An analyzer that is disabled or failed still exists, still appears in the console and still holds the findings it produced when it last ran, so the account looks monitored while nothing is being analysed. New shares created since it stopped raise no finding, and the findings it does show describe the account as it was rather than as it is. An analyzer fails for reasons that are invisible unless looked for: its service-linked role has been removed or altered, or the account has reached its analyzer quota.",
+    "remediation": "Read the status reason of the analyzer, restore the service-linked role or the quota it needs, and recreate or re-enable it; a disabled analyzer that is no longer wanted should be deleted so it stops presenting stale findings as current",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-troubleshooting.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-settings.html"
+    ],
+    "dashboard_name": "Analyzers",
+    "display_path": "accessanalyzer.regions.id.analyzers.id",
+    "path": "accessanalyzer.regions.id.analyzers.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.status",
+            "containAtLeastOneOf",
+            [
+                "DISABLED",
+                "FAILED"
+            ]
+        ]
+    ],
+    "id_suffix": "status"
+}

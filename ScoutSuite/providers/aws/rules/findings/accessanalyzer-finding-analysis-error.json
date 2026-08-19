@@ -1,0 +1,21 @@
+{
+    "description": "IAM Access Analyzer Could Not Analyse a Resource",
+    "rationale": "Access Analyzer reports an error against this finding, which means it could not evaluate the resource and therefore says nothing about who may reach it. The resource is not known to be safe and is not known to be exposed; it is simply outside the coverage the analyzer is being relied on to provide, while the region as a whole still looks analysed. Errors come from policies the analyzer cannot parse and from resources it was denied access to, both of which are conditions that persist until somebody looks.",
+    "remediation": "Read the error reported against the finding, fix the malformed policy or grant the analyzer's service-linked role the access it needs, and confirm that the resource is analysed on the next run",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-troubleshooting.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-findings.html"
+    ],
+    "dashboard_name": "Findings",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.error",
+            "notNull",
+            ""
+        ]
+    ],
+    "id_suffix": "error"
+}

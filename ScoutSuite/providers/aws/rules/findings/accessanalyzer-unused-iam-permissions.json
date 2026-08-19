@@ -1,0 +1,27 @@
+{
+    "description": "IAM Permissions Granted and Never Used",
+    "rationale": "IAM Access Analyzer has found actions this identity is allowed to take and has not taken within the tracking period, which is evidence rather than an opinion: the permissions are surplus to what the workload actually does. Every one of them is reach that a compromise of the identity inherits for free, and the surplus is what turns a foothold into lateral movement - the role that only needed to read one bucket but may also write to it, assume other roles or change its own policy. Access Analyzer names the service and the actions involved, so the policy can be narrowed against measured usage instead of guessed at.",
+    "remediation": "Narrow the policies of the identity to the actions the findings show as used, keeping any deliberately pre-provisioned permission documented, and re-check the findings after the change",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-unused-access.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "dashboard_name": "Findings",
+    "display_path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "path": "accessanalyzer.regions.id.analyzers.id.access_findings.id",
+    "conditions": [
+        "and",
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.active",
+            "true",
+            ""
+        ],
+        [
+            "accessanalyzer.regions.id.analyzers.id.access_findings.id.finding_type",
+            "equal",
+            "UnusedPermission"
+        ]
+    ],
+    "id_suffix": "finding_type"
+}

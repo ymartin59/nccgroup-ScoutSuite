@@ -1,0 +1,46 @@
+<!-- IAM Access Analyzer finding partial -->
+<script id="services.accessanalyzer.regions.id.analyzers.id.access_findings.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Finding ID: <samp>{{value_or_none id}}</samp></div>
+      <div class="list-group-item-text item-margin">Region: <samp>{{value_or_none region}}</samp></div>
+      <div class="list-group-item-text item-margin">Analyzer: <a href="javascript:showObject('services.accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}')"><samp>{{analyzer}}</samp></a></div>
+      <div class="list-group-item-text item-margin">Type: <span id="accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}.access_findings.{{id}}.finding_type"><samp>{{value_or_none finding_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}.access_findings.{{id}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <samp>{{value_or_none creation_time}}</samp></div>
+      <div class="list-group-item-text item-margin">Last analyzed at: <samp>{{value_or_none analyzed_time}}</samp></div>
+      <div class="list-group-item-text item-margin">Last updated at: <samp>{{value_or_none last_updated_time}}</samp></div>
+      <div class="list-group-item-text item-margin">Analysis error: <span id="accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}.access_findings.{{id}}.error"><samp>{{value_or_none error}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Resource</h4>
+      <div class="list-group-item-text item-margin">Resource: <samp>{{value_or_none resource}}</samp></div>
+      <div class="list-group-item-text item-margin">Resource type: <samp>{{value_or_none resource_type}}</samp></div>
+      <div class="list-group-item-text item-margin">Owner account: <samp>{{value_or_none resource_owner_account}}</samp></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Access</h4>
+      <div class="list-group-item-text item-margin">Public: <span id="accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}.access_findings.{{id}}.is_public"><samp>{{value_or_none is_public}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Access type: <samp>{{value_or_none access_type}}</samp></div>
+      <div class="list-group-item-text item-margin">Principals: {{#each principals}}<samp>{{this}}</samp> {{/each}}</div>
+      <div class="list-group-item-text item-margin">Principal types: {{#each principal_types}}<samp>{{this}}</samp> {{/each}}</div>
+      <div class="list-group-item-text item-margin">Actions: {{#each actions}}<samp>{{this}}</samp> {{/each}}</div>
+      <div class="list-group-item-text item-margin">Condition keys: {{#each condition_keys}}<samp>{{this}}</samp> {{/each}}</div>
+      <div class="list-group-item-text item-margin">Sources: {{#each sources}}<samp>{{this}}</samp> {{/each}}</div>
+      <div class="list-group-item-text item-margin">Restricted by a control policy: <span id="accessanalyzer.regions.{{region}}.analyzers.{{analyzer}}.access_findings.{{id}}.restricted_by_control_policy"><samp>{{value_or_none restricted_by_control_policy}}</samp></span></div>
+    </div>
+</script>
+<script>
+  Handlebars.registerPartial("services.accessanalyzer.regions.id.analyzers.id.access_findings", $("#services\\.accessanalyzer\\.regions\\.id\\.analyzers\\.id\\.access_findings\\.partial").html());
+</script>
+
+<!-- Single IAM Access Analyzer finding template -->
+<script id="single_accessanalyzer_access_finding-template" type="text/x-handlebars-template">
+  {{> modal-template template='services.accessanalyzer.regions.id.analyzers.id.access_findings' }}
+</script>
+<script>
+  var single_accessanalyzer_access_finding_template = Handlebars.compile($("#single_accessanalyzer_access_finding-template").html());
+</script>

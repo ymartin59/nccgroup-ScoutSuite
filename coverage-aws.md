@@ -75,13 +75,35 @@ or of whether AWS's own detection services are switched on.
       - [ ] RCPs (resource control policies), declarative policies, tag policies, backup policies
       - [ ] delegated administrators and delegated services
       - [ ] AI services opt-out policy
-- [ ] **IAM Access Analyzer** — new service. This is AWS's authoritative answer to
-      "what is shared outside this account", covering resource types ScoutSuite does not
-      policy-analyse at all.
-      - [ ] analyzers per region (type: ACCOUNT / ORGANIZATION / *_UNUSED_ACCESS), status
-      - [ ] external-access findings (S3, IAM roles, KMS, SQS, Secrets Manager, Lambda, EFS, RDS snapshots, ECR, SNS)
-      - [ ] unused-access findings (unused roles, unused permissions) if an unused-access analyzer exists
-      - [ ] archive rules (they can silently hide findings)
+- [x] **IAM Access Analyzer** — done, as the new `accessanalyzer` service. AWS's authoritative
+      answer to "what is shared outside this account", covering resource types ScoutSuite does not
+      policy-analyse at all. Whether a region is analysed is a property of the region, so the
+      per-kind analyzer counters a rule fires on when there is no analyzer to attach a finding to
+      are derived after the fetch, in `resources/accessanalyzer/base.py::_set_coverage`.
+      - [x] analyzers per region (ACCOUNT / ORGANIZATION / \*_UNUSED_ACCESS / \*_INTERNAL_ACCESS,
+            reduced to a `kind` and an `organization_wide` flag), status and its reason, whether an
+            AWS service manages it, last resource analyzed, the unused-access tracking period and
+            its exclusions, the internal-access inclusions
+      - [x] external-access findings, with the detail each one needs to mean anything: the
+            principals and their types, the actions, the condition keys, the sources (policy,
+            bucket ACL, access point), `isPublic`, and whether a resource or service control policy
+            already blocks the access
+      - [x] unused-access findings (unused roles, unused permissions, unused passwords and access
+            keys), from the listing only, since the resource they name identifies them fully
+      - [x] internal-access findings, opportunistically: the API returns them through the same call
+            and they carry the same detail structure
+      - [x] archive rules with their filter criteria, and the derived
+            `archives_public_access` — a rule matching on `isPublic` files away public exposure
+            before anybody sees it
+      - [ ] left out: `GetFindingV2` for the unused-access findings, which would add the
+            `lastAccessed` date and the unused action list; `ListAnalyzedResources`, which would say
+            which resources an analyzer covers rather than which ones it flagged; access previews;
+            and `ValidatePolicy` / `GetGeneratedPolicy`, which analyse a policy handed to them
+            rather than the account
+      - [ ] left out (rules): the unused password and access key findings, since
+            `iam-unused-credentials-not-disabled` already covers them from the credential report;
+            and the unused-access exclusions, which hide accounts and tagged roles the same way an
+            archive rule hides findings
 - [ ] **GuardDuty** — currently `private_guardduty` only; port an open-source collector.
       - [ ] detector per region, enabled state, finding publishing frequency
       - [ ] feature/data-source coverage (S3 logs, EKS audit logs, malware protection, RDS login events, Lambda network logs, runtime monitoring)

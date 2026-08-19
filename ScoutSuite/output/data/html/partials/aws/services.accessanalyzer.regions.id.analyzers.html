@@ -1,0 +1,90 @@
+<!-- IAM Access Analyzer analyzer partial -->
+<script id="services.accessanalyzer.regions.id.analyzers.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <samp>{{value_or_none name}}</samp></div>
+      <div class="list-group-item-text item-margin">ARN: <samp>{{value_or_none arn}}</samp></div>
+      <div class="list-group-item-text item-margin">Region: <samp>{{value_or_none region}}</samp></div>
+      <div class="list-group-item-text item-margin">Type: <samp>{{value_or_none type}}</samp></div>
+      <div class="list-group-item-text item-margin">Analyses: <samp>{{value_or_none kind}}</samp></div>
+      <div class="list-group-item-text item-margin">Organization wide: <samp>{{value_or_none organization_wide}}</samp></div>
+      <div class="list-group-item-text item-margin">Status: <span id="accessanalyzer.regions.{{region}}.analyzers.{{id}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status reason: <samp>{{value_or_none status_reason}}</samp></div>
+      <div class="list-group-item-text item-margin">Created at: <samp>{{value_or_none creation_time}}</samp></div>
+      <div class="list-group-item-text item-margin">Managed by: <samp>{{value_or_none managed_by}}</samp></div>
+      <div class="list-group-item-text item-margin">Last resource analyzed: <samp>{{value_or_none last_resource_analyzed}}</samp></div>
+      <div class="list-group-item-text item-margin">Last resource analyzed at: <samp>{{value_or_none last_resource_analyzed_time}}</samp></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Configuration</h4>
+      <div class="list-group-item-text item-margin">Unused access tracking period (days): <span id="accessanalyzer.regions.{{region}}.analyzers.{{id}}.unused_access_age"><samp>{{value_or_none unused_access_age}}</samp></span></div>
+      {{#if unused_access_exclusions}}
+      <div class="list-group-item-text item-margin">Unused access exclusions:
+        <ul>
+          {{#each unused_access_exclusions}}
+          <li class="list-group-item-text">
+            accounts {{#each account_ids}}<samp>{{this}}</samp> {{/each}}
+            tags {{#each resource_tags}}<samp>{{jsonStringify this}}</samp> {{/each}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      {{#if internal_access_inclusions}}
+      <div class="list-group-item-text item-margin">Internal access inclusions:
+        <ul>
+          {{#each internal_access_inclusions}}
+          <li class="list-group-item-text">
+            accounts {{#each account_ids}}<samp>{{this}}</samp> {{/each}}
+            resource types {{#each resource_types}}<samp>{{this}}</samp> {{/each}}
+            resources {{#each resource_arns}}<samp>{{this}}</samp> {{/each}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Findings</h4>
+      <div class="list-group-item-text item-margin">Total: <samp>{{access_findings_count}}</samp></div>
+      <div class="list-group-item-text item-margin">Active: <samp>{{active_findings_count}}</samp></div>
+      <div class="list-group-item-text item-margin">Archived: <samp>{{archived_findings_count}}</samp></div>
+      <div class="list-group-item-text item-margin">Active findings of public access: <samp>{{public_access_findings_count}}</samp></div>
+      {{#if access_findings}}
+      <div class="list-group-item-text item-margin">
+        <ul>
+          {{#each access_findings}}
+          <li class="list-group-item-text"><a href="javascript:showObject('services.accessanalyzer.regions.{{../region}}.analyzers.{{../id}}.access_findings.{{@key}}')">{{finding_type}} — {{name}} ({{status}})</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Archive rules</h4>
+      <div class="list-group-item-text item-margin">Count: <samp>{{archive_rules_count}}</samp></div>
+      {{#if archive_rules}}
+      <div class="list-group-item-text item-margin">
+        <ul>
+          {{#each archive_rules}}
+          <li class="list-group-item-text"><a href="javascript:showObject('services.accessanalyzer.regions.{{../region}}.analyzers.{{../id}}.archive_rules.{{@key}}')">{{name}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+</script>
+<script>
+  Handlebars.registerPartial("services.accessanalyzer.regions.id.analyzers", $("#services\\.accessanalyzer\\.regions\\.id\\.analyzers\\.partial").html());
+</script>
+
+<!-- Single IAM Access Analyzer analyzer template -->
+<script id="single_accessanalyzer_analyzer-template" type="text/x-handlebars-template">
+  {{> modal-template template='services.accessanalyzer.regions.id.analyzers' }}
+</script>
+<script>
+  var single_accessanalyzer_analyzer_template = Handlebars.compile($("#single_accessanalyzer_analyzer-template").html());
+</script>

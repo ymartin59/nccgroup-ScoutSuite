@@ -1,0 +1,44 @@
+<!-- IAM Access Analyzer region partial -->
+<script id="services.accessanalyzer.regions.partial" type="text/x-handlebars-template">
+    <div class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4>Coverage</h4>
+      <ul>
+        <li class="list-group-item-text">External access analyzer enabled:
+          <span id="accessanalyzer.regions.{{name}}.ExternalAccessAnalyzerNotEnabled">
+            <samp>{{#ifPositive active_external_access_analyzers_count}}True{{else}}False{{/ifPositive}}</samp>
+          </span>
+        </li>
+        <li class="list-group-item-text">Unused access analyzer enabled:
+          <span id="accessanalyzer.regions.{{name}}.UnusedAccessAnalyzerNotEnabled">
+            <samp>{{#ifPositive active_unused_access_analyzers_count}}True{{else}}False{{/ifPositive}}</samp>
+          </span>
+        </li>
+        <li class="list-group-item-text">Internal access analyzers: <samp>{{active_internal_access_analyzers_count}}</samp> active</li>
+        <li class="list-group-item-text">Active findings: <samp>{{active_findings_count}}</samp></li>
+        <li class="list-group-item-text">Archived findings: <samp>{{archived_findings_count}}</samp></li>
+        <li class="list-group-item-text">Active findings of public access: <samp>{{public_access_findings_count}}</samp></li>
+      </ul>
+    </div>
+    <div class="list-group-item">
+      <div class="accordion">
+        <h4 class="list-group-item-heading accordion-heading">Analyzers
+            {{> count_badge target=(concat '#accessanalyzer.regions' name 'analyzers') count=analyzers_count}}
+        </h4>
+        <div id="accessanalyzer.regions.{{name}}.analyzers" class="accordion-body">
+          <div class="accordion-inner">
+            <ul class="no-bullet">
+              {{#each this.analyzers}}
+                <li><a href="javascript:showObject('services.accessanalyzer.regions.{{../name}}.analyzers.{{@key}}')">{{name}} ({{type}})</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+<script>
+  Handlebars.registerPartial("services.accessanalyzer.regions", $("#services\\.accessanalyzer\\.regions\\.partial").html());
+</script>

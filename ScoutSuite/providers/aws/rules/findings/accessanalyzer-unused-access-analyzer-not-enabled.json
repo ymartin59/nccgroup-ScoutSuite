@@ -1,0 +1,21 @@
+{
+    "description": "IAM Access Analyzer Unused Access Analyzer Not Enabled",
+    "rationale": "Permissions in an account only ever grow: a role is granted what a change might need, the change ships, and nothing ever takes the grant back because nobody can tell which of them was used. An unused access analyzer compares each role, user, password, access key and granted service permission against the account's own access history and reports the ones that have not been exercised within its tracking period, which is the only evidence-based way to shrink a policy without guessing. Without it, least privilege is asserted at review time and never verified, and every unused role and permission stays available to whoever obtains the credential.",
+    "remediation": "Create an unused access analyzer, keep its tracking period short enough that a genuinely used permission is not reported, and work the findings into the policies and roles they name",
+    "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-unused-access.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "dashboard_name": "Regions",
+    "path": "accessanalyzer.regions.id",
+    "conditions": [
+        "and",
+        [
+            "active_unused_access_analyzers_count",
+            "equal",
+            "0"
+        ]
+    ],
+    "id_suffix": "UnusedAccessAnalyzerNotEnabled"
+}
