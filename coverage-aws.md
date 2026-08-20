@@ -252,8 +252,43 @@ or of whether AWS's own detection services are switched on.
       (credentials, JDBC password), security configurations, jobs
       (`--enable-*` flags, script location, bookmark encryption), dev endpoints (public SSH),
       crawlers.
-- [ ] **Athena** — workgroups: result-location encryption, **enforce workgroup configuration**,
-      CloudWatch metrics, query result reuse; data catalogs.
+- [x] **Athena** — done, as the `athena` service, with two resources per region. A workgroup is the
+      only place where Athena decides anything, and the query result location it fixes is a second,
+      usually unnoticed, copy of the output of every query ever run under it.
+      - [x] workgroups: the result configuration (output location, the bucket out of it, encryption
+            option and key, expected bucket owner, bucket-owner ACL) and the Athena-managed storage
+            alternative with its key; **whether the workgroup configuration is enforced** and, when
+            it is not, whether a **minimum encryption** level still is; the per-query data scanned
+            limit and requester-pays; the selected and effective engine version with the derived
+            `engine_version_auto_upgrade`; CloudWatch query metrics and the Spark log destinations;
+            the Spark execution role and the customer content key protecting the notebooks; IAM
+            Identity Center and the S3 Access Grants configuration of the result reads; state,
+            description, creation date and tags
+      - [x] data catalogs: type (GLUE / HIVE / LAMBDA / FEDERATED) with the derived `external`,
+            status and the derived `failed`, the connection type of a federated source, the error it
+            reports, and the registration parameters, which Athena documents as connector function
+            ARNs, a Glue catalog id or a connection ARN rather than credentials
+      - [x] nine rules: query results not encrypted (excluding a workgroup on Athena-managed
+            storage, which has no bucket of the account to secure), results encrypted under an S3
+            managed key, workgroup configuration not enforced, a declared encryption level a client
+            may silently drop, result location without an expected bucket owner, query metrics not
+            published, engine version pinned, a Spark workgroup whose notebook content is encrypted
+            under an AWS owned key, and a data catalog left in a failed state
+      - [ ] left out: named queries and prepared statements, and the query execution history
+            (`ListQueryExecutions` / `GetQueryExecution`), all of which carry SQL naming the tables
+            and the literals a query was written against and grow without bound; capacity
+            reservations; `ListDatabases` / `ListTableMetadata`, which would inventory what each
+            catalog actually exposes at one call per catalog and per database; and the Spark
+            sessions, calculations and notebook content of a Spark workgroup
+      - [ ] left out: matching the result bucket to the `s3` service in preprocessing, which is what
+            would turn an unencrypted result location into the finding it deserves to be — a bucket
+            policy, a public access block or a lifecycle rule on the prefix holding the output of
+            every query. `results_bucket` is derived and ready for it.
+      - [ ] left out (rules): requester-pays and the absent per-query data scanned limit, both of
+            which are cost controls with only an indirect security reading; the S3 Access Grants and
+            Identity Center settings, which say how results are read back but have no insecure
+            default to flag; and excluding DISABLED workgroups from the findings, since a workgroup
+            is re-enabled without any of its settings changing
 - [x] **SageMaker** — done, as the `sagemaker` service, with five resources per region. Every
       listing only names its resources, so each one is described.
       - [x] notebook instances: **direct internet access**, whether a subnet of the account was given

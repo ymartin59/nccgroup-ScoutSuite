@@ -1,0 +1,31 @@
+{
+    "description": "Workgroup Letting Clients Weaken Result Encryption",
+    "rationale": "The workgroup declares an encryption configuration for its query results but does not enforce its configuration, so a client is free to replace it, and there is no floor on what it may replace it with. The minimum encryption setting is what covers exactly that case: it keeps letting clients supply their own encryption configuration while making Athena reject any that is weaker than the one the workgroup declares. Without it, the encryption on the workgroup only describes the default, and a single query parameter is enough to have the results written with no encryption at all.",
+    "remediation": "Enable EnableMinimumEncryptionConfiguration on the workgroup so a client override cannot drop below the declared encryption level, or enforce the workgroup configuration outright",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/encryption.html",
+        "https://docs.aws.amazon.com/athena/latest/APIReference/API_WorkGroupConfiguration.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.results_encrypted",
+            "true",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.enforce_workgroup_configuration",
+            "false",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.minimum_encryption_enforced",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "minimum_encryption_enforced"
+}

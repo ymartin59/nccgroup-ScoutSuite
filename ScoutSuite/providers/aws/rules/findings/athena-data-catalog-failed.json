@@ -1,0 +1,21 @@
+{
+    "description": "Data Catalog in a Failed State",
+    "rationale": "Athena registered the catalog but could not finish creating or deleting it, so it is listed among the sources a query may name while not actually being usable. A catalog stuck this way is normally the trace of an abandoned federated source or Hive metastore: the registration, the Lambda connector it points at and the role that connector runs as all remain in the account, unused and therefore unreviewed, while whichever secret the connector was given to reach the external database keeps working. It is also the case a failed clean-up leaves behind, so the resources it names are not the ones anybody expects to still exist.",
+    "remediation": "Read the error reported on the catalog, then either repair the registration or delete it together with the connector function, its execution role and the credentials it was given",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/data-sources-managing.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/connect-to-a-data-source.html"
+    ],
+    "dashboard_name": "Data catalogs",
+    "display_path": "athena.regions.id.data_catalogs.id",
+    "path": "athena.regions.id.data_catalogs.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.data_catalogs.id.failed",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "status"
+}

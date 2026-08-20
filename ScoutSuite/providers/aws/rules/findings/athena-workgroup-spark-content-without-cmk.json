@@ -1,0 +1,26 @@
+{
+    "description": "Spark Workgroup Encrypting Notebook Content with an AWS Owned Key",
+    "rationale": "A workgroup created for Apache Spark runs code rather than SQL, and Athena stores the notebooks of that workgroup, the source of every cell and the results of every calculation on the account's behalf. The customer content encryption configuration is what names the KMS key protecting that store. Without one it is encrypted under a key AWS owns, whose policy the account cannot change, whose use it cannot deny and which it cannot disable, so access to the notebooks cannot be scoped or revoked separately from access to Athena itself. Notebook cells routinely hold the connection details, table names and sample rows of whatever they were written against.",
+    "remediation": "Set CustomerContentEncryptionConfiguration on the workgroup to a customer managed KMS key; the key cannot be changed once calculations have been run, so a new workgroup may be needed",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark-encryption.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.spark_enabled",
+            "true",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.customer_content_encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "customer_content_encryption_kms_key"
+}

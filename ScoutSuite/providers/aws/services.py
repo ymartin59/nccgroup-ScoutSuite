@@ -2,6 +2,7 @@ from ScoutSuite.providers.aws.facade.base import AWSFacade
 from ScoutSuite.providers.aws.resources.accessanalyzer.base import AccessAnalyzer
 from ScoutSuite.providers.aws.resources.account.base import Account
 from ScoutSuite.providers.aws.resources.acm.base import Certificates
+from ScoutSuite.providers.aws.resources.athena.base import Athena
 from ScoutSuite.providers.aws.resources.autoscaling.base import AutoScaling
 from ScoutSuite.providers.aws.resources.awslambda.base import Lambdas
 from ScoutSuite.providers.aws.resources.cloudformation.base import CloudFormation
@@ -75,6 +76,7 @@ class AWSServicesConfig(BaseServicesConfig):
 
     :ivar accessanalyzer:               IAM Access Analyzer configuration
     :ivar account                       Account configuration
+    :ivar athena:                       Athena configuration
     :ivar autoscaling:                  Auto Scaling configuration
     :ivar cloudtrail:                   CloudTrail configuration
     :ivar cloudwatch:                   CloudWatch configuration:
@@ -109,6 +111,7 @@ class AWSServicesConfig(BaseServicesConfig):
         self.accessanalyzer = AccessAnalyzer(facade)
         self.account = Account(facade)
         self.acm = Certificates(facade)
+        self.athena = Athena(facade)
         self.autoscaling = AutoScaling(facade)
         self.awslambda = Lambdas(facade)
         self.cloudformation = CloudFormation(facade)

@@ -1,5 +1,17 @@
 {
     "analytics": {
+        "athena": {
+            "resources": {
+                "work_groups": {
+                    "cols": 2,
+                    "path": "services.athena.regions.id.work_groups"
+                },
+                "data_catalogs": {
+                    "cols": 2,
+                    "path": "services.athena.regions.id.data_catalogs"
+                }
+            }
+        },
         "emr": {
             "resources": {
                 "clusters": {

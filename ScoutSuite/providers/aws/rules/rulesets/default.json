@@ -85,6 +85,60 @@
                 "level": "warning"
             }
         ],
+        "athena-data-catalog-failed.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-configuration-not-enforced.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "athena-workgroup-engine-version-pinned.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-metrics-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-minimum-encryption-not-enforced.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-result-bucket-owner-not-verified.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-results-encryption-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "athena-workgroup-results-not-encrypted.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "athena-workgroup-spark-content-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "autoscaling-group-elb-health-check-disabled.json": [
             {
                 "enabled": true,

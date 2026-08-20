@@ -3,6 +3,7 @@ from boto3.session import Session
 from ScoutSuite.providers.aws.facade.accessanalyzer import AccessAnalyzerFacade
 from ScoutSuite.providers.aws.facade.account import AccountFacade
 from ScoutSuite.providers.aws.facade.acm import AcmFacade
+from ScoutSuite.providers.aws.facade.athena import AthenaFacade
 from ScoutSuite.providers.aws.facade.autoscaling import AutoScalingFacade
 from ScoutSuite.providers.aws.facade.awslambda import LambdaFacade
 from ScoutSuite.providers.aws.facade.basefacade import AWSBaseFacade
@@ -260,6 +261,7 @@ class AWSFacade(AWSBaseFacade):
         self.accessanalyzer = AccessAnalyzerFacade(self.session)
         self.account = AccountFacade(self.session)
         self.acm = AcmFacade(self.session)
+        self.athena = AthenaFacade(self.session, self.partition, self.owner_id)
         self.autoscaling = AutoScalingFacade(self.session)
         self.awslambda = LambdaFacade(self.session)
         self.cloudformation = CloudFormation(self.session)

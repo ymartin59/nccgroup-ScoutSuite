@@ -1,0 +1,39 @@
+<!-- Athena Data Catalogs partial -->
+<script id="services.athena.regions.id.data_catalogs.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.name"><samp>{{value_or_none name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Type: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.type"><samp>{{value_or_none type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">External to the Glue Data Catalog: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.external"><samp>{{value_or_none external}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Connection type: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.connection_type"><samp>{{value_or_none connection_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Error: <span id="athena.regions.{{region}}.data_catalogs.{{@key}}.error"><samp>{{value_or_none error}}</samp></span></div>
+    </div>
+    {{#if parameters}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Parameters</h4>
+      <div class="list-group-item-text item-margin" id="athena.regions.{{region}}.data_catalogs.{{@key}}.parameters">
+        <ul>
+          {{#each parameters}}
+          <li class="list-group-item-text"><samp>{{@key}}</samp>: <samp>{{this}}</samp></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.athena.regions.id.data_catalogs", $("#services\\.athena\\.regions\\.id\\.data_catalogs\\.partial").html());
+  </script>
+  <!-- Single Athena data catalog template -->
+  <script id="single_athena_data_catalog-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.athena.regions.id.data_catalogs' }}
+  </script>
+  <script>
+    var single_athena_data_catalog_template = Handlebars.compile($("#single_athena_data_catalog-template").html());
+  </script>

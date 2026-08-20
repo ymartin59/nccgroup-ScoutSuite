@@ -1,0 +1,22 @@
+{
+    "description": "Workgroup Not Publishing Query Metrics",
+    "rationale": "CloudTrail records that a query was started, but not how much it read: the data scanned, the execution time and the number of queries are published to CloudWatch only when the workgroup is configured to publish its metrics. Athena is a read path over an entire data lake with no per-row accounting anywhere else, so those metrics are the only continuous signal that distinguishes an analyst running a report from a single query dumping every table it can reach. Without them there is nothing to alarm on and, after the fact, no baseline to compare against.",
+    "remediation": "Enable PublishCloudWatchMetricsEnabled on the workgroup and alarm on the ProcessedBytes and TotalExecutionTime metrics of its queries",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/query-metrics-viewing.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/workgroups-benefits.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/security-best-practices.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.publish_cloudwatch_metrics_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "publish_cloudwatch_metrics_enabled"
+}

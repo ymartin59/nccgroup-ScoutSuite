@@ -1,0 +1,71 @@
+<!-- Athena Workgroups partial -->
+<script id="services.athena.regions.id.work_groups.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <span id="athena.regions.{{region}}.work_groups.{{@key}}.name"><samp>{{value_or_none name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="athena.regions.{{region}}.work_groups.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Description: <span id="athena.regions.{{region}}.work_groups.{{@key}}.description"><samp>{{value_or_none description}}</samp></span></div>
+      <div class="list-group-item-text item-margin">State: <span id="athena.regions.{{region}}.work_groups.{{@key}}.state"><samp>{{value_or_none state}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="athena.regions.{{region}}.work_groups.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Enforcement</h4>
+      <div class="list-group-item-text item-margin">Workgroup configuration enforced: <span id="athena.regions.{{region}}.work_groups.{{@key}}.enforce_workgroup_configuration"><samp>{{value_or_none enforce_workgroup_configuration}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Minimum encryption enforced: <span id="athena.regions.{{region}}.work_groups.{{@key}}.minimum_encryption_enforced"><samp>{{value_or_none minimum_encryption_enforced}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Requester pays: <span id="athena.regions.{{region}}.work_groups.{{@key}}.requester_pays_enabled"><samp>{{value_or_none requester_pays_enabled}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Data scanned limit per query: <span id="athena.regions.{{region}}.work_groups.{{@key}}.bytes_scanned_cutoff_per_query"><samp>{{value_or_none bytes_scanned_cutoff_per_query}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Query results</h4>
+      <div class="list-group-item-text item-margin">Output location: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_output_location"><samp>{{value_or_none results_output_location}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Bucket: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_bucket"><samp>{{value_or_none results_bucket}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Encryption: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_encryption_option"><samp>{{#if results_encryption_option}}{{results_encryption_option}}{{else}}none{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">KMS key: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_encryption_kms_key"><samp>{{value_or_none results_encryption_kms_key}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_encryption_with_cmk"><samp>{{value_or_none results_encryption_with_cmk}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Expected bucket owner: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_expected_bucket_owner"><samp>{{value_or_none results_expected_bucket_owner}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Bucket owner ACL: <span id="athena.regions.{{region}}.work_groups.{{@key}}.results_acl_option"><samp>{{value_or_none results_acl_option}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Athena managed storage: <span id="athena.regions.{{region}}.work_groups.{{@key}}.managed_query_results_enabled">{{convert_bool_to_enabled managed_query_results_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Athena managed storage KMS key: <span id="athena.regions.{{region}}.work_groups.{{@key}}.managed_query_results_kms_key"><samp>{{value_or_none managed_query_results_kms_key}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Engine</h4>
+      <div class="list-group-item-text item-margin">Selected engine version: <span id="athena.regions.{{region}}.work_groups.{{@key}}.selected_engine_version"><samp>{{value_or_none selected_engine_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Effective engine version: <span id="athena.regions.{{region}}.work_groups.{{@key}}.effective_engine_version"><samp>{{value_or_none effective_engine_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Automatic engine upgrade: <span id="athena.regions.{{region}}.work_groups.{{@key}}.engine_version_auto_upgrade"><samp>{{value_or_none engine_version_auto_upgrade}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Monitoring</h4>
+      <div class="list-group-item-text item-margin">CloudWatch query metrics: <span id="athena.regions.{{region}}.work_groups.{{@key}}.publish_cloudwatch_metrics_enabled">{{convert_bool_to_enabled publish_cloudwatch_metrics_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">CloudWatch logs: <span id="athena.regions.{{region}}.work_groups.{{@key}}.cloudwatch_logging_enabled">{{convert_bool_to_enabled cloudwatch_logging_enabled}}</span> <span id="athena.regions.{{region}}.work_groups.{{@key}}.cloudwatch_log_group"><samp>{{value_or_none cloudwatch_log_group}}</samp></span></div>
+      <div class="list-group-item-text item-margin">S3 logs: <span id="athena.regions.{{region}}.work_groups.{{@key}}.s3_logging_enabled">{{convert_bool_to_enabled s3_logging_enabled}}</span> <span id="athena.regions.{{region}}.work_groups.{{@key}}.s3_log_location"><samp>{{value_or_none s3_log_location}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Managed logs: <span id="athena.regions.{{region}}.work_groups.{{@key}}.managed_logging_enabled">{{convert_bool_to_enabled managed_logging_enabled}}</span></div>
+    </div>
+    {{#if spark_enabled}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Spark</h4>
+      <div class="list-group-item-text item-margin">Execution role: <span id="athena.regions.{{region}}.work_groups.{{@key}}.execution_role"><samp>{{value_or_none execution_role}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer content KMS key: <span id="athena.regions.{{region}}.work_groups.{{@key}}.customer_content_encryption_kms_key"><samp>{{value_or_none customer_content_encryption_kms_key}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer content customer managed key: <span id="athena.regions.{{region}}.work_groups.{{@key}}.customer_content_encryption_with_cmk"><samp>{{value_or_none customer_content_encryption_with_cmk}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Additional configuration: <span id="athena.regions.{{region}}.work_groups.{{@key}}.additional_configuration"><samp>{{value_or_none additional_configuration}}</samp></span></div>
+    </div>
+    {{/if}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Identity</h4>
+      <div class="list-group-item-text item-margin">IAM Identity Center: <span id="athena.regions.{{region}}.work_groups.{{@key}}.identity_center_enabled">{{convert_bool_to_enabled identity_center_enabled}}</span> <span id="athena.regions.{{region}}.work_groups.{{@key}}.identity_center_instance_arn"><samp>{{value_or_none identity_center_instance_arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">S3 Access Grants: <span id="athena.regions.{{region}}.work_groups.{{@key}}.s3_access_grants_enabled">{{convert_bool_to_enabled s3_access_grants_enabled}}</span></div>
+      <div class="list-group-item-text item-margin">Per-user result prefix: <span id="athena.regions.{{region}}.work_groups.{{@key}}.s3_access_grants_user_level_prefix"><samp>{{value_or_none s3_access_grants_user_level_prefix}}</samp></span></div>
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.athena.regions.id.work_groups", $("#services\\.athena\\.regions\\.id\\.work_groups\\.partial").html());
+  </script>
+  <!-- Single Athena workgroup template -->
+  <script id="single_athena_work_group-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.athena.regions.id.work_groups' }}
+  </script>
+  <script>
+    var single_athena_work_group_template = Handlebars.compile($("#single_athena_work_group-template").html());
+  </script>

@@ -1,0 +1,27 @@
+{
+    "description": "Workgroup Result Location Without an Expected Bucket Owner",
+    "rationale": "The expected bucket owner makes Athena check, on every write, that the bucket behind the result location is still owned by the account named, and refuse the query otherwise. Without it a bucket name is the only thing identifying the destination, and S3 bucket names are a global namespace: a bucket deleted or never created in this account can be claimed by somebody else under the same name, and the results of every query then land in their account with nothing failing. The same check is what stops a client allowed to override the result location from directing results to a bucket outside the account.",
+    "remediation": "Set ExpectedBucketOwner on the result configuration of the workgroup to the account owning the result bucket",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/querying.html",
+        "https://docs.aws.amazon.com/athena/latest/APIReference/API_ResultConfiguration.html",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-owner-condition.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.results_output_location",
+            "notNull",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.results_bucket_owner_verified",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "results_expected_bucket_owner"
+}

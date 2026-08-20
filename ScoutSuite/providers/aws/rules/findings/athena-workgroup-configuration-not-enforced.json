@@ -1,0 +1,22 @@
+{
+    "description": "Workgroup Configuration Not Enforced",
+    "rationale": "With the enforcement of the workgroup configuration off, which is what Athena applies when a workgroup is created through the API without saying otherwise, a client may pass its own output location and its own encryption configuration with each query and Athena uses those instead of the ones set on the workgroup. Everything the workgroup declares about where results go and how they are protected then describes what a cooperating client would do, and nothing more: any principal allowed to start a query can have the results of it written unencrypted, or written to a bucket of its choosing, and the workgroup will still look correctly configured in the console and in this report.",
+    "remediation": "Enable EnforceWorkGroupConfiguration on the workgroup, after checking that no client depends on overriding the result location, and deny athena:StartQueryExecution outside the workgroups whose configuration is enforced",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html",
+        "https://docs.aws.amazon.com/athena/latest/APIReference/API_WorkGroupConfiguration.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/security-best-practices.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.enforce_workgroup_configuration",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "enforce_workgroup_configuration"
+}

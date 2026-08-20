@@ -1,0 +1,26 @@
+{
+    "description": "Query Results Encrypted with an S3 Managed Key",
+    "rationale": "SSE_S3 encrypts the query results under a key S3 owns and manages on its own. There is no key policy to restrict, no grant to revoke, no CloudTrail record of a decryption and no way to disable the key, so the encryption adds nothing to the S3 permissions already in force: anybody who can read the object can read the results. Since the result location holds the output of every query run under the workgroup, it is one of the few places in an account where a KMS key genuinely buys a second, independently revocable authorization check.",
+    "remediation": "Change the encryption option of the workgroup result configuration to SSE_KMS with a customer managed key, and grant kms:Decrypt on it only to the principals meant to read query results",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/encryption.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/encrypting-query-results-stored-in-s3.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.results_encrypted",
+            "true",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.results_encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "results_encryption_option"
+}

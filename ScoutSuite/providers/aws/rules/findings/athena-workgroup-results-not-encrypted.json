@@ -1,0 +1,27 @@
+{
+    "description": "Workgroup Not Encrypting Query Results",
+    "rationale": "Athena writes the complete result set of every query run under a workgroup to the result location in S3, together with the query metadata and the manifest of the files it read, and leaves it there until something deletes it. That prefix therefore accumulates a plaintext copy of the output of every query an analyst has ever run, and reading it needs no permission on any of the tables that were queried. A workgroup with no encryption configuration leaves the choice to whatever S3 does by default for the bucket, so the protection of the results depends on a setting made somewhere else and reviewed by somebody else.",
+    "remediation": "Set an encryption configuration on the result configuration of the workgroup, preferably SSE_KMS with a customer managed key, and enable the enforcement of the workgroup configuration so a client cannot write results without it",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/encryption.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/encrypting-query-results-stored-in-s3.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/security-best-practices.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.results_encrypted",
+            "false",
+            ""
+        ],
+        [
+            "athena.regions.id.work_groups.id.managed_query_results_enabled",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "results_encryption_option"
+}

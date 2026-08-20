@@ -1,0 +1,21 @@
+{
+    "description": "Workgroup Pinned to an Engine Version",
+    "rationale": "A workgroup left on AUTO is moved onto the Athena engine version AWS currently supports as it is released. A workgroup pinned to a version stays on it, and AWS eventually stops maintaining that version: the correctness and security fixes that land in later engines never reach the queries of the workgroup, and the eventual move happens on a deadline rather than on a schedule the team chose. Pinning is a deliberate and useful thing to do while a query is being tested against a new engine, and much less useful once it has been forgotten.",
+    "remediation": "Set the selected engine version of the workgroup back to AUTO once the queries have been validated against the current engine",
+    "references": [
+        "https://docs.aws.amazon.com/athena/latest/ug/engine-versions.html",
+        "https://docs.aws.amazon.com/athena/latest/ug/engine-versions-changing.html"
+    ],
+    "dashboard_name": "Workgroups",
+    "display_path": "athena.regions.id.work_groups.id",
+    "path": "athena.regions.id.work_groups.id",
+    "conditions": [
+        "and",
+        [
+            "athena.regions.id.work_groups.id.engine_version_auto_upgrade",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "selected_engine_version"
+}
