@@ -1,0 +1,21 @@
+{
+    "description": "Notebook Instance Encrypted with an AWS Managed Key",
+    "rationale": "SageMaker always encrypts the ML storage volume of a notebook instance, but without a key given at creation it uses one AWS manages in the account. That key has a policy the account cannot change, so the encryption cannot take part in an access decision: it cannot be scoped to the roles that ought to reach the notebook's data, its use cannot be denied, and it cannot be disabled to cut access to the volume. The volume is where a data scientist's working copies of the data, the notebooks themselves and any credential typed into a cell come to rest, which is exactly the content whose access ought to be revocable.",
+    "remediation": "Recreate the notebook instance with a customer managed KMS key, since the key is fixed at creation, and scope the key policy to the roles that legitimately use the notebook",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/encryption-at-rest-nbi.html"
+    ],
+    "dashboard_name": "Notebook instances",
+    "display_path": "sagemaker.regions.id.notebook_instances.id",
+    "path": "sagemaker.regions.id.notebook_instances.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.notebook_instances.id.encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_with_cmk"
+}

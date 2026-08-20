@@ -1,0 +1,21 @@
+{
+    "description": "Inference Endpoint Variant on a Single Instance",
+    "rationale": "A production variant backed by one instance is served from one Availability Zone, so the loss of that zone, the instance, or a routine host replacement takes the variant offline; the same single instance also absorbs every deployment and every scaling event as an interruption. SageMaker spreads two or more instances of a variant across Availability Zones on its own, which is the whole difference between an endpoint that survives a zone failure and one that does not - and an inference endpoint is usually a synchronous dependency of something a user is waiting on.",
+    "remediation": "Raise the initial instance count of the variant to at least two in a new endpoint configuration and update the endpoint to it, or move the variant to serverless inference, where SageMaker provides the capacity",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-best-practices.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/sagemaker-controls.html#sagemaker-4"
+    ],
+    "dashboard_name": "Variants",
+    "display_path": "sagemaker.regions.id.endpoints.id",
+    "path": "sagemaker.regions.id.endpoints.id.production_variants.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.endpoints.id.production_variants.id.single_instance",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "single_instance"
+}

@@ -29,6 +29,7 @@ from ScoutSuite.providers.aws.resources.rds.base import RDS
 from ScoutSuite.providers.aws.resources.redshift.base import Redshift
 from ScoutSuite.providers.aws.resources.route53.base import Route53
 from ScoutSuite.providers.aws.resources.s3.base import S3
+from ScoutSuite.providers.aws.resources.sagemaker.base import SageMaker
 from ScoutSuite.providers.aws.resources.ses.base import SES
 from ScoutSuite.providers.aws.resources.sns.base import SNS
 from ScoutSuite.providers.aws.resources.sqs.base import SQS
@@ -92,6 +93,7 @@ class AWSServicesConfig(BaseServicesConfig):
     :ivar rds:                          RDS configuration
     :ivar redshift:                     Redshift configuration
     :ivar s3:                           S3 configuration
+    :ivar sagemaker:                    SageMaker configuration
     :ivar ses:                          SES configuration:
     :ivar sns:                          SNS configuration
     :ivar sqs:                          SQS configuration
@@ -134,6 +136,7 @@ class AWSServicesConfig(BaseServicesConfig):
         self.redshift = Redshift(facade)
         self.route53 = Route53(facade)
         self.s3 = S3(facade)
+        self.sagemaker = SageMaker(facade)
         self.ses = SES(facade)
         self.sns = SNS(facade)
         self.sqs = SQS(facade)

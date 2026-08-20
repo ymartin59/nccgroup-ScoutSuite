@@ -1,0 +1,21 @@
+{
+    "description": "Inference Endpoint Capturing Data Without a Customer Managed Key",
+    "rationale": "Data capture writes the requests the endpoint receives and the responses it returns to S3, verbatim. Those are the inference payloads, so the destination accumulates whatever callers send the model - which for most models is the personal or business data the prediction is about - in plaintext JSON lines, continuously, with nobody looking at it. Encrypted with a key AWS manages, that store cannot be scoped to the roles that ought to read it, its decryption cannot be denied and access to it cannot be revoked by disabling a key, which is the one control that matters for a growing archive of production inputs.",
+    "remediation": "Update the data capture configuration of the endpoint to name a customer managed KMS key, scope its key policy to the roles that analyse the captured data, and set a lifecycle policy on the destination prefix so the archive does not grow without end",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-data-capture.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DataCaptureConfig.html"
+    ],
+    "dashboard_name": "Endpoints",
+    "display_path": "sagemaker.regions.id.endpoints.id",
+    "path": "sagemaker.regions.id.endpoints.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.endpoints.id.data_capture_encrypted_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "data_capture_encrypted_with_cmk"
+}

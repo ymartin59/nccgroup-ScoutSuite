@@ -1,0 +1,22 @@
+{
+    "description": "Notebook Instance with Direct Internet Access",
+    "rationale": "Direct internet access gives the notebook a network path out that no route table, security group or network ACL of the account governs and no VPC flow log records, and it is what SageMaker applies unless the creation request asks for it to be off. A notebook is a shell: whoever opens it runs arbitrary code with the notebook's IAM role, against whatever data was pulled down to look at, and this setting is the difference between that code being able to reach an arbitrary host on the internet and not. It is also the path a package installed from a cell, or a lifecycle configuration script, takes to fetch whatever it fetches. The setting is fixed at creation and cannot be changed afterwards.",
+    "remediation": "Recreate the notebook instance with direct internet access disabled and a subnet of the account, and reach S3, SageMaker, ECR and CodeCommit through VPC endpoints or a NAT gateway whose egress the account controls",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/appendix-notebook-and-internet-access.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/security-vpc.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/sagemaker-controls.html#sagemaker-1"
+    ],
+    "dashboard_name": "Notebook instances",
+    "display_path": "sagemaker.regions.id.notebook_instances.id",
+    "path": "sagemaker.regions.id.notebook_instances.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.notebook_instances.id.direct_internet_access_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "direct_internet_access_enabled"
+}

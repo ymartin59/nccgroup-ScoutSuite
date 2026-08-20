@@ -1249,6 +1249,7 @@ function makeTitle(title) {
         'guardduty': 'GuardDuty',
         'accessanalyzer': 'IAM Access Analyzer',
         'mq': 'Amazon MQ',
+        'sagemaker': 'SageMaker',
         'secretsmanager': 'Secrets Manager',
         'ssm': 'Systems Manager',
         'elasticache': 'ElastiCache',

@@ -1,0 +1,21 @@
+{
+    "description": "Training Job Not Attached to a VPC of the Account",
+    "rationale": "A training job created without a VPC configuration runs in a VPC SageMaker owns. No security group, route table, network ACL or VPC endpoint policy of the account applies to the training containers, and no flow log records what they reached, while those containers hold the job's role and the whole training dataset. Attaching the job to subnets of the account is what makes its egress a thing the account decides: the S3 access it needs goes through an endpoint whose policy can name the buckets, and anything else it tries is subject to the security groups. This finding is about how the account trains rather than about a job that can still be changed.",
+    "remediation": "Give the training jobs created by the pipeline, template or SDK call a VPC configuration with private subnets and security groups of the account, and a VPC endpoint for S3 so the training data is read without leaving the VPC",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/train-vpc.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-security.html"
+    ],
+    "dashboard_name": "Training jobs",
+    "display_path": "sagemaker.regions.id.training_jobs.id",
+    "path": "sagemaker.regions.id.training_jobs.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.training_jobs.id.in_customer_vpc",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "in_customer_vpc"
+}

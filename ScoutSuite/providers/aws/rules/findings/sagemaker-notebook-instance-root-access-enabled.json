@@ -1,0 +1,21 @@
+{
+    "description": "Notebook Instance with Root Access",
+    "rationale": "Root access, which SageMaker enables unless asked not to, lets anybody who opens the notebook become root on the instance. From there the separation between the notebook user and the machine hosting it stops existing: system packages and the Python environment can be replaced, the lifecycle configuration scripts and whatever they left on disk are readable and writable, the instance metadata service can be reached directly for the credentials of the notebook's IAM role, and any control implemented inside the notebook environment rather than in IAM can be removed. Turning root access off leaves the notebook able to install packages into its own environment while keeping the instance itself out of reach.",
+    "remediation": "Set root access to Disabled on the notebook instance and install what the work needs through conda or pip into the notebook environment, or through a lifecycle configuration script, which still runs as root at start",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-root-access.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/sagemaker-controls.html#sagemaker-3"
+    ],
+    "dashboard_name": "Notebook instances",
+    "display_path": "sagemaker.regions.id.notebook_instances.id",
+    "path": "sagemaker.regions.id.notebook_instances.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.notebook_instances.id.root_access_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "root_access_enabled"
+}

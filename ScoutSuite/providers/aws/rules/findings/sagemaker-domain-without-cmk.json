@@ -1,0 +1,21 @@
+{
+    "description": "Studio Domain Encrypted with an AWS Managed Key",
+    "rationale": "Every user profile of a Studio domain gets a home directory on one EFS file system, and that file system holds the accumulated working state of everybody who has ever used the domain: the notebooks, the datasets copied down to look at, the model artifacts, the shell history and the credentials people paste into cells. It is always encrypted, but without a key given at creation SageMaker uses one AWS manages, whose policy the account cannot change, whose use it cannot deny and which it cannot disable. That is the difference between being able to revoke access to years of a team's working data and not being able to.",
+    "remediation": "Recreate the domain with a customer managed KMS key, since the key is fixed at creation, and scope its key policy to the execution roles of the domain",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/domain-space-storage.html"
+    ],
+    "dashboard_name": "Domains",
+    "display_path": "sagemaker.regions.id.domains.id",
+    "path": "sagemaker.regions.id.domains.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.domains.id.encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_with_cmk"
+}

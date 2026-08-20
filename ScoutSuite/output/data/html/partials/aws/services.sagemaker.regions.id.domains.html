@@ -1,0 +1,67 @@
+<!-- SageMaker Domains partial -->
+<script id="services.sagemaker.regions.id.domains.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Domain ID: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.id"><samp>{{value_or_none id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">URL: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.url"><samp>{{value_or_none url}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Authentication mode: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.auth_mode"><samp>{{value_or_none auth_mode}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Studio web portal: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.studio_web_portal"><samp>{{value_or_none studio_web_portal}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Failure reason: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.failure_reason"><samp>{{value_or_none failure_reason}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Network</h4>
+      <div class="list-group-item-text item-margin">Application network access: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.app_network_access_type"><samp>{{value_or_none app_network_access_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">VPC only access: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.vpc_only_access"><samp>{{value_or_none vpc_only_access}}</samp></span></div>
+      <div class="list-group-item-text item-margin">VPC: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.vpc_id"><samp>{{value_or_none vpc_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Subnets: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.subnets">{{#each subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Domain security groups: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.domain_security_groups">{{#each domain_security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Default user security groups: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.default_security_groups">{{#each default_security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Application security group management: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.app_security_group_management"><samp>{{value_or_none app_security_group_management}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Domain boundary security group: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.domain_boundary_security_group"><samp>{{value_or_none domain_boundary_security_group}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Default user settings</h4>
+      <div class="list-group-item-text item-margin">Default execution role: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.default_execution_role"><samp>{{value_or_none default_execution_role}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Notebook output sharing: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.notebook_output_sharing_enabled"><samp>{{value_or_none notebook_output_sharing}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Notebook sharing location: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.notebook_sharing_s3_path"><samp>{{value_or_none notebook_sharing_s3_path}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Notebook sharing KMS key: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.notebook_sharing_kms_key_id"><samp>{{value_or_none notebook_sharing_kms_key_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Execution role identity configuration: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.user_identity_propagated"><samp>{{value_or_none execution_role_identity_config}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Local Docker access: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.docker_access"><samp>{{value_or_none docker_access}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Encryption</h4>
+      <div class="list-group-item-text item-margin">Home EFS file system: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.home_efs_file_system_id"><samp>{{value_or_none home_efs_file_system_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">KMS key: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.kms_key_id"><samp>{{#if kms_key_id}}{{kms_key_id}}{{else}}AWS managed{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="sagemaker.regions.{{region}}.domains.{{@key}}.encryption_with_cmk"><samp>{{value_or_none encryption_with_cmk}}</samp></span></div>
+    </div>
+    {{#if user_profiles}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">User profiles</h4>
+      <ul>
+        {{#each user_profiles}}
+        <li class="list-group-item-text" id="sagemaker.regions.{{../region}}.domains.{{@../key}}.user_profiles.{{@key}}">
+          <samp>{{name}}</samp> — status <samp>{{value_or_none status}}</samp>,
+          execution role <span id="sagemaker.regions.{{../region}}.domains.{{@../key}}.user_profiles.{{@key}}.execution_role"><samp>{{value_or_none execution_role}}</samp></span>
+          <span id="sagemaker.regions.{{../region}}.domains.{{@../key}}.user_profiles.{{@key}}.execution_role_overridden">{{#if execution_role_overridden}}(overrides the domain default){{/if}}</span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.sagemaker.regions.id.domains", $("#services\\.sagemaker\\.regions\\.id\\.domains\\.partial").html());
+  </script>
+  <!-- Single SageMaker domain template -->
+  <script id="single_sagemaker_domain-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.sagemaker.regions.id.domains' }}
+  </script>
+  <script>
+    var single_sagemaker_domain_template = Handlebars.compile($("#single_sagemaker_domain-template").html());
+  </script>

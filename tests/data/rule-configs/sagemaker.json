@@ -1,0 +1,623 @@
+{
+    "account_id": "123456789012",
+    "services": {
+        "sagemaker": {
+            "domains_count": 2,
+            "endpoints_count": 3,
+            "models_count": 2,
+            "notebook_instances_count": 3,
+            "regions": {
+                "eu-west-1": {
+                    "domains": {
+                        "d-1111aaaabbbb": {
+                            "app_network_access_type": "VpcOnly",
+                            "app_security_group_management": "Customer",
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:domain/d-1111aaaabbbb",
+                            "auth_mode": "SSO",
+                            "creation_time": "2022-09-01 11:00:00",
+                            "default_execution_role": "arn:aws:iam::123456789012:role/SageMakerStudioExecution",
+                            "default_security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "docker_access": "DISABLED",
+                            "docker_vpc_only_trusted_accounts": [],
+                            "domain_boundary_security_group": "sg-0d4e5f60718293a4b",
+                            "domain_security_groups": [
+                                "sg-0c3d4e5f60718293a"
+                            ],
+                            "encryption_with_cmk": true,
+                            "execution_role_identity_config": "USER_PROFILE_NAME",
+                            "failure_reason": null,
+                            "home_efs_file_system_id": "fs-0a1b2c3d4e5f60718",
+                            "id": "d-1111aaaabbbb",
+                            "kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "name": "ml-platform",
+                            "notebook_output_sharing": "Disabled",
+                            "notebook_output_sharing_enabled": false,
+                            "notebook_sharing_kms_key_id": null,
+                            "notebook_sharing_s3_path": null,
+                            "region": "eu-west-1",
+                            "status": "InService",
+                            "studio_web_portal": "ENABLED",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718",
+                                "subnet-0b2c3d4e5f6071829"
+                            ],
+                            "url": "https://d-1111aaaabbbb.studio.eu-west-1.sagemaker.aws",
+                            "user_identity_propagated": true,
+                            "user_profiles": {
+                                "alice": {
+                                    "arn": "arn:aws:sagemaker:eu-west-1:123456789012:user-profile/d-1111aaaabbbb/alice",
+                                    "creation_time": "2022-09-01 11:20:00",
+                                    "execution_role": "arn:aws:iam::123456789012:role/SageMakerStudioExecution",
+                                    "execution_role_overridden": false,
+                                    "id": "alice",
+                                    "name": "alice",
+                                    "security_groups": [],
+                                    "sso_user_identifier": "UserName",
+                                    "sso_user_value": "alice@example.com",
+                                    "status": "InService"
+                                },
+                                "bob": {
+                                    "arn": "arn:aws:sagemaker:eu-west-1:123456789012:user-profile/d-1111aaaabbbb/bob",
+                                    "creation_time": "2023-02-17 08:45:00",
+                                    "execution_role": "arn:aws:iam::123456789012:role/SageMakerStudioPowerUser",
+                                    "execution_role_overridden": true,
+                                    "id": "bob",
+                                    "name": "bob",
+                                    "security_groups": [
+                                        "sg-0e5f60718293a4b5c"
+                                    ],
+                                    "sso_user_identifier": "UserName",
+                                    "sso_user_value": "bob@example.com",
+                                    "status": "InService"
+                                }
+                            },
+                            "user_profiles_count": 2,
+                            "vpc_id": "vpc-0a1b2c3d4e5f60718",
+                            "vpc_only_access": true
+                        },
+                        "d-2222ccccdddd": {
+                            "app_network_access_type": "PublicInternetOnly",
+                            "app_security_group_management": "Service",
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:domain/d-2222ccccdddd",
+                            "auth_mode": "IAM",
+                            "creation_time": "2023-05-22 14:12:00",
+                            "default_execution_role": "arn:aws:iam::123456789012:role/SageMakerSandboxExecution",
+                            "default_security_groups": [],
+                            "docker_access": "ENABLED",
+                            "docker_vpc_only_trusted_accounts": [],
+                            "domain_boundary_security_group": null,
+                            "domain_security_groups": [],
+                            "encryption_with_cmk": false,
+                            "execution_role_identity_config": "DISABLED",
+                            "failure_reason": null,
+                            "home_efs_file_system_id": "fs-0b2c3d4e5f6071829",
+                            "id": "d-2222ccccdddd",
+                            "kms_key_id": null,
+                            "name": "data-science-sandbox",
+                            "notebook_output_sharing": "Allowed",
+                            "notebook_output_sharing_enabled": true,
+                            "notebook_sharing_kms_key_id": null,
+                            "notebook_sharing_s3_path": "s3://sagemaker-studio-sharing-123456789012/",
+                            "region": "eu-west-1",
+                            "status": "InService",
+                            "studio_web_portal": "ENABLED",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718"
+                            ],
+                            "url": "https://d-2222ccccdddd.studio.eu-west-1.sagemaker.aws",
+                            "user_identity_propagated": false,
+                            "user_profiles": {
+                                "carol": {
+                                    "arn": "arn:aws:sagemaker:eu-west-1:123456789012:user-profile/d-2222ccccdddd/carol",
+                                    "creation_time": "2023-05-22 14:30:00",
+                                    "execution_role": "arn:aws:iam::123456789012:role/SageMakerSandboxExecution",
+                                    "execution_role_overridden": false,
+                                    "id": "carol",
+                                    "name": "carol",
+                                    "security_groups": [],
+                                    "sso_user_identifier": null,
+                                    "sso_user_value": null,
+                                    "status": "InService"
+                                }
+                            },
+                            "user_profiles_count": 1,
+                            "vpc_id": "vpc-0a1b2c3d4e5f60718",
+                            "vpc_only_access": false
+                        }
+                    },
+                    "domains_count": 2,
+                    "endpoints": {
+                        "fraud-scoring-prod": {
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:endpoint/fraud-scoring-prod",
+                            "creation_time": "2023-03-08 10:00:00",
+                            "data_capture_destination": "s3://ml-inference-capture-123456789012/fraud-scoring/",
+                            "data_capture_enabled": true,
+                            "data_capture_encrypted_with_cmk": true,
+                            "data_capture_kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "data_capture_options": [
+                                "Input",
+                                "Output"
+                            ],
+                            "data_capture_sampling_percentage": 100,
+                            "data_capture_status": "Started",
+                            "encryption_with_cmk": true,
+                            "endpoint_config_name": "fraud-scoring-prod-3",
+                            "execution_role_arn": "arn:aws:iam::123456789012:role/SageMakerHostingExecution",
+                            "failure_reason": null,
+                            "id": "fraud-scoring-prod",
+                            "in_customer_vpc": true,
+                            "kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "last_modified_time": "2023-10-19 12:41:03",
+                            "name": "fraud-scoring-prod",
+                            "network_isolation": true,
+                            "production_variants": {
+                                "primary": {
+                                    "current_weight": 1.0,
+                                    "desired_instance_count": 3,
+                                    "id": "primary",
+                                    "images": [
+                                        "123456789012.dkr.ecr.eu-west-1.amazonaws.com/fraud-scoring@sha256:aaaa"
+                                    ],
+                                    "instance_count": 3,
+                                    "instance_type": "ml.m5.large",
+                                    "model_name": "fraud-scoring-v7",
+                                    "name": "primary",
+                                    "serverless": false,
+                                    "single_instance": false
+                                }
+                            },
+                            "production_variants_count": 1,
+                            "region": "eu-west-1",
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "status": "InService",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718",
+                                "subnet-0b2c3d4e5f6071829"
+                            ]
+                        },
+                        "legacy-scoring": {
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:endpoint/legacy-scoring",
+                            "creation_time": "2021-01-19 09:05:00",
+                            "data_capture_destination": null,
+                            "data_capture_enabled": false,
+                            "data_capture_encrypted_with_cmk": null,
+                            "data_capture_kms_key_id": null,
+                            "data_capture_options": [],
+                            "data_capture_sampling_percentage": null,
+                            "data_capture_status": null,
+                            "encryption_with_cmk": null,
+                            "endpoint_config_name": "legacy-scoring-1",
+                            "execution_role_arn": null,
+                            "failure_reason": null,
+                            "id": "legacy-scoring",
+                            "in_customer_vpc": null,
+                            "kms_key_id": null,
+                            "last_modified_time": "2021-01-19 09:19:44",
+                            "name": "legacy-scoring",
+                            "network_isolation": null,
+                            "production_variants": {},
+                            "production_variants_count": 0,
+                            "region": "eu-west-1",
+                            "security_groups": [],
+                            "status": "InService",
+                            "subnets": []
+                        },
+                        "recommendations-test": {
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:endpoint/recommendations-test",
+                            "creation_time": "2023-09-27 16:22:00",
+                            "data_capture_destination": "s3://ml-inference-capture-123456789012/recommendations/",
+                            "data_capture_enabled": true,
+                            "data_capture_encrypted_with_cmk": false,
+                            "data_capture_kms_key_id": null,
+                            "data_capture_options": [
+                                "Input",
+                                "Output"
+                            ],
+                            "data_capture_sampling_percentage": 20,
+                            "data_capture_status": "Started",
+                            "encryption_with_cmk": false,
+                            "endpoint_config_name": "recommendations-test-1",
+                            "execution_role_arn": "arn:aws:iam::123456789012:role/SageMakerHostingExecution",
+                            "failure_reason": null,
+                            "id": "recommendations-test",
+                            "in_customer_vpc": false,
+                            "kms_key_id": null,
+                            "last_modified_time": "2023-09-27 16:34:51",
+                            "name": "recommendations-test",
+                            "network_isolation": false,
+                            "production_variants": {
+                                "canary": {
+                                    "current_weight": 0.1,
+                                    "desired_instance_count": null,
+                                    "id": "canary",
+                                    "images": [
+                                        "123456789012.dkr.ecr.eu-west-1.amazonaws.com/recommendations@sha256:cccc"
+                                    ],
+                                    "instance_count": null,
+                                    "instance_type": null,
+                                    "model_name": "recommendations-v3",
+                                    "name": "canary",
+                                    "serverless": true,
+                                    "single_instance": null
+                                },
+                                "primary": {
+                                    "current_weight": 1.0,
+                                    "desired_instance_count": 1,
+                                    "id": "primary",
+                                    "images": [
+                                        "123456789012.dkr.ecr.eu-west-1.amazonaws.com/recommendations@sha256:bbbb"
+                                    ],
+                                    "instance_count": 1,
+                                    "instance_type": "ml.c5.xlarge",
+                                    "model_name": "recommendations-v2",
+                                    "name": "primary",
+                                    "serverless": false,
+                                    "single_instance": true
+                                }
+                            },
+                            "production_variants_count": 2,
+                            "region": "eu-west-1",
+                            "security_groups": [],
+                            "status": "InService",
+                            "subnets": []
+                        }
+                    },
+                    "endpoints_count": 3,
+                    "id": "eu-west-1",
+                    "models": {
+                        "fraud-scoring-v7": {
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:model/fraud-scoring-v7",
+                            "containers": [
+                                {
+                                    "environment_variable_names": [
+                                        "SAGEMAKER_PROGRAM"
+                                    ],
+                                    "hostname": null,
+                                    "image": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/fraud-scoring:7",
+                                    "image_repository_access_mode": "Vpc",
+                                    "mode": "SingleModel",
+                                    "model_data_url": "s3://ml-artifacts-123456789012/fraud-scoring/v7/model.tar.gz",
+                                    "model_package_name": null
+                                }
+                            ],
+                            "containers_count": 1,
+                            "creation_time": "2023-10-19 12:30:00",
+                            "execution_role_arn": "arn:aws:iam::123456789012:role/SageMakerHostingExecution",
+                            "id": "fraud-scoring-v7",
+                            "images": [
+                                "123456789012.dkr.ecr.eu-west-1.amazonaws.com/fraud-scoring:7"
+                            ],
+                            "in_customer_vpc": true,
+                            "inference_execution_mode": null,
+                            "name": "fraud-scoring-v7",
+                            "network_isolation": true,
+                            "region": "eu-west-1",
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718"
+                            ]
+                        },
+                        "recommendations-v3": {
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:model/recommendations-v3",
+                            "containers": [
+                                {
+                                    "environment_variable_names": [
+                                        "HF_TOKEN",
+                                        "SAGEMAKER_PROGRAM"
+                                    ],
+                                    "hostname": "featurizer",
+                                    "image": "763104351884.dkr.ecr.eu-west-1.amazonaws.com/pytorch-inference:2.1.0-cpu",
+                                    "image_repository_access_mode": "Platform",
+                                    "mode": "SingleModel",
+                                    "model_data_url": "s3://ml-artifacts-123456789012/recommendations/v3/featurizer.tar.gz",
+                                    "model_package_name": null
+                                }
+                            ],
+                            "containers_count": 1,
+                            "creation_time": "2023-09-27 16:10:00",
+                            "execution_role_arn": "arn:aws:iam::123456789012:role/SageMakerHostingExecution",
+                            "id": "recommendations-v3",
+                            "images": [
+                                "763104351884.dkr.ecr.eu-west-1.amazonaws.com/pytorch-inference:2.1.0-cpu"
+                            ],
+                            "in_customer_vpc": false,
+                            "inference_execution_mode": "Serial",
+                            "name": "recommendations-v3",
+                            "network_isolation": false,
+                            "region": "eu-west-1",
+                            "security_groups": [],
+                            "subnets": []
+                        }
+                    },
+                    "models_count": 2,
+                    "name": "eu-west-1",
+                    "notebook_instances": {
+                        "features-vpc-with-egress": {
+                            "additional_code_repositories": [],
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:notebook-instance/features-vpc-with-egress",
+                            "code_repositories": [],
+                            "creation_time": "2023-06-14 09:31:00",
+                            "default_code_repository": null,
+                            "direct_internet_access": "Enabled",
+                            "direct_internet_access_enabled": true,
+                            "encryption_with_cmk": true,
+                            "failure_reason": null,
+                            "id": "features-vpc-with-egress",
+                            "imds_minimum_version": null,
+                            "imdsv2_required": false,
+                            "in_customer_vpc": true,
+                            "instance_type": "ml.t3.medium",
+                            "ip_address_type": "ipv4",
+                            "kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "last_modified_time": "2023-11-02 17:04:12",
+                            "lifecycle_config_name": null,
+                            "name": "features-vpc-with-egress",
+                            "network_interface_id": "eni-0a1b2c3d4e5f60718",
+                            "platform_identifier": "notebook-al1-v1",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/service-role/AmazonSageMaker-ExecutionRole",
+                            "root_access": "Enabled",
+                            "root_access_enabled": true,
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "status": "InService",
+                            "subnet_id": "subnet-0a1b2c3d4e5f60718",
+                            "url": "features-vpc-with-egress.notebook.eu-west-1.sagemaker.aws",
+                            "volume_size": 20
+                        },
+                        "research-default": {
+                            "additional_code_repositories": [],
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:notebook-instance/research-default",
+                            "code_repositories": [
+                                "https://github.com/example/notebooks.git"
+                            ],
+                            "creation_time": "2023-06-14 09:31:00",
+                            "default_code_repository": "https://github.com/example/notebooks.git",
+                            "direct_internet_access": "Enabled",
+                            "direct_internet_access_enabled": true,
+                            "encryption_with_cmk": false,
+                            "failure_reason": null,
+                            "id": "research-default",
+                            "imds_minimum_version": "1",
+                            "imdsv2_required": false,
+                            "in_customer_vpc": false,
+                            "instance_type": "ml.t3.medium",
+                            "ip_address_type": "ipv4",
+                            "kms_key_id": null,
+                            "last_modified_time": "2023-11-02 17:04:12",
+                            "lifecycle_config_name": null,
+                            "name": "research-default",
+                            "network_interface_id": null,
+                            "platform_identifier": "notebook-al2-v2",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/service-role/AmazonSageMaker-ExecutionRole",
+                            "root_access": "Enabled",
+                            "root_access_enabled": true,
+                            "security_groups": [],
+                            "status": "InService",
+                            "subnet_id": null,
+                            "url": "research-default.notebook.eu-west-1.sagemaker.aws",
+                            "volume_size": 20
+                        },
+                        "research-hardened": {
+                            "additional_code_repositories": [],
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:notebook-instance/research-hardened",
+                            "code_repositories": [],
+                            "creation_time": "2023-06-14 09:31:00",
+                            "default_code_repository": null,
+                            "direct_internet_access": "Disabled",
+                            "direct_internet_access_enabled": false,
+                            "encryption_with_cmk": true,
+                            "failure_reason": null,
+                            "id": "research-hardened",
+                            "imds_minimum_version": "2",
+                            "imdsv2_required": true,
+                            "in_customer_vpc": true,
+                            "instance_type": "ml.t3.medium",
+                            "ip_address_type": "ipv4",
+                            "kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "last_modified_time": "2023-11-02 17:04:12",
+                            "lifecycle_config_name": null,
+                            "name": "research-hardened",
+                            "network_interface_id": "eni-0a1b2c3d4e5f60718",
+                            "platform_identifier": "notebook-al2-v2",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/service-role/AmazonSageMaker-ExecutionRole",
+                            "root_access": "Disabled",
+                            "root_access_enabled": false,
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "status": "InService",
+                            "subnet_id": "subnet-0a1b2c3d4e5f60718",
+                            "url": "research-hardened.notebook.eu-west-1.sagemaker.aws",
+                            "volume_size": 20
+                        }
+                    },
+                    "notebook_instances_count": 3,
+                    "region": "eu-west-1",
+                    "training_jobs": {
+                        "churn-2023-11-30-08-15-00-789": {
+                            "algorithm_name": null,
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:training-job/churn-2023-11-30-08-15-00-789",
+                            "auto_ml_job_arn": null,
+                            "creation_time": "2023-11-30 08:15:00",
+                            "distributed": false,
+                            "end_time": "2023-11-30 08:39:12",
+                            "environment_variable_names": [],
+                            "hyperparameter_names": [
+                                "max_depth",
+                                "num_round"
+                            ],
+                            "id": "churn-2023-11-30-08-15-00-789",
+                            "in_customer_vpc": true,
+                            "input_channels": [
+                                {
+                                    "file_system_id": "fs-0c3d4e5f60718293a",
+                                    "name": "train",
+                                    "s3_uri": null
+                                }
+                            ],
+                            "instance_count": 1,
+                            "instance_groups": [],
+                            "instance_type": "ml.m5.xlarge",
+                            "inter_container_traffic_encryption": false,
+                            "labeling_job_arn": null,
+                            "model_artifact": "s3://ml-artifacts-123456789012/churn/model.tar.gz",
+                            "name": "churn-2023-11-30-08-15-00-789",
+                            "network_isolation": true,
+                            "output_encrypted_with_cmk": true,
+                            "output_kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "output_s3_path": "s3://ml-artifacts-123456789012/churn/",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/SageMakerTrainingExecution",
+                            "secondary_status": "Completed",
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "status": "Completed",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718"
+                            ],
+                            "training_image": "438346466558.dkr.ecr.eu-west-1.amazonaws.com/xgboost:1.7-1",
+                            "tuning_job_arn": "arn:aws:sagemaker:eu-west-1:123456789012:hyper-parameter-tuning-job/churn-hpo-3",
+                            "volume_encrypted_with_cmk": false,
+                            "volume_kms_key_id": null,
+                            "volume_size": 30
+                        },
+                        "fraud-scoring-2023-10-19-11-58-02-123": {
+                            "algorithm_name": null,
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:training-job/fraud-scoring-2023-10-19-11-58-02-123",
+                            "auto_ml_job_arn": null,
+                            "creation_time": "2023-10-19 11:58:02",
+                            "distributed": true,
+                            "end_time": "2023-10-19 12:26:41",
+                            "environment_variable_names": [],
+                            "hyperparameter_names": [
+                                "epochs",
+                                "learning_rate"
+                            ],
+                            "id": "fraud-scoring-2023-10-19-11-58-02-123",
+                            "in_customer_vpc": true,
+                            "input_channels": [
+                                {
+                                    "file_system_id": null,
+                                    "name": "train",
+                                    "s3_uri": "s3://ml-datasets-123456789012/fraud/train/"
+                                }
+                            ],
+                            "instance_count": 4,
+                            "instance_groups": [],
+                            "instance_type": "ml.m5.4xlarge",
+                            "inter_container_traffic_encryption": true,
+                            "labeling_job_arn": null,
+                            "model_artifact": "s3://ml-artifacts-123456789012/fraud-scoring/v7/model.tar.gz",
+                            "name": "fraud-scoring-2023-10-19-11-58-02-123",
+                            "network_isolation": true,
+                            "output_encrypted_with_cmk": true,
+                            "output_kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "output_s3_path": "s3://ml-artifacts-123456789012/fraud-scoring/",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/SageMakerTrainingExecution",
+                            "secondary_status": "Completed",
+                            "security_groups": [
+                                "sg-0a1b2c3d4e5f60718"
+                            ],
+                            "status": "Completed",
+                            "subnets": [
+                                "subnet-0a1b2c3d4e5f60718"
+                            ],
+                            "training_image": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/fraud-training:7",
+                            "tuning_job_arn": null,
+                            "volume_encrypted_with_cmk": true,
+                            "volume_kms_key_id": "arn:aws:kms:eu-west-1:123456789012:key/abcd1234-56ef-78ab-90cd-ef1234567890",
+                            "volume_size": 100
+                        },
+                        "recommendations-2023-09-27-15-40-11-456": {
+                            "algorithm_name": null,
+                            "arn": "arn:aws:sagemaker:eu-west-1:123456789012:training-job/recommendations-2023-09-27-15-40-11-456",
+                            "auto_ml_job_arn": null,
+                            "creation_time": "2023-09-27 15:40:11",
+                            "distributed": true,
+                            "end_time": "2023-09-27 16:04:58",
+                            "environment_variable_names": [
+                                "HF_TOKEN"
+                            ],
+                            "hyperparameter_names": [
+                                "batch_size",
+                                "sagemaker_program"
+                            ],
+                            "id": "recommendations-2023-09-27-15-40-11-456",
+                            "in_customer_vpc": false,
+                            "input_channels": [
+                                {
+                                    "file_system_id": null,
+                                    "name": "train",
+                                    "s3_uri": "s3://ml-datasets-123456789012/recommendations/"
+                                }
+                            ],
+                            "instance_count": 3,
+                            "instance_groups": [
+                                {
+                                    "instance_count": 2,
+                                    "instance_type": "ml.g5.2xlarge",
+                                    "name": "workers"
+                                },
+                                {
+                                    "instance_count": 1,
+                                    "instance_type": "ml.m5.large",
+                                    "name": "parameter-server"
+                                }
+                            ],
+                            "instance_type": null,
+                            "inter_container_traffic_encryption": false,
+                            "labeling_job_arn": null,
+                            "model_artifact": "s3://ml-artifacts-123456789012/recommendations/v3/model.tar.gz",
+                            "name": "recommendations-2023-09-27-15-40-11-456",
+                            "network_isolation": false,
+                            "output_encrypted_with_cmk": false,
+                            "output_kms_key_id": null,
+                            "output_s3_path": "s3://ml-artifacts-123456789012/recommendations/",
+                            "region": "eu-west-1",
+                            "role_arn": "arn:aws:iam::123456789012:role/SageMakerTrainingExecution",
+                            "secondary_status": "Completed",
+                            "security_groups": [],
+                            "status": "Completed",
+                            "subnets": [],
+                            "training_image": "763104351884.dkr.ecr.eu-west-1.amazonaws.com/pytorch-training:2.1.0-gpu",
+                            "tuning_job_arn": null,
+                            "volume_encrypted_with_cmk": false,
+                            "volume_kms_key_id": null,
+                            "volume_size": 200
+                        }
+                    },
+                    "training_jobs_count": 3
+                },
+                "us-east-1": {
+                    "domains": {},
+                    "domains_count": 0,
+                    "endpoints": {},
+                    "endpoints_count": 0,
+                    "id": "us-east-1",
+                    "models": {},
+                    "models_count": 0,
+                    "name": "us-east-1",
+                    "notebook_instances": {},
+                    "notebook_instances_count": 0,
+                    "region": "us-east-1",
+                    "training_jobs": {},
+                    "training_jobs_count": 0
+                }
+            },
+            "regions_count": 2,
+            "training_jobs_count": 3
+        }
+    }
+}

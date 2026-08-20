@@ -1,0 +1,22 @@
+{
+    "description": "Notebook Instance Not Attached to a VPC of the Account",
+    "rationale": "A notebook instance created without a subnet runs in a VPC SageMaker owns. Nothing the account can write applies to it: no route table decides where its traffic goes, no security group decides what it may open, no network ACL and no VPC endpoint policy constrain it, and no flow log records any of it. The instance still holds an IAM role and still reads the account's data, so the only control left over what a cell may reach is the IAM policy of that role. Attaching the notebook to a subnet of the account puts it back where the network controls the account already maintains apply to it.",
+    "remediation": "Recreate the notebook instance in a private subnet of the account, since the placement is fixed at creation, with security groups scoped to what it needs and VPC endpoints for the AWS APIs it calls",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/appendix-notebook-and-internet-access.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-security.html",
+        "https://docs.aws.amazon.com/securityhub/latest/userguide/sagemaker-controls.html#sagemaker-2"
+    ],
+    "dashboard_name": "Notebook instances",
+    "display_path": "sagemaker.regions.id.notebook_instances.id",
+    "path": "sagemaker.regions.id.notebook_instances.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.notebook_instances.id.in_customer_vpc",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "in_customer_vpc"
+}

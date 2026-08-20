@@ -1,0 +1,21 @@
+{
+    "description": "Notebook Instance Answering IMDSv1 Requests",
+    "rationale": "The instance metadata service hands out the credentials of the notebook's IAM role, and under IMDSv1 it hands them to any request that reaches the link-local address, with no token and no proof of intent. A notebook is an environment where third-party code runs by design - a library installed from a cell, a notebook shared as a file, a model or dataset downloaded to inspect - and every one of those is a way for a single unauthenticated GET to walk out with the role's credentials. IMDSv2 requires a PUT to obtain a token first, which the classes of request that reach the metadata service by accident cannot make.",
+    "remediation": "Set the minimum instance metadata service version of the notebook instance to 2, which can be changed on an existing notebook after stopping it; a notebook on an older platform identifier has to be recreated on a current one first",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-imds.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html"
+    ],
+    "dashboard_name": "Notebook instances",
+    "display_path": "sagemaker.regions.id.notebook_instances.id",
+    "path": "sagemaker.regions.id.notebook_instances.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.notebook_instances.id.imdsv2_required",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "imdsv2_required"
+}

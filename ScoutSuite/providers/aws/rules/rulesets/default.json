@@ -1800,6 +1800,108 @@
                 "level": "danger"
             }
         ],
+        "sagemaker-domain-notebook-output-sharing-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-domain-public-internet-access.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "sagemaker-domain-user-identity-not-propagated.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-domain-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-endpoint-data-capture-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-endpoint-single-instance-variant.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-endpoint-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-model-network-isolation-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-model-not-in-vpc.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-notebook-instance-direct-internet-access.json": [
+            {
+                "enabled": true,
+                "level": "danger"
+            }
+        ],
+        "sagemaker-notebook-instance-imdsv1-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-notebook-instance-not-in-vpc.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-notebook-instance-root-access-enabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-notebook-instance-without-cmk.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-training-job-inter-container-encryption-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-training-job-network-isolation-disabled.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
+        "sagemaker-training-job-not-in-vpc.json": [
+            {
+                "enabled": true,
+                "level": "warning"
+            }
+        ],
         "ses-identity-dkim-not-enabled.json": [
             {
                 "enabled": true,

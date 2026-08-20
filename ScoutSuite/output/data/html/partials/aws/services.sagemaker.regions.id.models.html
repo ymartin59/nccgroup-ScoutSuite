@@ -1,0 +1,46 @@
+<!-- SageMaker Models partial -->
+<script id="services.sagemaker.regions.id.models.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <span id="sagemaker.regions.{{region}}.models.{{@key}}.name"><samp>{{value_or_none name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="sagemaker.regions.{{region}}.models.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="sagemaker.regions.{{region}}.models.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Execution role: <span id="sagemaker.regions.{{region}}.models.{{@key}}.execution_role_arn"><samp>{{value_or_none execution_role_arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Inference execution mode: <span id="sagemaker.regions.{{region}}.models.{{@key}}.inference_execution_mode"><samp>{{value_or_none inference_execution_mode}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Network</h4>
+      <div class="list-group-item-text item-margin">Network isolation: <span id="sagemaker.regions.{{region}}.models.{{@key}}.network_isolation"><samp>{{value_or_none network_isolation}}</samp></span></div>
+      <div class="list-group-item-text item-margin">In a VPC of the account: <span id="sagemaker.regions.{{region}}.models.{{@key}}.in_customer_vpc"><samp>{{value_or_none in_customer_vpc}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Subnets: <span id="sagemaker.regions.{{region}}.models.{{@key}}.subnets">{{#each subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="sagemaker.regions.{{region}}.models.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    {{#if containers}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Containers</h4>
+      <ul>
+        {{#each containers}}
+        <li class="list-group-item-text">
+          <samp>{{value_or_none image}}</samp> — mode <samp>{{value_or_none mode}}</samp>,
+          artifact <samp>{{value_or_none model_data_url}}</samp>,
+          repository access <samp>{{value_or_none image_repository_access_mode}}</samp>,
+          environment variables {{#each environment_variable_names}}<samp>{{this}}</samp> {{/each}}
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.sagemaker.regions.id.models", $("#services\\.sagemaker\\.regions\\.id\\.models\\.partial").html());
+  </script>
+  <!-- Single SageMaker model template -->
+  <script id="single_sagemaker_model-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.sagemaker.regions.id.models' }}
+  </script>
+  <script>
+    var single_sagemaker_model_template = Handlebars.compile($("#single_sagemaker_model-template").html());
+  </script>

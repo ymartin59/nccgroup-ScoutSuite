@@ -1,0 +1,21 @@
+{
+    "description": "Model Without Network Isolation",
+    "rationale": "Without network isolation the containers of the model keep full network access while they run, in both directions, and they run holding the model's execution role. A model container is rarely code the account wrote from scratch: it is a framework image, a marketplace or Hugging Face container, or an artifact unpacked at start-up from S3, and inference containers are also where deserialisation of attacker-supplied input happens by construction. Network isolation removes the path such code would use to reach the metadata service, to call AWS APIs with the execution role, or to post the inference inputs somewhere, and a model that only has to answer requests does not need that path.",
+    "remediation": "Recreate the model with network isolation enabled, as the setting is fixed at creation, and where the container genuinely needs to reach something, attach it to a VPC of the account instead and constrain its egress there",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/mkt-algo-model-internet-free.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModel.html"
+    ],
+    "dashboard_name": "Models",
+    "display_path": "sagemaker.regions.id.models.id",
+    "path": "sagemaker.regions.id.models.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.models.id.network_isolation",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "network_isolation"
+}

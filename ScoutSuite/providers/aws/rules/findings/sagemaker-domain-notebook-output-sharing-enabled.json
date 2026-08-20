@@ -1,0 +1,21 @@
+{
+    "description": "Studio Domain Allowing Notebook Output Sharing",
+    "rationale": "With sharing allowed, a Studio user can publish a notebook - including the output of every cell that has been run - to an S3 location and get back a URL that reproduces it for anybody who opens it. The cell output is the point: it is the query results, the sample rows, the aggregates and whatever else the notebook printed while working on the account's data, and it leaves in a form that no bucket policy review would ever have looked at, because the bucket is SageMaker's sharing location rather than a data store. The setting is a domain-level default, so it applies to every user profile that does not override it.",
+    "remediation": "Set the notebook output option of the domain default user settings to Disabled, or, where sharing is genuinely needed, keep it on with a sharing S3 location and a KMS key the account controls and review who can read them",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-sharing.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SharingSettings.html"
+    ],
+    "dashboard_name": "Domains",
+    "display_path": "sagemaker.regions.id.domains.id",
+    "path": "sagemaker.regions.id.domains.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.domains.id.notebook_output_sharing_enabled",
+            "true",
+            ""
+        ]
+    ],
+    "id_suffix": "notebook_output_sharing_enabled"
+}

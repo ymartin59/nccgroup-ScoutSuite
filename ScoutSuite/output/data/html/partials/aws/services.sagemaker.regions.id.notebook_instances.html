@@ -1,0 +1,52 @@
+<!-- SageMaker Notebook Instances partial -->
+<script id="services.sagemaker.regions.id.notebook_instances.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.name"><samp>{{value_or_none name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Instance type: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.instance_type"><samp>{{value_or_none instance_type}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Platform: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.platform_identifier"><samp>{{value_or_none platform_identifier}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Volume size: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.volume_size"><samp>{{value_or_none volume_size}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Last modified at: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.last_modified_time"><samp>{{value_or_none last_modified_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">URL: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.url"><samp>{{value_or_none url}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Execution role: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.role_arn"><samp>{{value_or_none role_arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Lifecycle configuration: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.lifecycle_config_name"><samp>{{value_or_none lifecycle_config_name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Failure reason: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.failure_reason"><samp>{{value_or_none failure_reason}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Network</h4>
+      <div class="list-group-item-text item-margin">Direct internet access: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.direct_internet_access_enabled"><samp>{{value_or_none direct_internet_access}}</samp></span></div>
+      <div class="list-group-item-text item-margin">In a VPC of the account: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.in_customer_vpc"><samp>{{value_or_none in_customer_vpc}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Subnet: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.subnet_id"><samp>{{value_or_none subnet_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Network interface: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.network_interface_id"><samp>{{value_or_none network_interface_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IP address type: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.ip_address_type"><samp>{{value_or_none ip_address_type}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Access</h4>
+      <div class="list-group-item-text item-margin">Root access: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.root_access_enabled"><samp>{{value_or_none root_access}}</samp></span></div>
+      <div class="list-group-item-text item-margin">IMDSv2 required: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.imdsv2_required"><samp>{{value_or_none imdsv2_required}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Minimum IMDS version: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.imds_minimum_version"><samp>{{value_or_none imds_minimum_version}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Code repositories: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.code_repositories">{{#each code_repositories}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Encryption</h4>
+      <div class="list-group-item-text item-margin">KMS key: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.kms_key_id"><samp>{{#if kms_key_id}}{{kms_key_id}}{{else}}AWS managed{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="sagemaker.regions.{{region}}.notebook_instances.{{@key}}.encryption_with_cmk"><samp>{{value_or_none encryption_with_cmk}}</samp></span></div>
+    </div>
+  </script>
+  <script>
+    Handlebars.registerPartial("services.sagemaker.regions.id.notebook_instances", $("#services\\.sagemaker\\.regions\\.id\\.notebook_instances\\.partial").html());
+  </script>
+  <!-- Single SageMaker notebook instance template -->
+  <script id="single_sagemaker_notebook_instance-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.sagemaker.regions.id.notebook_instances' }}
+  </script>
+  <script>
+    var single_sagemaker_notebook_instance_template = Handlebars.compile($("#single_sagemaker_notebook_instance-template").html());
+  </script>

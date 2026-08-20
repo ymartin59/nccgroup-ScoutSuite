@@ -254,9 +254,50 @@ or of whether AWS's own detection services are switched on.
       crawlers.
 - [ ] **Athena** — workgroups: result-location encryption, **enforce workgroup configuration**,
       CloudWatch metrics, query result reuse; data catalogs.
-- [ ] **SageMaker** — notebook instances (**direct internet access**, VPC, KMS, root access),
-      domains and user profiles, training jobs (inter-container encryption, network isolation, VPC),
-      endpoints (KMS, data capture), models.
+- [x] **SageMaker** — done, as the `sagemaker` service, with five resources per region. Every
+      listing only names its resources, so each one is described.
+      - [x] notebook instances: **direct internet access**, whether a subnet of the account was given
+            at all (a notebook without one runs in a VPC SageMaker owns), security groups and network
+            interface, root access, the minimum IMDS version, the KMS key of the ML volume, the
+            execution role, the lifecycle configuration and the Git repositories cloned at start
+      - [x] Studio domains: **application network access type** (`VpcOnly` vs `PublicInternetOnly`),
+            VPC and subnets, who manages the application security groups, the home EFS file system
+            and its key, the authentication mode, the default execution role, notebook output
+            sharing, `ExecutionRoleIdentityConfig` (whether CloudTrail can name the user behind a
+            call), local Docker access, and the user profiles with the execution role each one
+            overrides the domain default with
+      - [x] endpoints, joined with the endpoint configuration they serve, since the volume key,
+            network isolation and VPC placement live there and not on the endpoint: production and
+            shadow variants with their model, instance type and count or serverless configuration,
+            and the data capture configuration with its destination, sampling and key
+      - [x] models: network isolation, VPC configuration, execution role, inference execution mode,
+            and the containers with their image, artifact, repository access mode and the **names**
+            of their environment variables
+      - [x] training jobs: network isolation, inter-container traffic encryption, VPC configuration,
+            the output and volume KMS keys, the instance type and count (summed over heterogeneous
+            instance groups), the training image, the input channels and output location, and the
+            names of the hyperparameters
+      - [x] seventeen rules: notebook direct internet access, notebook outside a VPC of the account,
+            notebook root access, notebook without a customer managed key, notebook answering IMDSv1;
+            domain with public internet access, domain without a customer managed key, domain
+            allowing notebook output sharing, domain not propagating the user identity; endpoint
+            without a customer managed key, endpoint capturing data without one, endpoint variant on
+            a single instance; model without network isolation, model outside a VPC of the account;
+            and training job without network isolation, without inter-container traffic encryption
+            and outside a VPC of the account
+      - [ ] left out: training jobs beyond the 200 most recent of a region, since a job record is
+            kept for ever and only `DescribeTrainingJob` carries the settings a rule is about — what
+            was dropped is printed rather than passed over silently; tags, which SageMaker does not
+            return from any `Describe*` call and would cost one `ListTags` per resource; matching
+            notebooks, endpoints, models and training jobs to their security groups, so the attack
+            surface of what they can reach is not evaluated, and neither is `in_public_subnet`
+            derived from their subnets; the container environment variable and hyperparameter
+            *values*, which carry credentials often enough that a shareable report should not hold
+            them; and the resources of Studio that are not the domain itself — spaces, apps,
+            app image configs, and the lifecycle configuration scripts, whose content runs as root
+      - [ ] left out (resources): batch transform jobs, processing jobs, pipelines, model packages
+            and their group policies (a cross-account share), feature groups, MLflow tracking
+            servers, and the account-level `DescribeSagemakerServicecatalogPortfolioStatus`
 - [ ] **CI/CD chain beyond CodeBuild** — `codebuild` is collected, the rest is not, so pipelines
       with over-privileged roles and permissive GitHub OIDC trust policies go unseen.
       - [ ] CodePipeline: pipelines, service roles, source providers, cross-account actions, artifact store encryption

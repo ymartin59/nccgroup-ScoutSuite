@@ -1,0 +1,4 @@
+[
+    "sagemaker.regions.eu-west-1.notebook_instances.features-vpc-with-egress.root_access_enabled",
+    "sagemaker.regions.eu-west-1.notebook_instances.research-default.root_access_enabled"
+]

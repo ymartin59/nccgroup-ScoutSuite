@@ -1,0 +1,64 @@
+<!-- SageMaker Endpoints partial -->
+<script id="services.sagemaker.regions.id.endpoints.partial" type="text/x-handlebars-template">
+    <div id="resource-name" class="list-group-item active">
+      <h4 class="list-group-item-heading">{{name}}</h4>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Information</h4>
+      <div class="list-group-item-text item-margin">Name: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.name"><samp>{{value_or_none name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">ARN: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.arn"><samp>{{value_or_none arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.status"><samp>{{value_or_none status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Endpoint configuration: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.endpoint_config_name"><samp>{{value_or_none endpoint_config_name}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Created at: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.creation_time"><samp>{{value_or_none creation_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Last modified at: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.last_modified_time"><samp>{{value_or_none last_modified_time}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Execution role: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.execution_role_arn"><samp>{{value_or_none execution_role_arn}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Failure reason: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.failure_reason"><samp>{{value_or_none failure_reason}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Network</h4>
+      <div class="list-group-item-text item-margin">Network isolation: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.network_isolation"><samp>{{value_or_none network_isolation}}</samp></span></div>
+      <div class="list-group-item-text item-margin">In a VPC of the account: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.in_customer_vpc"><samp>{{value_or_none in_customer_vpc}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Subnets: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.subnets">{{#each subnets}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">Security groups: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.security_groups">{{#each security_groups}}<samp>{{this}}</samp> {{/each}}</span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Encryption</h4>
+      <div class="list-group-item-text item-margin">KMS key: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.kms_key_id"><samp>{{#if kms_key_id}}{{kms_key_id}}{{else}}AWS managed{{/if}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.encryption_with_cmk"><samp>{{value_or_none encryption_with_cmk}}</samp></span></div>
+    </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Data capture</h4>
+      <div class="list-group-item-text item-margin">Enabled: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_enabled"><samp>{{value_or_none data_capture_enabled}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Status: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_status"><samp>{{value_or_none data_capture_status}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Destination: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_destination"><samp>{{value_or_none data_capture_destination}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Sampling percentage: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_sampling_percentage"><samp>{{value_or_none data_capture_sampling_percentage}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Captured: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_options">{{#each data_capture_options}}<samp>{{this}}</samp> {{/each}}</span></div>
+      <div class="list-group-item-text item-margin">KMS key: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_kms_key_id"><samp>{{value_or_none data_capture_kms_key_id}}</samp></span></div>
+      <div class="list-group-item-text item-margin">Customer managed key: <span id="sagemaker.regions.{{region}}.endpoints.{{@key}}.data_capture_encrypted_with_cmk"><samp>{{value_or_none data_capture_encrypted_with_cmk}}</samp></span></div>
+    </div>
+    {{#if production_variants}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">Variants</h4>
+      <ul>
+        {{#each production_variants}}
+        <li class="list-group-item-text" id="sagemaker.regions.{{../region}}.endpoints.{{@../key}}.production_variants.{{@key}}">
+          <samp>{{name}}</samp> — model <samp>{{value_or_none model_name}}</samp>,
+          {{#if serverless}}serverless{{else}}<samp>{{value_or_none instance_type}}</samp> ×
+          <span id="sagemaker.regions.{{../region}}.endpoints.{{@../key}}.production_variants.{{@key}}.instance_count"><samp>{{value_or_none instance_count}}</samp></span>{{/if}}
+          <span id="sagemaker.regions.{{../region}}.endpoints.{{@../key}}.production_variants.{{@key}}.single_instance"></span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+  </script>
+  <script>
+    Handlebars.registerPartial("services.sagemaker.regions.id.endpoints", $("#services\\.sagemaker\\.regions\\.id\\.endpoints\\.partial").html());
+  </script>
+  <!-- Single SageMaker endpoint template -->
+  <script id="single_sagemaker_endpoint-template" type="text/x-handlebars-template">
+    {{> modal-template template='services.sagemaker.regions.id.endpoints' }}
+  </script>
+  <script>
+    var single_sagemaker_endpoint_template = Handlebars.compile($("#single_sagemaker_endpoint-template").html());
+  </script>

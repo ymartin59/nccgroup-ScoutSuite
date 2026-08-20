@@ -1,0 +1,21 @@
+{
+    "description": "Training Job Without Network Isolation",
+    "rationale": "A training job is the one place where the full training dataset, the training code and a role able to read it all meet on the same instances. Without network isolation those containers have unrestricted network access while they run, so any code inside the training image - a framework image, a community or marketplace algorithm, a package installed by the entry point at start-up - can read the data it was given and send it anywhere, or use the job's role to call AWS APIs. The job is short lived and leaves nothing behind, which makes it the least observed part of the pipeline. This finding is about how the account trains rather than about a job that can still be changed: the fix belongs in the template, pipeline or SDK call that creates the next one.",
+    "remediation": "Set EnableNetworkIsolation on the training jobs created by the pipeline, template or SDK call; a job that has to download from the internet cannot be isolated, so bring what it needs into S3 or ECR first",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/mkt-algo-model-internet-free.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/train-vpc.html"
+    ],
+    "dashboard_name": "Training jobs",
+    "display_path": "sagemaker.regions.id.training_jobs.id",
+    "path": "sagemaker.regions.id.training_jobs.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.training_jobs.id.network_isolation",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "network_isolation"
+}

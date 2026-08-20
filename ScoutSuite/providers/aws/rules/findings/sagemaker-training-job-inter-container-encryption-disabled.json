@@ -1,0 +1,26 @@
+{
+    "description": "Distributed Training Job Without Inter-Container Traffic Encryption",
+    "rationale": "A training job spread over several instances sends the training data itself between them: the shards each worker reads, the gradients computed from them and, for a model parallel job, the activations. SageMaker only encrypts that traffic when the job asks it to, so otherwise it crosses the network in the clear, and in the default case it crosses a VPC SageMaker owns where the account cannot see or constrain anything. The cost is training time, which is why it is off by default - and why it is a decision worth having made deliberately for a job training on sensitive data rather than left at the default.",
+    "remediation": "Set EnableInterContainerTrafficEncryption on the distributed training jobs created by the pipeline, template or SDK call, accepting the training time it adds, and place the job in a VPC of the account so the traffic is also within a network it controls",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/train-encrypt.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingJob.html"
+    ],
+    "dashboard_name": "Training jobs",
+    "display_path": "sagemaker.regions.id.training_jobs.id",
+    "path": "sagemaker.regions.id.training_jobs.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.training_jobs.id.distributed",
+            "true",
+            ""
+        ],
+        [
+            "sagemaker.regions.id.training_jobs.id.inter_container_traffic_encryption",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "inter_container_traffic_encryption"
+}

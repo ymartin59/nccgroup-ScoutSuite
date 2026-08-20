@@ -1,0 +1,4 @@
+[
+    "sagemaker.regions.eu-west-1.notebook_instances.features-vpc-with-egress.imdsv2_required",
+    "sagemaker.regions.eu-west-1.notebook_instances.research-default.imdsv2_required"
+]

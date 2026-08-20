@@ -1,0 +1,21 @@
+{
+    "description": "Studio Domain Not Propagating the User Identity",
+    "rationale": "Everything a Studio user does to the account's data is done by the execution role of their user profile, not by them, so in CloudTrail the caller is that role and nothing else. When several profiles share one execution role - the common case, since the domain supplies a default - the calls of every user in the domain are indistinguishable, and an investigation into what was read or deleted cannot get past \"the domain did it\". Setting the execution role identity configuration to USER_PROFILE_NAME makes SageMaker put the user profile name in the role session name, which appears in every CloudTrail event and can be matched with a condition key in a policy.",
+    "remediation": "Set the execution role identity configuration of the domain to USER_PROFILE_NAME, which can be changed on an existing domain, and allow sts:SetSourceIdentity on the execution roles so the propagated identity is accepted",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/monitor-user-access.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DomainSettings.html"
+    ],
+    "dashboard_name": "Domains",
+    "display_path": "sagemaker.regions.id.domains.id",
+    "path": "sagemaker.regions.id.domains.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.domains.id.user_identity_propagated",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "user_identity_propagated"
+}

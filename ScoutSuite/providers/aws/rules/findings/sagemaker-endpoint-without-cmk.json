@@ -1,0 +1,21 @@
+{
+    "description": "Inference Endpoint Encrypted with an AWS Managed Key",
+    "rationale": "The endpoint configuration fixes the KMS key protecting the ML storage volume of the instances hosting the model. That volume is where the model artifact is unpacked and where the container writes whatever it writes while serving requests - cached features, temporary files, logs it has not shipped anywhere. Without a key named in the configuration, SageMaker uses one AWS manages, whose policy the account cannot change, whose use it cannot deny and which it cannot disable, so the encryption cannot be scoped to the roles that ought to reach the model and cannot be revoked. A model artifact is the training data compressed into parameters, and is worth treating as the data it came from.",
+    "remediation": "Create a new endpoint configuration naming a customer managed KMS key and update the endpoint to it, since the key cannot be changed on an existing configuration; note that a serverless or Inferentia variant has no volume and therefore takes no key",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/encryption-at-rest.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html"
+    ],
+    "dashboard_name": "Endpoints",
+    "display_path": "sagemaker.regions.id.endpoints.id",
+    "path": "sagemaker.regions.id.endpoints.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.endpoints.id.encryption_with_cmk",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "encryption_with_cmk"
+}

@@ -1,0 +1,21 @@
+{
+    "description": "Model Not Attached to a VPC of the Account",
+    "rationale": "A model created without a VPC configuration runs its containers in a VPC SageMaker owns, where no security group, route table, network ACL or VPC endpoint policy of the account applies to them and no flow log records what they did. The containers hold the model's execution role and process whatever callers send the endpoint, so the only remaining constraint on where that code can send data is the IAM policy of the role. Attaching the model to subnets of the account puts its containers back under the network controls the account already maintains, and lets the S3 access it needs go through an endpoint policy rather than the open internet.",
+    "remediation": "Recreate the model with a VPC configuration naming private subnets and security groups of the account, since the placement is fixed at creation, with a VPC endpoint for S3 so the model artifact and the data are fetched without leaving the VPC",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-security.html"
+    ],
+    "dashboard_name": "Models",
+    "display_path": "sagemaker.regions.id.models.id",
+    "path": "sagemaker.regions.id.models.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.models.id.in_customer_vpc",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "in_customer_vpc"
+}

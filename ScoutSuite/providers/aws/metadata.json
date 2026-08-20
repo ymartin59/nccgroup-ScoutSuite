@@ -11,6 +11,30 @@
                     ]
                 }
             }
+        },
+        "sagemaker": {
+            "resources": {
+                "notebook_instances": {
+                    "cols": 2,
+                    "path": "services.sagemaker.regions.id.notebook_instances"
+                },
+                "domains": {
+                    "cols": 2,
+                    "path": "services.sagemaker.regions.id.domains"
+                },
+                "endpoints": {
+                    "cols": 2,
+                    "path": "services.sagemaker.regions.id.endpoints"
+                },
+                "models": {
+                    "cols": 2,
+                    "path": "services.sagemaker.regions.id.models"
+                },
+                "training_jobs": {
+                    "cols": 2,
+                    "path": "services.sagemaker.regions.id.training_jobs"
+                }
+            }
         }
     },
     "management": {

@@ -1,0 +1,22 @@
+{
+    "description": "Studio Domain with Public Internet Access",
+    "rationale": "PublicInternetOnly, which is what SageMaker applies unless the domain is created as VpcOnly, gives every notebook, terminal, kernel and Canvas application of the domain a network interface in a VPC SageMaker owns, with a route to the internet that no route table, security group, network ACL or VPC endpoint policy of the account governs and no flow log records. Studio is where people work interactively with the account's data under an execution role, so this is a permanent unmonitored egress path sitting next to the data: a dataset copied out of a terminal, a package installed from an arbitrary index, or a token posted to an external host all leave without crossing anything the account can see or stop.",
+    "remediation": "Recreate the domain with an application network access type of VpcOnly, as the setting is fixed at creation, in private subnets with VPC endpoints for the SageMaker API, SageMaker runtime, Studio, S3 and any other AWS service the users need",
+    "references": [
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-notebooks-and-internet-access.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-interface-endpoint.html",
+        "https://docs.aws.amazon.com/sagemaker/latest/dg/security-vpc.html"
+    ],
+    "dashboard_name": "Domains",
+    "display_path": "sagemaker.regions.id.domains.id",
+    "path": "sagemaker.regions.id.domains.id",
+    "conditions": [
+        "and",
+        [
+            "sagemaker.regions.id.domains.id.vpc_only_access",
+            "false",
+            ""
+        ]
+    ],
+    "id_suffix": "vpc_only_access"
+}
